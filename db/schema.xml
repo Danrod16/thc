@@ -22,7 +22,6 @@
     <type label="Binary" length="1" sql="BYTEA" quote="'"/>
     <type label="Boolean" length="0" sql="BOOLEAN" quote="'"/>
   </group>
-
   <group label="Date &amp; Time" color="rgb(200,255,200)">
     <type label="Date" length="0" sql="DATE" quote="'"/>
     <type label="Time" length="1" sql="TIME" quote="'"/>
