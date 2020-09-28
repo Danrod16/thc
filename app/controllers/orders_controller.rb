@@ -9,5 +9,7 @@ class OrdersController < ApplicationController
   # end
 
   def raw_data
+    Order.create_orders
+    @orders = Order.all
   end
 end
