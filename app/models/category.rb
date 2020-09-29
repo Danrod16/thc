@@ -1,5 +1,6 @@
 class Category < ApplicationRecord
   has_many :products
+  has_many :orders, through: :products
 
   def self.fetch_categories
     client = Webflow::Client.new(ENV['WEBFLOW_API'])
@@ -9,6 +10,6 @@ class Category < ApplicationRecord
   end
 
   def self.create_categories(category)
-    @category = Category.create(category_id: category['_id'], name: category['category_name'])
+    @category = Category.create(category_id: category['_id'], name: category['name'])
   end
 end
