@@ -2,6 +2,7 @@ class Order < ApplicationRecord
   require 'date'
 
   belongs_to :product
+  
   def self.order_exists?(order)
     Order.find_by(order_id: order['orderId'])
   end
@@ -43,18 +44,16 @@ class Order < ApplicationRecord
 
   def self.new_order(purchased_item, order)
     Order.create(customer_name: order["customerInfo"]["fullName"],
-    customer_email: order["customerInfo"]["email"],
-
-    quantity: purchased_item["count"],
-    meal_size: @meal_size,
-    meal_protein: @meal_protein,
-    meal_custom: @meal_custom,
-    notes: order["customData"][1]["textArea"],
-    telephone: order["customData"][0]["textInput"],
-    delivery_address: Order.delivery_address(order),
-    # macros: order["customerInfo"]["fullName"],
-    order_id: order["orderId"],
-    product_id: Order.assign_product(purchased_item))
+                 customer_email: order["customerInfo"]["email"],
+                 meal_size: @meal_size,
+                 meal_protein: @meal_protein,
+                 meal_custom: @meal_custom,
+                 notes: order["customData"][1]["textArea"],
+                 telephone: order["customData"][0]["textInput"],
+                 delivery_address: Order.delivery_address(order),
+                 # macros: order["customerInfo"]["fullName"],
+                 order_id: order["orderId"],
+                 product_id: Order.assign_product(purchased_item))
   end
 
   def self.delivery_address(order)
