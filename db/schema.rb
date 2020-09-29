@@ -10,17 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_28_085633) do
+ActiveRecord::Schema.define(version: 2020_09_29_101931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.string "category_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "orders", force: :cascade do |t|
     t.string "customer_name"
     t.string "customer_email"
-    t.string "meal_name"
-    t.text "meal_description"
-    t.string "day"
     t.integer "quantity"
     t.string "meal_size"
     t.string "meal_protein"
@@ -32,6 +36,21 @@ ActiveRecord::Schema.define(version: 2020_09_28_085633) do
     t.string "order_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "product_id"
+    t.index ["product_id"], name: "index_orders_on_product_id"
   end
 
+  create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "meal_name"
+    t.string "product_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_products_on_category_id"
+  end
+
+  add_foreign_key "orders", "products"
+  add_foreign_key "products", "categories"
 end
