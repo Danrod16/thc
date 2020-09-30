@@ -1,8 +1,9 @@
+require 'date'
+
 class Order < ApplicationRecord
-  require 'date'
 
   belongs_to :product
-  
+
   def self.order_exists?(order)
     Order.find_by(order_id: order['orderId'])
   end
