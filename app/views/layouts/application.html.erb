@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Thc</title>
+    <title>The healthiest choice dashboard</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -12,6 +12,9 @@
   </head>
 
   <body>
-    <%= yield %>
+    <%= render "shared/side_bar" %>
+    <section class="content">
+      <%= yield %>
+    </section>
   </body>
 </html>

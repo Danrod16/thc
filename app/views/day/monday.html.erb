@@ -1,0 +1,41 @@
+<div class="dashboard">
+    <div class="nav-wrapper">
+      <ul class="nav mb-3" %>
+          <% @days.each do |day| %>
+          <% path = "#{day}".downcase %>
+            <% if current_page?("/#{path}") %>
+                <%= link_to day, path, class: "nav-pills-current" %>
+            <% else %>
+                <%= link_to day, path, class: "nav-pills" %>
+            <% end %>
+          <% end %>
+      </ul>
+    </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead class="thead">
+        <tr>
+          <th>Nombre</th>
+          <th>Producto</th>
+          <th>Talla</th>
+          <th>Proteína</th>
+          <th>Custom</th>
+          <th>Notas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @orders.first(20).each do |order| %>
+          <tr>
+            <td><%= order.customer_name %></td>
+            <td><%= order.product.meal_name %></td>
+            <td><%= order.meal_size %></td>
+            <td><%= order.meal_protein %></td>
+            <td><%= order.meal_custom %></td>
+            <td><%= order.notes %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

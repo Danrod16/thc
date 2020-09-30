@@ -1,0 +1,48 @@
+.dashboard {
+  background-color: $yellow;
+  border-radius: 40px;
+  width: 100%;
+  padding: 20px;
+}
+
+.nav {
+  justify-content: center;
+}
+
+.nav-wrapper {
+  display: flex;
+  justify-content: center;
+  // padding: 10px;
+}
+
+.nav-pills {
+  background: white;
+  border-radius: 50px;
+  font-size: 14px;
+  line-height: 19px;
+  color: black;
+  // border-color: black;
+  // border-width: 1px;
+  // border-style: solid;
+  padding: 10px 40px;
+  text-decoration: none;
+/* identical to box height */
+  letter-spacing: 0.2em;
+  margin: 0px 5px;
+}
+
+.nav-pills-current {
+  background: black;
+  border-radius: 50px;
+  font-size: 14px;
+  line-height: 19px;
+  color: white !important;
+  // border-color: black;
+  // border-width: 1px;
+  // border-style: solid;
+  padding: 10px 40px;
+  text-decoration: none;
+/* identical to box height */
+  letter-spacing: 0.2em;
+  margin: 0px 5px;
+}
