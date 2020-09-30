@@ -18,13 +18,13 @@ class DayController < ApplicationController
   private
 
   def set_today
-    today_date = Date.today.strftime("%Y-%m-%d")
+    today_date = Date.today.strftime("%d-%m-%Y")
     week_day = Date.today.strftime("%A")
     orders = Order.all
     orders.each do |order|
       product_day = order.product.name
     end
-    meal_day = Order.where(meal_date: today_date)
+    @orders = Order.where(meal_date: today_date)
     @days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"]
   end
 end

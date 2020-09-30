@@ -16,6 +16,7 @@
     <table class="table table-striped">
       <thead class="thead">
         <tr>
+          <th>Fecha</th>
           <th>Nombre</th>
           <th>Producto</th>
           <th>Talla</th>
@@ -25,8 +26,9 @@
         </tr>
       </thead>
       <tbody>
-        <% @orders.first(20).each do |order| %>
+        <% @orders.each do |order| %>
           <tr>
+            <td><%= order.meal_date %></td>
             <td><%= order.customer_name %></td>
             <td><%= order.product.meal_name %></td>
             <td><%= order.meal_size %></td>

@@ -8,7 +8,7 @@ class Order < ApplicationRecord
     Order.fetch_orders
     # Order.fetch_meals
     # we iterate through the Orders array
-    @orders.first(20).each do |order|
+    @orders.first(50).each do |order|
       # We check that the order doesn't exist already in our database
       unless Order.order_exists?(order)
         # For each order we itterate through each purchased item
@@ -66,7 +66,7 @@ class Order < ApplicationRecord
       if day.wday == 6 || day.wday == 0
         day = day.next_day
       else
-        array << { name: day.strftime("%A"), date: day.strftime("%Y-%m-%d")}
+        array << { name: day.strftime("%A"), date: day.strftime("%d-%m-%Y")}
         day = day.next_day
       end
     end
@@ -137,7 +137,7 @@ class Order < ApplicationRecord
     end
   
     while day.wday < 6
-      array << { name: day.strftime("%A"), date: day.strftime("%Y-%m-%d")}
+      array << { name: day.strftime("%A"), date: day.strftime("%d-%m-%Y")}
       day = day.next_day
     end
     Order.assign_date(array, purchased_item)
