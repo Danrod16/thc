@@ -1,12 +1,4 @@
 class OrdersController < ApplicationController
-
-  # def new
-  #   @order = Order.new
-  # end
-
-  # def create
-  #   @order = Order.new()
-  # end
   def weekly
     @orders = Order.all
   end
@@ -17,8 +9,7 @@ class OrdersController < ApplicationController
     @orders = Order.where(meal_date: today_date)
   end
 
-  def raw_data
-    Order.create_orders
+  def index
     @orders = Order.all
   end
 end

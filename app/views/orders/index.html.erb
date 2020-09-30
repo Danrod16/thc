@@ -1,0 +1,31 @@
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th>Nombre</th>
+      <th>Email</th>
+      <th>Teléfono</th>
+      <th>Dirección</th>
+      <th>Fecha</th>
+      <th>Producto</th>
+      <th>Talla</th>
+      <th>Proteína</th>
+      <th>Custom</th>
+      <th>Notas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @orders.first(20).each do |order| %>
+      <tr>
+        <td><%= order.customer_name %></td>
+        <td><%= order.customer_email %></td>
+        <td><%= order.telephone %></td>
+        <td><%= order.delivery_address %></td>
+        <td><%= order.product.meal_name %></td>
+        <td><%= order.meal_size %></td>
+        <td><%= order.meal_protein %></td>
+        <td><%= order.meal_custom %></td>
+        <td><%= order.notes %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
