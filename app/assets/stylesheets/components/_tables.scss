@@ -1,0 +1,15 @@
+.table-responsive {
+  background-color: white;
+  border-radius: 20px;
+  overflow: scroll;
+  height: 40vh;
+}
+
+.table {
+  overflow: scroll;
+  font-size: 14px;
+}
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+   background-color: #fffaf1;
+}
