@@ -64,3 +64,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'webflow-ruby', path: 'webflow-ruby-1.2.0'
 gem 'prawn-labels'
 gem 'rails_admin', '~> 2.0'
+gem 'rufus-scheduler'
