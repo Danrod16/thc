@@ -1,5 +1,6 @@
 class DayController < ApplicationController
   before_action :set_days
+  before_action :webflow_fetch
   def monday
     @orders = Order.where(meal_date: assign_date("Monday"))
   end
@@ -31,7 +32,7 @@ class DayController < ApplicationController
       start += 1
     }
     meal_date = ""
-    week.each do|e| 
+    week.each do|e|
       if e[:name] == day
         meal_date = e[:date]
       end
@@ -41,5 +42,9 @@ class DayController < ApplicationController
 
   def set_days
     @days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"]
+  end
+
+  def webflow_fetch
+    FetchWebflow.get_webflow
   end
 end

@@ -7,7 +7,7 @@ require 'date'
     Order.fetch_orders(client)
     # Order.fetch_meals
     # we iterate through the Orders array
-    @orders.first(50).each do |order|
+    @orders.each do |order|
       # We check that the order doesn't exist already in our database
       unless Order.order_exists?(order)
         # For each order we itterate through each purchased item
@@ -37,7 +37,7 @@ require 'date'
     when "Combos"
       if Order.is_weekly?(purchased_item)
         Order.create_weekly(order, purchased_item)
-      else 
+      else
         Order.create_monthly(order, purchased_item)
       end
     when "Snacks"
@@ -97,7 +97,7 @@ require 'date'
     new_format = variant_name.split(", ")
                               .find { |e| e[variant_type]}
                               .gsub(regex, "")
-    new_format.include?("No customisation") ? "-" : new_format                            
+    new_format.include?("No customisation") ? "-" : new_format
   end
 
   def self.delivery_address(order)
@@ -110,7 +110,7 @@ require 'date'
   end
 
   def self.create_monthly(order, purchased_item)
-    days = Order.fetch_day(order, 20)
+    days = Order.fetch_days(order, 20)
       days.each do |day|
        Order.new_combo(order, purchased_item, day)
      end

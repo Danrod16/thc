@@ -1,9 +1,12 @@
 class Product < ApplicationRecord
+  has_many :orders, dependent: :destroy
   belongs_to :category
 
   def self.fetch_products(client)
     client.items("5ec79e4a047417204a44efdb").each do |product|
-      Product.create_products(product)
+      unless Product.product_exists?(product)
+        Product.create_products(product)
+      end
     end
   end
 
@@ -16,5 +19,9 @@ class Product < ApplicationRecord
 
   def self.assign_category(category_id)
     Category.where(category_id: category_id).first.id
+  end
+
+  def self.product_exists?(product)
+    Product.find_by(product_id: product['_id'])
   end
 end

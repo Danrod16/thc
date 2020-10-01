@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  require 'Rufus-scheduler'
-  scheduler = Rufus::Scheduler.new
-  scheduler.every '4s', FetchWebflow.get_webflow
+  # require 'rufus-scheduler'
+  # scheduler = Rufus::Scheduler.new
+  # scheduler.every '5s', FetchWebflow.get_webflow
 end
