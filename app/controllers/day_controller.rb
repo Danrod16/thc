@@ -44,6 +44,12 @@ class DayController < ApplicationController
     @days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"]
   end
 
+  def set_variables(order)
+    size = ["Regular", "Large"]
+    custom = [""]
+    @meal_count = @orders.where(meal_size: order.meal_size, meal_custom: order.meal_custom, meal_protein: order.meal_protein).count
+  end
+
   def webflow_fetch
     FetchWebflow.get_webflow
   end

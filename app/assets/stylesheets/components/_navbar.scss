@@ -1,5 +1,5 @@
 section {
-  margin-left: 160px;
+  margin-left: 140px;
   width: 90%;
   -webkit-transition: all .5s ease;
   -moz-transition: all .5s ease;
@@ -14,10 +14,10 @@ section {
   left: 0;
   top: 0;
   height: 100%;
-  text-align: center;
+  text-align: left;
 }
 .navbar, .navbar ul {
-  padding: 0;
+  padding: 10px;
   margin: 0;
 }
 #navbar_icon {

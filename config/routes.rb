@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  get 'lunes', to: 'day#monday'
-  get 'martes', to: 'day#tuesday'
+  get 'lunes', to: 'day#monday', as: "monday"
+  get 'martes', to: 'day#tuesday', as: "tuesday"
   get 'miercoles', to: 'day#wednesday'
   get 'jueves', to: 'day#thursday'
   get 'viernes', to: 'day#friday'
