@@ -1,0 +1,28 @@
+<div class="table-responsive">
+    <table class="table table-striped">
+      <thead class="thead">
+        <tr>
+          <th>Fecha</th>
+          <th>Nombre</th>
+          <th>Producto</th>
+          <th>Talla</th>
+          <th>Proteína</th>
+          <th>Custom</th>
+          <th>Notas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @orders.each do |order| %>
+          <tr>
+            <td><%= order.meal_date %></td>
+            <td><%= order.customer_name %></td>
+            <td><%= order.product.meal_name.downcase.capitalize %></td>
+            <td><%= order.meal_size %></td>
+            <td><%= order.meal_protein %></td>
+            <td><%= order.meal_custom %></td>
+            <td><%= order.notes %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+</div>
