@@ -2,8 +2,7 @@ class Category < ApplicationRecord
   has_many :products
   has_many :orders, through: :products
 
-  def self.fetch_categories
-    client = Webflow::Client.new(ENV['WEBFLOW_API'])
+  def self.fetch_categories(client)
     client.items("5ec79e4a047417e66944efc5").each do |category|
       Category.create_categories(category)
     end

@@ -1,11 +1,10 @@
-require 'date'
-
 class Order < ApplicationRecord
+require 'date'
   belongs_to :product
 
-  def self.create_orders
+  def self.create_orders(client)
     # We fetch the orders JSON from webflow
-    Order.fetch_orders
+    Order.fetch_orders(client)
     # Order.fetch_meals
     # we iterate through the Orders array
     @orders.first(50).each do |order|
@@ -21,12 +20,11 @@ class Order < ApplicationRecord
       end
     end
   end
-  
+
   private
-  
-  def self.fetch_orders
-    @client = Webflow::Client.new(ENV['WEBFLOW_API'])
-    @orders = @client.orders("5e9709a0ad0cd03f9c491ae6")
+
+  def self.fetch_orders(client)
+    @orders = client.orders("5e9709a0ad0cd03f9c491ae6")
   end
 
   def self.order_exists?(order)
@@ -52,18 +50,18 @@ class Order < ApplicationRecord
   def self.is_weekly?(purchased_item)
     purchased_item["productName"] == "Weekly Combo"
   end
-  
+
   def self.is_monthly?(purchased_item)
     purchased_item["productName"] == "Monthly Combo"
   end
-  
+
   def self.create_weekly(order, purchased_item)
     days = Order.fetch_days(order, 5)
     days.each do |day|
       Order.new_combo(order, purchased_item, day)
     end
   end
-  
+
   def self.fetch_days(order, days)
     array = []
     full_date = order["acceptedOn"].split("T")[0]
@@ -78,7 +76,7 @@ class Order < ApplicationRecord
     end
     array
   end
-  
+
   def self.new_combo(order, purchased_item, day)
     Order.create(customer_name: order["customerInfo"]["fullName"],
                  customer_email: order["customerInfo"]["email"],
@@ -93,7 +91,7 @@ class Order < ApplicationRecord
                  product_id: Order.assign_day(day[:name]),
                  meal_date: day[:date])
   end
-  
+
   def self.variants(variant_name, variant_type)
     regex = Regexp.new(".*#{variant_type}: ")
     new_format = variant_name.split(", ")
@@ -101,12 +99,12 @@ class Order < ApplicationRecord
                               .gsub(regex, "")
     new_format.include?("No customisation") ? "-" : new_format                            
   end
-  
+
   def self.delivery_address(order)
     address = order['allAddresses'][1]
     "#{address['line1']}, #{address['line2']}, #{address['postalCode']}, #{address['city']}"
   end
-  
+
   def self.assign_day(name)
     Product.where(name: name).first.id
   end
@@ -167,17 +165,17 @@ class Order < ApplicationRecord
     elsif day.wday == 0
       day = day.next_day
     end
-  
+
     while day.wday < 6
       array << { name: day.strftime("%A"), date: day.strftime("%d-%m-%Y")}
       day = day.next_day
     end
     Order.assign_date(array, purchased_item)
   end
-  
+
   def self.assign_date(array, purchased_item)
     meal_date = ""
-    array.each do|e| 
+    array.each do|e|
       if e[:name] == purchased_item["productName"]
         meal_date = e[:date]
       end
