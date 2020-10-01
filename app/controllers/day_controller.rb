@@ -1,30 +1,45 @@
 class DayController < ApplicationController
-  before_action :set_today
+  before_action :set_days
   def monday
+    @orders = Order.where(meal_date: assign_date("Monday"))
   end
 
   def tuesday
+    @orders = Order.where(meal_date: assign_date("Tuesday"))
   end
 
   def wednesday
+    @orders = Order.where(meal_date: assign_date("Wednesday"))
   end
 
   def thursday
+    @orders = Order.where(meal_date: assign_date("Thursday"))
   end
 
   def friday
+    @orders = Order.where(meal_date: assign_date("Friday"))
   end
 
   private
 
-  def set_today
-    today_date = Date.today.strftime("%d-%m-%Y")
-    week_day = Date.today.strftime("%A")
-    orders = Order.all
-    orders.each do |order|
-      product_day = order.product.name
+  def assign_date(day)
+    week = []
+    today = Date.today
+    start = today - (today.wday - 1)
+    5.times {
+      week << { name: start.strftime("%A"), date: start.strftime("%d-%m-%Y") }
+      start += 1
+    }
+    meal_date = ""
+    week.each do|e| 
+      if e[:name] == day
+        meal_date = e[:date]
+      end
     end
-    @orders = Order.where(meal_date: today_date)
+    meal_date
+  end
+
+  def set_days
     @days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"]
   end
 end
