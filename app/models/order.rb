@@ -34,10 +34,16 @@ class Order < ApplicationRecord
   end
 
   def self.order_type(order, purchased_item)
-    if Order.is_weekly?(purchased_item)
-      Order.create_weekly(order, purchased_item)
-    elsif Order.is_monthly?(purchased_item)
-      Order.create_monthly(order, purchased_item)
+    category = Product.where(product_id: purchased_item["productId"]).first.category.name
+    case category
+    when "Combos"
+      if Order.is_weekly?(purchased_item)
+        Order.create_weekly(order, purchased_item)
+      else 
+        Order.create_monthly(order, purchased_item)
+      end
+    when "Snacks"
+      Order.new_snack(order, purchased_item)
     else
       Order.new_meal(order, purchased_item)
     end
@@ -91,8 +97,8 @@ class Order < ApplicationRecord
   def self.variants(variant_name, variant_type)
     regex = Regexp.new(".*#{variant_type}: ")
     new_format = variant_name.split(", ")
-                             .find { |e| e[variant_type]}
-                             .gsub(regex, "")
+                              .find { |e| e[variant_type]}
+                              .gsub(regex, "")
     new_format.include?("No customisation") ? "-" : new_format                            
   end
   
@@ -112,6 +118,22 @@ class Order < ApplicationRecord
      end
    end
 
+  def self.new_snack(order, purchased_item)
+    Order.create(customer_name: order["customerInfo"]["fullName"],
+                 customer_email: order["customerInfo"]["email"],
+                 meal_size: "-",
+                 meal_protein: "-",
+                 meal_custom: "-",
+                 notes: order["customData"][1]["textArea"],
+                 telephone: order["customData"][0]["textInput"],
+                 delivery_address: Order.delivery_address(order),
+                 # macros: order["customerInfo"]["fullName"],
+                 order_id: order["orderId"],
+                 product_id: Order.assign_product(purchased_item),
+                 meal_date: Order.fetch_snack_date(order, purchased_item))
+  end
+
+
   def self.new_meal(order, purchased_item)
     Order.create(customer_name: order["customerInfo"]["fullName"],
                  customer_email: order["customerInfo"]["email"],
@@ -125,6 +147,16 @@ class Order < ApplicationRecord
                  order_id: order["orderId"],
                  product_id: Order.assign_product(purchased_item),
                  meal_date: Order.fetch_date(order, purchased_item))
+  end
+
+  def self.fetch_snack_date(order, purchased_item)
+    day = Date.parse(order["acceptedOn"].split("T")[0])
+    if day.wday == 6
+      day = day.next_day.next_day
+    elsif day.wday == 0
+      day = day.next_day
+    end
+    meal_date = day.strftime("%d-%m-%Y")
   end
 
   def self.fetch_date(order, purchased_item)
