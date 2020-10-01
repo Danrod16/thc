@@ -1,8 +1,7 @@
 class Product < ApplicationRecord
   belongs_to :category
 
-  def self.fetch_products
-    client = Webflow::Client.new(ENV['WEBFLOW_API'])
+  def self.fetch_products(client)
     client.items("5ec79e4a047417204a44efdb").each do |product|
       Product.create_products(product)
     end
