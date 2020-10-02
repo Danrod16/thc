@@ -41,7 +41,7 @@ class DayController < ApplicationController
   end
 
   def set_days
-    @days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"]
+    @days = [["Lunes", "Monday"], ["Martes", "Tuesday"], ["Miercoles", "Wednesday"], ["Jueves", "Thursday"], ["Viernes", "Friday"]]
   end
 
   # def set_variables(order)

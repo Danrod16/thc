@@ -1,11 +1,11 @@
 <div class="nav-wrapper">
   <ul class="nav mb-3" %>
       <% @days.each do |day| %>
-        <% path = "#{day}".downcase %>
+        <% path = "#{day[1]}".downcase %>
         <% if current_page?("/#{path}") %>
-            <%= link_to day, path, class: "nav-pills-current" %>
+            <%= link_to day[0], path, class: "nav-pills-current" %>
         <% else %>
-            <%= link_to day, path, class: "nav-pills" %>
+            <%= link_to day[0], path, class: "nav-pills" %>
         <% end %>
       <% end %>
   </ul>
