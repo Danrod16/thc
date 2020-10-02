@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   get 'monday', to: 'day#monday', as: "monday"
   get 'tuesday', to: 'day#tuesday', as: "tuesday"
   get 'wednesday', to: 'day#wednesday', as: "wednesday"
