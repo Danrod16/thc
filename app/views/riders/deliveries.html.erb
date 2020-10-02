@@ -1,0 +1,33 @@
+  <%= render 'rider_pills' %>
+<div class="table-responsive">
+  <table class="table table-striped">
+        <tr>
+          <th>Fecha</th>
+          <th>Nombre</th>
+          <th>Producto</th>
+          <th>Telefono</th>
+          <th>Dirección</th>
+          <th>Notas</th>
+          <th>Asignar Rider</th>
+        </tr>
+      </thead>
+  <tbody>  <!-- sortable target -->
+    <% @orders.each do |order| %>
+      <tr data-id = <%= "#{order.id}"%>>  <!-- Needs id tag on sorting elements -->
+        <td><%= order.meal_date %></td>
+        <td><%= order.customer_name %></td>
+        <td><%= order.telephone %></td>
+        <td><%= order.delivery_address %></td>
+        <td><%= order.notes %></td>
+        <td>
+          <%= simple_form_for(order) do |f| %>
+           <% f.association :user %>
+         <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+

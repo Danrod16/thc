@@ -1,0 +1,16 @@
+<div class="nav-wrapper">
+  <ul class="nav mb-3" %>
+      <% if current_page?(deliveries_path) %>
+        <%= link_to "Pedidos totales", deliveries_path, class: "nav-pills-current" %>
+      <% else %>
+        <%= link_to "Pedidos totales", deliveries_path, class: "nav-pills" %>
+      <% end %>
+      <% @riders.each do |rider| %>
+        <% if current_page?(rider_path(rider)) %>
+            <%= link_to "#{rider.user.first_name} #{rider.user.last_name}", rider_path(rider), class: "nav-pills-current" %>
+        <% else %>
+            <%= link_to "#{rider.user.first_name} #{rider.user.last_name}", rider_path(rider), class: "nav-pills" %>
+        <% end %>
+      <% end %>
+  </ul>
+</div>

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'riders/index'
+  get 'riders/show'
   devise_for :users
   get 'monday', to: 'day#monday', as: "monday"
   get 'tuesday', to: 'day#tuesday', as: "tuesday"
@@ -8,5 +10,8 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root :to => 'passthrough#index'
   resources :orders
+  resources :riders, only: [:index, :show]
+  get 'deliveries', to: 'riders#deliveries', as: "deliveries"
+
   get '/today', to: 'orders#today'
 end
