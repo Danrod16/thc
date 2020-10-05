@@ -3,8 +3,6 @@ class OrdersController < ApplicationController
     @orders = Order.all
   end
 
-
-
   def index
     @orders = Order.all
   end

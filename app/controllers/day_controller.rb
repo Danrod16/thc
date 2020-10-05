@@ -1,24 +1,35 @@
 class DayController < ApplicationController
   before_action :set_days
   before_action :webflow_fetch
+  
   def monday
-    @orders = Order.where(meal_date: assign_date("Monday"))
+    monday = assign_date("Monday")
+    @orders = Order.where(meal_date: monday)
+    @summary = day_summary(monday)
   end
 
   def tuesday
-    @orders = Order.where(meal_date: assign_date("Tuesday"))
+    tuesday = assign_date("Tuesday")
+    @orders = Order.where(meal_date: tuesday)
+    @summary = day_summary(tuesday)
   end
 
   def wednesday
-    @orders = Order.where(meal_date: assign_date("Wednesday"))
+    wednesday = assign_date("Wednesday")
+    @orders = Order.where(meal_date: wednesday)
+    @summary = day_summary(wednesday)
   end
 
   def thursday
-    @orders = Order.where(meal_date: assign_date("Thursday"))
+    thursday = assign_date("Thursday")
+    @orders = Order.where(meal_date: thursday)
+    @summary = day_summary(thursday)
   end
 
   def friday
-    @orders = Order.where(meal_date: assign_date("Friday"))
+    friday = assign_date("Friday")
+    @orders = Order.where(meal_date: friday)
+    @summary = day_summary(friday)
   end
 
   private
@@ -44,10 +55,25 @@ class DayController < ApplicationController
     @days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"]
   end
 
-  def set_variables(order)
-    size = ["Regular", "Large"]
-    custom = [""]
-    @meal_count = @orders.where(meal_size: order.meal_size, meal_custom: order.meal_custom, meal_protein: order.meal_protein).count
+  def day_summary(day)
+    size = ["regular", "large"]
+    protein = ["-", "vegetarian", "vegan"]
+    customisation = ["-", "low carb", "high carb", "high protein", "keto", "high protein/low carb"]
+    
+    summary = []
+    meal = []
+    size.each do |meal_size|
+      protein.each do |meal_protein|
+        meal << "#{meal_size} #{meal_protein}"
+        customisation.each do |meal_custom|
+          total = Order.where("meal_date = ? AND meal_size = ? AND meal_protein = ? AND meal_custom = ?", day, meal_size, meal_protein, meal_custom).count
+          meal << total
+        end
+        summary << meal
+        meal = []
+      end
+    end
+    summary
   end
 
   def webflow_fetch
