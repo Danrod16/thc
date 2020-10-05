@@ -1,6 +1,8 @@
 class Order < ApplicationRecord
-require 'date'
+  require 'date'
   belongs_to :product
+  belongs_to :rider
+
 
   def self.create_orders(client)
     # We fetch the orders JSON from webflow
