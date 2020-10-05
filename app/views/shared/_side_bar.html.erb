@@ -4,7 +4,9 @@
   </div>
   <ul class="list">
     <li><%= link_to "Cocina", monday_path %></li>
-    <li><%= link_to "Reparto", rider_path(Rider.all.first) %></li>
+    <% if Rider.exists? %>
+      <li><%= link_to "Reparto", rider_path(Rider.all.first) %></li>
+    <% end %>
     <li><%= link_to "Pedidos totales", monday_path %></li>
   </ul>
 </nav>
