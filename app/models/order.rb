@@ -1,6 +1,7 @@
 class Order < ApplicationRecord
   require 'date'
   belongs_to :product
+  belongs_to :rider
 
 
   def self.create_orders(client)

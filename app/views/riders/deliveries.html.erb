@@ -1,5 +1,5 @@
-  <%= render 'rider_pills' %>
-<div class="table-responsive">
+<%= render 'rider_pills' %>
+<div class="table-responsive-raw">
   <table class="table table-striped">
         <tr>
           <th>Fecha</th>
@@ -13,15 +13,7 @@
       </thead>
   <tbody>  <!-- sortable target -->
     <% @orders.each do |order| %>
-      <tr data-id = <%= "#{order.id}"%>>  <!-- Needs id tag on sorting elements -->
-        <td><%= order.meal_date %></td>
-        <td><%= order.customer_name %></td>
-        <td><%= order.telephone %></td>
-        <td><%= order.delivery_address %></td>
-        <td><%= order.notes %></td>
-        <td>
-        <%= check_box_tag "rider", collection: :rider  %>
-      </tr>
+      <%= render 'orders/show' %>
     <% end %>
   </tbody>
 </table>

@@ -11,8 +11,16 @@ class RidersController < ApplicationController
 
   def deliveries
     @riders = Rider.all
+    @users = User.all.where(role: "Delivery")
     @orders = Order.where(meal_date: assign_date(@day))
+    # update_all
   end
+
+  # def update_all
+  #   @order = Order.find_by(params[:id])
+  #   @order.rider_id = rider_id
+  #   @order.save
+  # end
 
   private
 
@@ -36,5 +44,11 @@ class RidersController < ApplicationController
   def set_day
     @day = Date.today.strftime("%A")
   end
+
+  # def rider_names
+  #   @riders = Rider.all.each do |rider|
+  #     "#{rider.user.first_name}"
+  #   end
+  # end
 
 end
