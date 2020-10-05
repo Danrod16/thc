@@ -12,9 +12,12 @@
   </head>
 
   <body>
+    <%= render 'shared/flashes' %>
     <%= render "shared/side_bar" %>
     <section class="content">
-      <%= yield %>
+      <div class="dashboard">
+        <%= yield %>
+      </div>
     </section>
   </body>
 </html>

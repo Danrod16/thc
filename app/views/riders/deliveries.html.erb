@@ -1,0 +1,22 @@
+<%= render 'rider_pills' %>
+<div class="table-responsive-raw">
+  <table class="table table-striped">
+        <tr>
+          <th>Fecha</th>
+          <th>Nombre</th>
+          <th>Producto</th>
+          <th>Telefono</th>
+          <th>Dirección</th>
+          <th>Notas</th>
+          <th>Asignar Rider</th>
+        </tr>
+      </thead>
+  <tbody>  <!-- sortable target -->
+    <% @orders.each do |order| %>
+      <%= render 'orders/show' %>
+    <% end %>
+  </tbody>
+</table>
+
+
+
