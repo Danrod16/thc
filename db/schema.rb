@@ -37,7 +37,9 @@ ActiveRecord::Schema.define(version: 2020_10_02_083830) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "product_id"
     t.string "meal_date"
+    t.bigint "rider_id"
     t.index ["product_id"], name: "index_orders_on_product_id"
+    t.index ["rider_id"], name: "index_orders_on_rider_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -55,8 +57,6 @@ ActiveRecord::Schema.define(version: 2020_10_02_083830) do
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "order_id"
-    t.index ["order_id"], name: "index_riders_on_order_id"
     t.index ["user_id"], name: "index_riders_on_user_id"
   end
 
@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 2020_10_02_083830) do
   end
 
   add_foreign_key "orders", "products"
+  add_foreign_key "orders", "riders"
   add_foreign_key "products", "categories"
-  add_foreign_key "riders", "orders"
   add_foreign_key "riders", "users"
 end
