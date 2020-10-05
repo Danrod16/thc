@@ -1,7 +1,7 @@
 class Order < ApplicationRecord
   require 'date'
   belongs_to :product
-  belongs_to :rider
+  # belongs_to :rider
 
 
   def self.create_orders(client)
@@ -99,7 +99,14 @@ class Order < ApplicationRecord
     new_format = variant_name.split(", ")
                               .find { |e| e[variant_type]}
                               .gsub(regex, "")
-    new_format.include?("No customisation") ? "-" : new_format
+                              .downcase
+    if new_format.include?("no customisation")
+      "-"
+    elsif new_format.match?(/\(.*\)/)
+      new_format.gsub(/ \(.*\)/, "")
+    else
+      new_format
+    end
   end
 
   def self.delivery_address(order)
