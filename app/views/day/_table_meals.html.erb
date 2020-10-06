@@ -1,20 +1,19 @@
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show active" id="meals" role="tabpanel" aria-labelledby="home-tab">
-    <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Expandir</a>
     <div class="collapse multi-collapse" id="multiCollapseExample1">
       <%= render 'table_summary' %>
     </div>
-    <div class="table-responsive">
+    <div class="table-responsive-raw">
         <table class="table table-striped">
           <thead class="thead">
             <tr>
-              <th>Fecha</th>
-              <th>Nombre</th>
-              <th>Producto</th>
+              <th class="date">Fecha</th>
+              <th class="name">Nombre</th>
+              <th class="product">Producto</th>
               <th>Talla</th>
               <th>Proteína</th>
-              <th>Custom</th>
-              <th>Notas</th>
+              <th class="custom">Custom</th>
+              <th class="notes">Notas</th>
             </tr>
           </thead>
           <tbody>
@@ -40,9 +39,9 @@
       <table class="table table-striped">
           <thead class="thead">
             <tr>
-              <th>Fecha</th>
-              <th>Nombre</th>
-              <th>Producto</th>
+              <th class="date">Fecha</th>
+              <th class="name">Nombre</th>
+              <th class="product">Producto</th>
               <th>Notas</th>
             </tr>
           </thead>
@@ -65,9 +64,9 @@
       <table class="table table-striped">
         <thead class="thead">
           <tr>
-            <th>Fecha</th>
-            <th>Nombre</th>
-            <th>Producto</th>
+            <th class="date">Fecha</th>
+            <th class="name">Nombre</th>
+            <th class="product">Producto</th>
             <th>Notas</th>
           </tr>
         </thead>

@@ -4,6 +4,7 @@
   overflow: scroll;
   height: 30vh;
   margin-bottom: 20px;
+  z-index: 5;
 }
 
 .table-responsive-summary {
@@ -12,6 +13,7 @@
   overflow: none;
   height: 40vh;
   margin-bottom: 20px;
+  z-index: 5;
 }
 
 .table-responsive-raw {
@@ -19,7 +21,7 @@
   border-radius: 20px;
   overflow-y: scroll;
   overflow-x: scroll;
-  height: 75vh;
+  height: 70vh;
   margin-bottom: 20px;
 }
 
@@ -28,6 +30,16 @@
   overflow: scroll;
   font-size: 14px;
   line-height: 16px;
+
+  td { vertical-align: inherit;}
+
+  .date { min-width: 105px; }
+
+  .name { min-width: 200px; }
+
+  .product { min-width: 180px; } 
+
+  .custom { min-width: 180px; }
 }
 
 .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {

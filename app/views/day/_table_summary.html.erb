@@ -2,7 +2,7 @@
     <table class="table table-striped">
       <thead class="thead">
         <tr>
-          <th>Resumen del día</th>
+          <th></th>
           <th>Normal</th>
           <th>Low Carb</th>
           <th>High Carb</th>
@@ -14,7 +14,7 @@
       <tbody>
         <% @summary.each do |e| %>
           <tr>
-          <th scope="row"><%= e[0].capitalize %></th>
+          <th><%= e[0].capitalize %></th>
           <td><%= e[1] %></td>
           <td><%= e[2] %></td>
           <td><%= e[3] %></td>

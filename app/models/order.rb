@@ -91,7 +91,7 @@ class Order < ApplicationRecord
                  notes: order["customData"][1]["textArea"],
                  telephone: order["customData"][0]["textInput"],
                  delivery_address: Order.delivery_address(order),
-                 category: Order.assign_category(purchased_item),
+                 category: "Meals",
                  order_id: order["orderId"],
                  product_id: Order.assign_day(day[:name]),
                  meal_date: day[:date])
