@@ -1,31 +1,86 @@
-<div class="table-responsive">
-    <table class="table table-striped">
-      <thead class="thead">
-        <tr>
-          <th>Fecha</th>
-          <th>Nombre</th>
-          <th>Producto</th>
-          <th>Talla</th>
-          <th>Proteína</th>
-          <th>Custom</th>
-          <th>Notas</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @meals.each do |meal| %>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="meals" role="tabpanel" aria-labelledby="home-tab">
+    <div class="collapse multi-collapse" id="multiCollapseExample1">
+      <%= render 'table_summary' %>
+    </div>
+    <div class="table-responsive-raw">
+        <table class="table table-striped">
+          <thead class="thead">
+            <tr>
+              <th class="date">Fecha</th>
+              <th class="name">Nombre</th>
+              <th class="product">Producto</th>
+              <th>Talla</th>
+              <th>Proteína</th>
+              <th class="custom">Custom</th>
+              <th class="notes">Notas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @meals.each do |meal| %>
+              <tr>
+                <td><%= meal.meal_date %></td>
+                <td><%= meal.customer_name %></td>
+                <td><%= meal.product.meal_name.downcase.capitalize %></td>
+                <td><%= meal.meal_size.capitalize %></td>
+                <td><%= meal.meal_protein.capitalize %></td>
+                <td><%= meal.meal_custom.capitalize %></td>
+                <td><%= meal.notes.downcase.capitalize %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+    </div>
+    <p><strong>Total pedidos de hoy: <%= @total_orders %></strong></p>
+  </div>
+ 
+  <div class="tab-pane fade" id="snacks" role="tabpanel" aria-labelledby="profile-tab">
+    <div class="table-responsive-raw">
+      <table class="table table-striped">
+          <thead class="thead">
+            <tr>
+              <th class="date">Fecha</th>
+              <th class="name">Nombre</th>
+              <th class="product">Producto</th>
+              <th>Notas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @snacks.each do |snack| %>
+              <tr>
+                <td><%= snack.meal_date %></td>
+                <td><%= snack.customer_name %></td>
+                <td><%= snack.product.meal_name.downcase.capitalize %></td>
+                <td><%= snack.notes.downcase.capitalize %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+    </div>
+  </div>
+  
+  <div class="tab-pane fade" id="desserts" role="tabpanel" aria-labelledby="contact-tab">
+    <div class="table-responsive-raw">
+      <table class="table table-striped">
+        <thead class="thead">
           <tr>
-            <td><%= meal.meal_date %></td>
-            <td><%= meal.customer_name %></td>
-            <td><%= meal.product.meal_name.downcase.capitalize %></td>
-            <td><%= meal.meal_size.capitalize %></td>
-            <td><%= meal.meal_protein.capitalize %></td>
-            <td><%= meal.meal_custom.capitalize %></td>
-            <td><%= meal.notes.downcase.capitalize %></td>
+            <th class="date">Fecha</th>
+            <th class="name">Nombre</th>
+            <th class="product">Producto</th>
+            <th>Notas</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @desserts.each do |dessert| %>
+            <tr>
+              <td><%= dessert.meal_date %></td>
+              <td><%= dessert.customer_name %></td>
+              <td><%= dessert.product.meal_name.downcase.capitalize %></td>
+              <td><%= dessert.notes.downcase.capitalize %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
-
-<p><strong>Total pedidos de hoy: <%= @total_orders %></strong></p>
-

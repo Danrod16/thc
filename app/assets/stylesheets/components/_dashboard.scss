@@ -12,7 +12,20 @@
 .nav-wrapper {
   display: flex;
   justify-content: center;
-  // padding: 10px;
+}
+
+.nav-wrapper-tabs {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0px 20px;
+  margin-bottom: -3px;
+}
+
+.toggler {
+  background-color: white;
+  padding: 5px;
+  border-radius: 5px 5px 0 0;;
 }
 
 .nav-pills {
@@ -21,9 +34,6 @@
   font-size: 14px;
   line-height: 19px;
   color: black;
-  // border-color: black;
-  // border-width: 1px;
-  // border-style: solid;
   padding: 10px 40px;
   text-decoration: none;
 /* identical to box height */
@@ -37,9 +47,6 @@
   font-size: 14px;
   line-height: 19px;
   color: white !important;
-  // border-color: black;
-  // border-width: 1px;
-  // border-style: solid;
   padding: 10px 40px;
   text-decoration: none;
 /* identical to box height */

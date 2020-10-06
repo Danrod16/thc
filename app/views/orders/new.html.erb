@@ -19,6 +19,11 @@
                     required: true,
                     label: "Producto",
                     autofocus: true %>
+        <%= f.input :category,
+                    required: true,
+                    label: "Categoría",
+                    collection: ["Meals", "Snacks", "Desserts"],
+                    autofocus: true %>
           <%= f.input :meal_size,
                       required: true,
                       collection: ["regular", "large"],

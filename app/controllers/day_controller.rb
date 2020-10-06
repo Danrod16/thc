@@ -1,7 +1,7 @@
 class DayController < ApplicationController
   before_action :set_days
   before_action :webflow_fetch
-
+  
   def monday
     monday = assign_date("Monday")
     @meals = Order.where(meal_date: monday, category: "Meals")

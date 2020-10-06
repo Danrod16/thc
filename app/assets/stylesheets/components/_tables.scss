@@ -4,6 +4,7 @@
   overflow: scroll;
   height: 30vh;
   margin-bottom: 20px;
+  z-index: 5;
 }
 
 .table-responsive-summary {
@@ -12,6 +13,7 @@
   overflow: none;
   height: 40vh;
   margin-bottom: 20px;
+  z-index: 5;
 }
 
 .table-responsive-raw {
@@ -19,7 +21,7 @@
   border-radius: 20px;
   overflow-y: scroll;
   overflow-x: scroll;
-  height: 85vh;
+  height: 70vh;
   margin-bottom: 20px;
 }
 
@@ -33,6 +35,16 @@
   overflow: scroll;
   font-size: 14px;
   line-height: 16px;
+
+  td { vertical-align: inherit;}
+
+  .date { min-width: 105px; }
+
+  .name { min-width: 200px; }
+
+  .product { min-width: 180px; } 
+
+  .custom { min-width: 180px; }
 }
 
 .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
@@ -50,4 +62,19 @@
 .sortable td.ghost {
   filter: grayscale(1);
   opacity: 0.5;
+}
+
+.nav-item {
+  background-color: white;
+  border: none;
+  border-radius: 5px 5px 0 0;
+  margin-left: 5px;
+}
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  border: none;
+  border-radius: 5px 5px 0 0;
+  background-color: black;
+  color: white !important;
 }
