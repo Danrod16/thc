@@ -19,7 +19,7 @@
   border-radius: 20px;
   overflow-y: scroll;
   overflow-x: scroll;
-  height: 85vh;
+  height: 75vh;
   margin-bottom: 20px;
 }
 
@@ -45,4 +45,19 @@
 .sortable td.ghost {
   filter: grayscale(1);
   opacity: 0.5;
+}
+
+.nav-item {
+  background-color: white;
+  border: none;
+  border-radius: 5px 5px 0 0;
+  margin-left: 5px;
+}
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  border: none;
+  border-radius: 5px 5px 0 0;
+  background-color: black;
+  color: white !important;
 }
