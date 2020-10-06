@@ -4,32 +4,47 @@ class DayController < ApplicationController
   
   def monday
     monday = assign_date("Monday")
-    @orders = Order.where(meal_date: monday)
+    @meals = Order.where(meal_date: monday, category: "Meals")
+    @snacks = Order.where(meal_date: monday, category: "Snacks")
+    @desserts = Order.where(meal_date: monday, category: "Desserts") 
     @summary = day_summary(monday)
+    @total_orders = Order.where(meal_date: monday).count
   end
 
   def tuesday
     tuesday = assign_date("Tuesday")
-    @orders = Order.where(meal_date: tuesday)
+    @meals = Order.where(meal_date: tuesday, category: "Meals")
+    @snacks = Order.where(meal_date: tuesday, category: "Snacks")
+    @desserts = Order.where(meal_date: tuesday, category: "Desserts") 
     @summary = day_summary(tuesday)
+    @total_orders = Order.where(meal_date: tuesday).count
   end
 
   def wednesday
     wednesday = assign_date("Wednesday")
-    @orders = Order.where(meal_date: wednesday)
+    @meals = Order.where(meal_date: wednesday, category: "Meals")
+    @snacks = Order.where(meal_date: wednesday, category: "Snacks")
+    @desserts = Order.where(meal_date: wednesday, category: "Desserts") 
     @summary = day_summary(wednesday)
+    @total_orders = Order.where(meal_date: wednesday).count
   end
 
   def thursday
     thursday = assign_date("Thursday")
-    @orders = Order.where(meal_date: thursday)
+    @meals = Order.where(meal_date: thursday, category: "Meals")
+    @snacks = Order.where(meal_date: thursday, category: "Snacks")
+    @desserts = Order.where(meal_date: thursday, category: "Desserts") 
     @summary = day_summary(thursday)
+    @total_orders = Order.where(meal_date: thursday).count
   end
 
   def friday
     friday = assign_date("Friday")
-    @orders = Order.where(meal_date: friday)
+    @meals = Order.where(meal_date: friday, category: "Meals")
+    @snacks = Order.where(meal_date: friday, category: "Snacks")
+    @desserts = Order.where(meal_date: friday, category: "Desserts") 
     @summary = day_summary(friday)
+    @total_orders = Order.where(meal_date: friday).count
   end
 
   private

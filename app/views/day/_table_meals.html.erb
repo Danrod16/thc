@@ -1,0 +1,31 @@
+<div class="table-responsive">
+    <table class="table table-striped">
+      <thead class="thead">
+        <tr>
+          <th>Fecha</th>
+          <th>Nombre</th>
+          <th>Producto</th>
+          <th>Talla</th>
+          <th>Proteína</th>
+          <th>Custom</th>
+          <th>Notas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @meals.each do |meal| %>
+          <tr>
+            <td><%= meal.meal_date %></td>
+            <td><%= meal.customer_name %></td>
+            <td><%= meal.product.meal_name.downcase.capitalize %></td>
+            <td><%= meal.meal_size.capitalize %></td>
+            <td><%= meal.meal_protein.capitalize %></td>
+            <td><%= meal.meal_custom.capitalize %></td>
+            <td><%= meal.notes.downcase.capitalize %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+</div>
+
+<p><strong>Total pedidos de hoy: <%= @total_orders %></strong></p>
+
