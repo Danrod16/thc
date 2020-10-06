@@ -140,7 +140,7 @@ class Order < ApplicationRecord
                  notes: order["customData"][1]["textArea"],
                  telephone: order["customData"][0]["textInput"],
                  delivery_address: Order.delivery_address(order),
-                 # macros: order["customerInfo"]["fullName"],
+                 category: Order.assign_category(purchased_item)
                  order_id: order["orderId"],
                  product_id: Order.assign_product(purchased_item),
                  meal_date: Order.fetch_snack_date(order, purchased_item))
@@ -156,7 +156,7 @@ class Order < ApplicationRecord
                  notes: order["customData"][1]["textArea"],
                  telephone: order["customData"][0]["textInput"],
                  delivery_address: Order.delivery_address(order),
-                 # macros: order["customerInfo"]["fullName"],
+                 category: Order.assign_category(purchased_item)
                  order_id: order["orderId"],
                  product_id: Order.assign_product(purchased_item),
                  meal_date: Order.fetch_date(order, purchased_item))
@@ -200,5 +200,9 @@ class Order < ApplicationRecord
 
   def self.assign_product(purchased_item)
     Product.where(product_id: purchased_item['productId']).first.id
+  end
+
+  def self.assign_category(purchased_item)
+    Product.where(product_id: purchased_item['productId']).first.category.name
   end
 end
