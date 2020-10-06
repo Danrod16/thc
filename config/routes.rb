@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   get 'riders/index'
   get 'riders/show'
   devise_for :users
@@ -11,7 +12,8 @@ Rails.application.routes.draw do
   root :to => 'passthrough#index'
   resources :orders
   resources :riders, only: [:index, :show]
-  get 'deliveries', to: 'riders#deliveries', as: "deliveries"
+  resources :deliveries, only: [:index, :show, :edit, :new, :create]
+  get 'riders-deliveries', to: 'riders#deliveries', as: "riders_deliveries"
 
   get '/today', to: 'orders#today'
 end

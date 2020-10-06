@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_06_090008) do
+ActiveRecord::Schema.define(version: 2020_10_06_114738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,14 @@ ActiveRecord::Schema.define(version: 2020_10_06_090008) do
     t.string "category_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "deliveries", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "rider_id"
+    t.index ["rider_id"], name: "index_deliveries_on_rider_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -36,10 +44,10 @@ ActiveRecord::Schema.define(version: 2020_10_06_090008) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "product_id"
     t.string "meal_date"
-    t.bigint "rider_id"
     t.string "category"
+    t.bigint "delivery_id"
+    t.index ["delivery_id"], name: "index_orders_on_delivery_id"
     t.index ["product_id"], name: "index_orders_on_product_id"
-    t.index ["rider_id"], name: "index_orders_on_rider_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -77,7 +85,6 @@ ActiveRecord::Schema.define(version: 2020_10_06_090008) do
   end
 
   add_foreign_key "orders", "products"
-  add_foreign_key "orders", "riders"
   add_foreign_key "products", "categories"
   add_foreign_key "riders", "users"
 end
