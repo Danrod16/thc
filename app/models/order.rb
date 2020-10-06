@@ -5,7 +5,6 @@ class Order < ApplicationRecord
   validates :meal_date, presence: true, format: { with: /\d{2}-\d{2}-\d{4}/,
                          error: 'Fecha invalida' }, on: :create
 
-
   def self.create_orders(client)
     # We fetch the orders JSON from webflow
     Order.fetch_orders(client)
@@ -45,6 +44,8 @@ class Order < ApplicationRecord
         Order.create_monthly(order, purchased_item)
       end
     when "Snacks"
+      Order.new_snack(order, purchased_item)
+    when "Desserts"
       Order.new_snack(order, purchased_item)
     else
       Order.new_meal(order, purchased_item)
@@ -90,7 +91,7 @@ class Order < ApplicationRecord
                  notes: order["customData"][1]["textArea"],
                  telephone: order["customData"][0]["textInput"],
                  delivery_address: Order.delivery_address(order),
-                 # macros: order["customerInfo"]["fullName"],
+                 category: Order.assign_category(purchased_item),
                  order_id: order["orderId"],
                  product_id: Order.assign_day(day[:name]),
                  meal_date: day[:date])
@@ -113,7 +114,7 @@ class Order < ApplicationRecord
 
   def self.delivery_address(order)
     address = order['allAddresses'][1]
-    "#{address['line1']}, #{address['line2']}, #{address['postalCode']}, #{address['city']}"
+    "#{address['line1']}, #{address['line2']}, #{address['postalCode']}"
   end
 
   def self.assign_day(name)
@@ -136,7 +137,7 @@ class Order < ApplicationRecord
                  notes: order["customData"][1]["textArea"],
                  telephone: order["customData"][0]["textInput"],
                  delivery_address: Order.delivery_address(order),
-                 # macros: order["customerInfo"]["fullName"],
+                 category: Order.assign_category(purchased_item),
                  order_id: order["orderId"],
                  product_id: Order.assign_product(purchased_item),
                  meal_date: Order.fetch_snack_date(order, purchased_item))
@@ -152,7 +153,7 @@ class Order < ApplicationRecord
                  notes: order["customData"][1]["textArea"],
                  telephone: order["customData"][0]["textInput"],
                  delivery_address: Order.delivery_address(order),
-                 # macros: order["customerInfo"]["fullName"],
+                 category: Order.assign_category(purchased_item),
                  order_id: order["orderId"],
                  product_id: Order.assign_product(purchased_item),
                  meal_date: Order.fetch_date(order, purchased_item))
@@ -196,5 +197,9 @@ class Order < ApplicationRecord
 
   def self.assign_product(purchased_item)
     Product.where(product_id: purchased_item['productId']).first.id
+  end
+
+  def self.assign_category(purchased_item)
+    Product.where(product_id: purchased_item['productId']).first.category.name
   end
 end
