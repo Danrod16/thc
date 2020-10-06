@@ -3,8 +3,22 @@ class OrdersController < ApplicationController
     @orders = Order.all
   end
 
+  def new
+    @order = Order.new
+  end
+
+  def create
+    @order = Order.create(order_params)
+    if @order.save
+      redirect_to new_order_path
+      flash[:alert] = "Nuevo pedido creado, Gracias Jessica!"
+    else
+      render :new
+    end
+  end
+
   def index
-    @orders = Order.all
+    @orders = Order.order(created_at: :desc)
   end
 
   def show(order)
@@ -19,7 +33,9 @@ class OrdersController < ApplicationController
     end
   end
 
-
-
   private
+
+  def order_params
+    params.require(:order).permit(:customer_name, :customer_email, :meal_size, :meal_protein, :meal_custom, :notes, :telephone, :delivery_address, :order_id, :product_id, :meal_date)
+  end
 end

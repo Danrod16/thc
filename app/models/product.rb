@@ -22,7 +22,8 @@ class Product < ApplicationRecord
   end
 
   def self.update_product(product)
-  Product.update(name: product['name'], description: product['description'],
+  product = Product.find_by(product_id: product['_id'])
+  product.update(name: product['name'], description: product['description'],
                  meal_name: product['meal-name'])
   end
 

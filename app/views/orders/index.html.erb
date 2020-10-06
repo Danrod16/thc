@@ -14,7 +14,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @orders.first(20).each do |order| %>
+      <% @orders.each do |order| %>
         <tr>
           <td><%= order.customer_name %></td>
           <td><%= order.customer_email %></td>
