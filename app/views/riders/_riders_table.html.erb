@@ -11,13 +11,14 @@
           </tr>
         </thead>
     <tbody class="sortable">  <!-- sortable target -->
-      <% @orders.each do |order| %>
-        <tr data-id = <%= "#{order.id}"%>>  <!-- Needs id tag on sorting elements -->
-          <td><%= order.meal_date %></td>
-          <td><%= order.customer_name %></td>
-          <td><%= order.telephone %></td>
-          <td><%= order.delivery_address %></td>
-          <td><%= order.notes %></td>
+      <% @delivery_groups.each do |group| %>
+        <tr><td><%= group.name %></td></tr>
+<!--         <tr data-id = <%#= "#{order.id}"%> -->  <!-- Needs id tag on sorting elements -->
+<!--           <td><%#= order.meal_date %></td>
+          <td><%#= order.customer_name %></td>
+          <td><%#= order.telephone %></td>
+          <td><%#= order.delivery_address %></td>
+          <td><%#= order.notes %></td> -->
   <!--         <td><%#= link_to 'Show', item %></td>
           <td><%#= link_to 'Edit', edit_item_path(item) %></td>
           <td><%#= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->

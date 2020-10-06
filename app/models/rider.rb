@@ -1,6 +1,6 @@
 class Rider < ApplicationRecord
   belongs_to :user
-  has_many :orders
+  has_many :deliveries
   before_create :assign_name
 
   def assign_name
