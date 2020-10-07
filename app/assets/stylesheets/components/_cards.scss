@@ -1,0 +1,46 @@
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 35px;
+}
+
+.card-category {
+  background-color: white;
+  background-size: cover;
+  background-position: center;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  position: relative;
+  padding: 10px;
+  &:hover {
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+}
+
+  .card-img {
+    display: flex;
+    justify-content: center;
+    img {
+    width: 50px;
+    margin: 10px;
+    }
+  }
+
+.card-title {
+  text-align: center;
+}
+
+.card-description {
+  font-size: 16px;
+  p {
+    font-weight: 300;
+  }
+}

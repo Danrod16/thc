@@ -1,6 +1,7 @@
 class DeliveriesController < ApplicationController
   def index
     @delivery_groups = Delivery.all
+    @riders = Rider.all
   end
 
   def show
@@ -31,7 +32,7 @@ class DeliveriesController < ApplicationController
   private
 
   def delivery_params
-    params.require(:delivery).permit(:name, :orders, :rider_id)
+    params.require(:delivery).permit(:name, :rider_id, :order_ids => [])
   end
 
   def assign_date(day)

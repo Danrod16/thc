@@ -3,11 +3,11 @@
     <%= image_tag("https://res.cloudinary.com/therainycloud/image/upload/v1601637674/thc-logo-1_dfmhnc.png") %>
   </div>
   <ul class="list">
-    <li><%= link_to "Cocina", monday_path %></li>
+    <li><%= link_to "Cocina", root_path %></li>
     <% if Rider.exists? %>
       <li><%= link_to "Reparto", riders_deliveries_path %></li>
     <% end %>
-    <li><%= link_to "Pedidos totales", monday_path %></li>
+    <li><%= link_to "Pedidos totales", orders_path %></li>
     <li><%= link_to "Crear nuevo pedido", new_order_path %></li>
   </ul>
 </nav>

@@ -1,2 +1,30 @@
-<h1>Deliveries#show</h1>
-<p>Find me in app/views/deliveries/show.html.erb</p>
+<h1><%= @delivery_group.name %></h1>
+<h2>Rider: <%= @delivery_group.rider.name %></h2>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Nombre</th>
+            <!-- <th>Producto</th> -->
+            <th>Telefono</th>
+            <th>Dirección</th>
+            <th>Notas</th>
+          </tr>
+        </thead>
+    <tbody class="sortable">  <!-- sortable target -->
+      <% @delivery_group.orders.each do |order| %>
+        <tr data-id = <%= "#{order.id}" %> >
+          <td><%= order.meal_date %></td>
+          <td><%= order.customer_name %></td>
+          <td><%= order.telephone %></td>
+          <td><%= order.delivery_address %></td>
+          <td><%= order.notes %></td>
+          <!-- <td><%#= link_to 'Delete', order, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+

@@ -15,6 +15,7 @@ section {
   top: 0;
   height: 100%;
   text-align: left;
+  border-right: 1px solid #e8e8e8;
 }
 .navbar, .navbar ul {
   padding: 10px;
@@ -48,6 +49,16 @@ section {
 }
 .navbar ul li {
   margin-bottom: 10vh;
+}
+
+.navbar li {
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+  text-align: center;
+  &:active {
+    background-color: $yellow;
+  }
 }
 
 .logo img {
