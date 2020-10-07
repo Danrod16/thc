@@ -8,6 +8,7 @@
       <li><%= link_to "Reparto", riders_deliveries_path %></li>
     <% end %>
     <li><%= link_to "Pedidos totales", orders_path %></li>
-    <li><%= link_to "Crear nuevo pedido", new_order_path %></li>
+    <li><%= link_to "", new_order_path, class: "fas fa-plus-square" %></li>
+    <li><%= link_to "", destroy_user_session_path, method: :delete, class: "fas fa-sign-out-alt" %></li>
   </ul>
 </nav>

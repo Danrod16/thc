@@ -69,3 +69,5 @@ gem 'devise'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'rails_sortable'
+gem 'will_paginate', '~> 3.1.0'
+
