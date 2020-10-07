@@ -1,7 +1,7 @@
 class Order < ApplicationRecord
   require 'date'
   belongs_to :product
-  belongs_to :delivery
+  # belongs_to :delivery
   validates :meal_date, presence: true, format: { with: /\d{2}-\d{2}-\d{4}/,
                          error: 'Fecha invalida' }, on: :create
 
@@ -86,7 +86,7 @@ class Order < ApplicationRecord
   end
 
   def self.new_combo(order, purchased_item, day)
-    Order.create(customer_name: order["customerInfo"]["fullName"],
+    Order.create(customer_name: Order.format_name(order["customerInfo"]["fullName"]),
                  customer_email: order["customerInfo"]["email"],
                  meal_size: Order.variants(purchased_item["variantName"], "Size"),
                  meal_protein: Order.variants(purchased_item["variantName"], "Protein"),
@@ -98,6 +98,12 @@ class Order < ApplicationRecord
                  order_id: order["orderId"],
                  product_id: Order.assign_day(day[:name]),
                  meal_date: day[:date])
+  end
+
+  def self.format_name(customer_name)
+    customer_name.downcase.split(" ")
+        .map { |e| e.capitalize }
+        .join(" ")
   end
 
   def self.variants(variant_name, variant_type)
@@ -117,7 +123,7 @@ class Order < ApplicationRecord
 
   def self.delivery_address(order)
     address = order['allAddresses'][1]
-    "#{address['line1']}, #{address['line2']}, #{address['postalCode']}, #{address['city']}"
+    "#{address['line1']}, #{address['line2']}, #{address['postalCode']}"
   end
 
   def self.assign_day(name)
@@ -132,7 +138,7 @@ class Order < ApplicationRecord
    end
 
   def self.new_snack(order, purchased_item)
-    Order.create(customer_name: order["customerInfo"]["fullName"],
+    Order.create(customer_name: Order.format_name(order["customerInfo"]["fullName"]),
                  customer_email: order["customerInfo"]["email"],
                  meal_size: "-",
                  meal_protein: "-",
@@ -140,7 +146,7 @@ class Order < ApplicationRecord
                  notes: order["customData"][1]["textArea"],
                  telephone: order["customData"][0]["textInput"],
                  delivery_address: Order.delivery_address(order),
-                 category: Order.assign_category(purchased_item)
+                 category: Order.assign_category(purchased_item),
                  order_id: order["orderId"],
                  product_id: Order.assign_product(purchased_item),
                  meal_date: Order.fetch_snack_date(order, purchased_item))
@@ -148,7 +154,7 @@ class Order < ApplicationRecord
 
 
   def self.new_meal(order, purchased_item)
-    Order.create(customer_name: order["customerInfo"]["fullName"],
+    Order.create(customer_name: Order.format_name(order["customerInfo"]["fullName"]),
                  customer_email: order["customerInfo"]["email"],
                  meal_size: Order.variants(purchased_item["variantName"], "Size"),
                  meal_protein: Order.variants(purchased_item["variantName"], "Protein"),
@@ -156,7 +162,7 @@ class Order < ApplicationRecord
                  notes: order["customData"][1]["textArea"],
                  telephone: order["customData"][0]["textInput"],
                  delivery_address: Order.delivery_address(order),
-                 category: Order.assign_category(purchased_item)
+                 category: Order.assign_category(purchased_item),
                  order_id: order["orderId"],
                  product_id: Order.assign_product(purchased_item),
                  meal_date: Order.fetch_date(order, purchased_item))
