@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   def weekly
-    @orders = Order.all
+    @orders = Order.paginate(page: params[:page], per_page: 40)
   end
 
   def new
@@ -18,7 +18,7 @@ class OrdersController < ApplicationController
   end
 
   def index
-    @orders = Order.order(created_at: :desc)
+    @orders = Order.paginate(page: params[:page], per_page: 40).order(created_at: :desc)
   end
 
   def show(order)

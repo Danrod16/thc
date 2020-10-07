@@ -1,7 +1,7 @@
 class Order < ApplicationRecord
   require 'date'
   belongs_to :product
-  # belongs_to :delivery
+  belongs_to :delivery, optional: true
   validates :meal_date, presence: true, format: { with: /\d{2}-\d{2}-\d{4}/,
                          error: 'Fecha invalida' }, on: :create
 

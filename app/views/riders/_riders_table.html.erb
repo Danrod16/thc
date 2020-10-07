@@ -1,30 +1,20 @@
-<div class="table-responsive">
-  <table class="table table-striped">
-    <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>Nombre</th>
-<!--             <th>Producto</th>
- -->            <th>Telefono</th>
-            <th>Dirección</th>
-            <th>Notas</th>
-          </tr>
-        </thead>
-    <tbody class="sortable">  <!-- sortable target -->
-      <% @delivery_groups.each do |group| %>
-        <tr><td><%= group.name %></td></tr>
-<!--         <tr data-id = <%#= "#{order.id}"%> -->  <!-- Needs id tag on sorting elements -->
-<!--           <td><%#= order.meal_date %></td>
-          <td><%#= order.customer_name %></td>
-          <td><%#= order.telephone %></td>
-          <td><%#= order.delivery_address %></td>
-          <td><%#= order.notes %></td> -->
-  <!--         <td><%#= link_to 'Show', item %></td>
-          <td><%#= link_to 'Edit', edit_item_path(item) %></td>
-          <td><%#= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+<div class="header">
+  <h1>Grupos de reparto</h1>
 </div>
-
+<div class="cards">
+  <% @rider.deliveries.each do |delivery| %>
+    <%= link_to delivery_path(delivery) do %>
+      <div class="card-category">
+        <div class="card-img">
+          <%= image_tag("https://res.cloudinary.com/therainycloud/image/upload/v1602063855/THC/barcelona_illustration_lcmanm.png") %>
+        </div>
+        <div class="card-title">
+          <%= delivery.name %>
+        </div>
+        <div class="card-description">
+          <strong>Rider: </strong><p><%= delivery.rider.name %></p>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

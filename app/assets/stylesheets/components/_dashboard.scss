@@ -1,8 +1,12 @@
 .dashboard {
-  background-color: $yellow;
-  border-radius: 40px;
+  background-color: none;
+  border-radius: 5px;
   width: 100%;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-item: center;
 }
 
 .nav {
@@ -23,14 +27,18 @@
 }
 
 .toggler {
-  background-color: white;
+  background-color: black;
+  color: white !important;
   padding: 8px 16px;
-  border-radius: 5px 5px 0 0;;
+  border-radius: 5px 5px 0 0;
+  &:hover{
+    background-color: rgba(0,0,0,0.8);
+  }
 }
 
 .nav-pills {
   background: white;
-  border-radius: 50px;
+  border-radius: 5px;
   font-size: 14px;
   line-height: 19px;
   color: black;
@@ -39,11 +47,20 @@
 /* identical to box height */
   letter-spacing: 0.2em;
   margin: 0px 5px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    &:hover{
+    background-color: rgba(0,0,0,0.8);
+  }
+}
+
+.login {
+  text-align: center;
+  max-width: 300px;
 }
 
 .nav-pills-current {
   background: black;
-  border-radius: 50px;
+  border-radius: 5px;
   font-size: 14px;
   line-height: 19px;
   color: white !important;
@@ -51,5 +68,6 @@
   text-decoration: none;
 /* identical to box height */
   letter-spacing: 0.2em;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
   margin: 0px 5px;
 }
