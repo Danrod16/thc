@@ -1,40 +1,43 @@
 .table-responsive {
   background-color: white;
-  border-radius: 20px;
+  border-radius: 10px;
   overflow: scroll;
   height: 30vh;
   margin-bottom: 20px;
   z-index: 5;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
 }
 
 .table-responsive-summary {
   background-color: white;
-  border-radius: 20px;
+  border-radius: 10px;
   overflow: none;
   height: 40vh;
   margin-bottom: 20px;
   z-index: 5;
+  // box-shadow: 0 0 -15px rgba(0,0,0,0.2);
 }
 
 .table-responsive-raw {
   background-color: white;
-  border-radius: 20px;
+  border-radius: 10px;
   overflow-y: scroll;
   overflow-x: scroll;
   height: 70vh;
   margin-bottom: 20px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
 }
 
 .form-check {
-  border-style: solid;
-  border-color: gray;
-  border-width: 0.5px 0 0 0;
+  border-radius: 10px;
 }
 
 .table {
   overflow: scroll;
   font-size: 14px;
   line-height: 16px;
+  border-top: none !important;
+  // box-shadow: 0 0 15px rgba(0,0,0,0.2);
 
   td { vertical-align: inherit;}
 
@@ -42,13 +45,25 @@
 
   .name { min-width: 200px; }
 
-  .product { min-width: 180px; } 
+  .product { min-width: 180px; }
 
   .custom { min-width: 180px; }
 }
 
+table th, .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: none !important;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: none !important;
+}
+
 .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
    background-color: #fffaf1;
+   border: none !important;
 }
 
 .sortable td {
@@ -67,14 +82,14 @@
 .nav-item {
   background-color: white;
   border: none;
-  border-radius: 5px 5px 0 0;
+  border-radius: 10px 5px 0 0;
   margin-left: 5px;
 }
 
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
   border: none;
-  border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 5px 5px;
   background-color: black;
   color: white !important;
 }
