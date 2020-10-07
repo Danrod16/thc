@@ -7,8 +7,11 @@ class DayController < ApplicationController
     @meals = Order.where(meal_date: monday, category: "Meals")
     @snacks = Order.where(meal_date: monday, category: "Snacks")
     @desserts = Order.where(meal_date: monday, category: "Desserts")
-    @summary = day_summary(monday)
+    @meals_summary = day_summary(monday)
+    @snacks_summary = snacks_summary(monday)
+    @desserts_summary = desserts_summary(monday)
     @total_orders = Order.where(meal_date: monday).count
+    generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, monday)
   end
 
   def tuesday
@@ -16,8 +19,11 @@ class DayController < ApplicationController
     @meals = Order.where(meal_date: tuesday, category: "Meals")
     @snacks = Order.where(meal_date: tuesday, category: "Snacks")
     @desserts = Order.where(meal_date: tuesday, category: "Desserts")
-    @summary = day_summary(tuesday)
+    @meals_summary = day_summary(tuesday)
+    @snacks_summary = snacks_summary(tuesday)
+    @desserts_summary = desserts_summary(tuesday)
     @total_orders = Order.where(meal_date: tuesday).count
+    generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, tuesday)
   end
 
   def wednesday
@@ -25,8 +31,11 @@ class DayController < ApplicationController
     @meals = Order.where(meal_date: wednesday, category: "Meals")
     @snacks = Order.where(meal_date: wednesday, category: "Snacks")
     @desserts = Order.where(meal_date: wednesday, category: "Desserts")
-    @summary = day_summary(wednesday)
+    @meals_summary = day_summary(wednesday)
+    @snacks_summary = snacks_summary(wednesday)
+    @desserts_summary = desserts_summary(wednesday)
     @total_orders = Order.where(meal_date: wednesday).count
+    generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, wednesday)
   end
 
   def thursday
@@ -34,8 +43,11 @@ class DayController < ApplicationController
     @meals = Order.where(meal_date: thursday, category: "Meals")
     @snacks = Order.where(meal_date: thursday, category: "Snacks")
     @desserts = Order.where(meal_date: thursday, category: "Desserts")
-    @summary = day_summary(thursday)
+    @meals_summary = day_summary(thursday)
+    @snacks_summary = snacks_summary(thursday)
+    @desserts_summary = desserts_summary(thursday)
     @total_orders = Order.where(meal_date: thursday).count
+    generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, thursday)
   end
 
   def friday
@@ -43,11 +55,26 @@ class DayController < ApplicationController
     @meals = Order.where(meal_date: friday, category: "Meals")
     @snacks = Order.where(meal_date: friday, category: "Snacks")
     @desserts = Order.where(meal_date: friday, category: "Desserts")
-    @summary = day_summary(friday)
+    @meals_summary = day_summary(friday)
+    @snacks_summary = snacks_summary(friday)
+    @desserts_summary = desserts_summary(friday)
     @total_orders = Order.where(meal_date: friday).count
+    generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, friday)
   end
 
   private
+
+  def generate_pdf(meals_summary, snacks_summary, desserts_summary, day)
+    respond_to do |format|
+      format.html
+      format.pdf do 
+        pdf = OrdersPdf.new(meals_summary, snacks_summary, desserts_summary, day)
+        send_data pdf.render, filename: "orders.pdf",
+                              type: "application/pdf",
+                              disposition: "inline"
+      end     
+    end
+  end
 
   def assign_date(day)
     week = []
@@ -87,6 +114,34 @@ class DayController < ApplicationController
         summary << meal
         meal = []
       end
+    end
+    summary
+  end
+
+  def snacks_summary(day)
+    summary = []
+    snack_names = Category.find_by(name: "Snacks").products.map { |e| e.name }
+    snack_names.each do |e|
+      snack = []
+      snack << e
+      id = Product.find_by(name: e)
+      total = Order.where(meal_date: day, product_id: id).count
+      snack << total
+      summary << snack
+    end
+    summary
+  end
+
+  def desserts_summary(day)
+    summary = []
+    dessert_names = Category.find_by(name: "Desserts").products.map { |e| e.name }
+    dessert_names.each do |e|
+      dessert = []
+      dessert << e
+      id = Product.find_by(name: e)
+      total = Order.where(meal_date: day, product_id: id).count
+      dessert << total
+      summary << dessert
     end
     summary
   end
