@@ -1,7 +1,8 @@
 <div class="tab-content" id="myTabContent">
+    <a class="toggler" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Resumen <i class="fas fa-arrows-alt-v"></i></a>
   <div class="tab-pane fade show active" id="meals" role="tabpanel" aria-labelledby="home-tab">
     <div class="collapse multi-collapse" id="multiCollapseExample1">
-      <%= render 'table_summary' %>
+      <%= render 'table_meals_summary' %>
     </div>
     <div class="table-responsive-raw">
         <table class="table table-striped">
@@ -35,6 +36,9 @@
   </div>
 
   <div class="tab-pane fade" id="snacks" role="tabpanel" aria-labelledby="profile-tab">
+   <div class="collapse multi-collapse" id="multiCollapseExample1">
+      <%= render 'table_snacks_summary' %>
+    </div>
     <div class="table-responsive-raw">
       <table class="table table-striped">
           <thead class="thead">
@@ -60,6 +64,9 @@
   </div>
 
   <div class="tab-pane fade" id="desserts" role="tabpanel" aria-labelledby="contact-tab">
+    <div class="collapse multi-collapse" id="multiCollapseExample1">
+      <%= render 'table_desserts_summary' %>
+    </div>
     <div class="table-responsive-raw">
       <table class="table table-striped">
         <thead class="thead">

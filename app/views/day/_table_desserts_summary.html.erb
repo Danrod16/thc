@@ -1,0 +1,18 @@
+<div class="table-responsive-summary">
+    <table class="table table-striped">
+      <thead class="thead">
+        <tr>
+          <th></th>
+          <th>Cantidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @desserts_summary.each do |e| %>
+          <tr>
+          <th><%= e[0] %></th>
+          <td><%= e[1] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+</div>
