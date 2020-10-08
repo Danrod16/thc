@@ -1,10 +1,17 @@
 class Order < ApplicationRecord
   require 'date'
+  include PgSearch::Model
   belongs_to :product
   belongs_to :delivery, optional: true
   validates :meal_date, presence: true, format: { with: /\d{2}-\d{2}-\d{4}/,
                          error: 'Fecha invalida' }, on: :create
 
+  include PgSearch::Model
+  pg_search_scope :search,
+    against: [ :customer_name, :customer_email, :meal_date, :product],
+    using: {
+      tsearch: { prefix: true } # <-- now `superman batm` will return something!
+    }
 
   def self.create_orders(client)
     # We fetch the orders JSON from webflow
