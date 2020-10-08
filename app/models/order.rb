@@ -91,7 +91,7 @@ class Order < ApplicationRecord
                  meal_size: Order.variants(purchased_item["variantName"], "Size"),
                  meal_protein: Order.variants(purchased_item["variantName"], "Protein"),
                  meal_custom: Order.variants(purchased_item["variantName"], "Customise"),
-                 notes: order["customData"][1]["textArea"],
+                 notes: Order.format_notes(order["customData"][1]["textArea"]),
                  telephone: order["customData"][0]["textInput"],
                  delivery_address: Order.delivery_address(order),
                  category: "Meals",
@@ -104,6 +104,14 @@ class Order < ApplicationRecord
     customer_name.downcase.split(" ")
         .map { |e| e.capitalize }
         .join(" ")
+  end
+
+  def self.format_notes(note)
+    if note.downcase.match?(/(^no$)|(^none$)|(^ninguno$)|(^nothing$)/)
+      "-"
+    else
+      note
+    end
   end
 
   def self.variants(variant_name, variant_type)
@@ -143,7 +151,7 @@ class Order < ApplicationRecord
                  meal_size: "-",
                  meal_protein: "-",
                  meal_custom: "-",
-                 notes: order["customData"][1]["textArea"],
+                 notes: Order.format_notes(order["customData"][1]["textArea"]),
                  telephone: order["customData"][0]["textInput"],
                  delivery_address: Order.delivery_address(order),
                  category: Order.assign_category(purchased_item),
@@ -152,14 +160,13 @@ class Order < ApplicationRecord
                  meal_date: Order.fetch_snack_date(order, purchased_item))
   end
 
-
   def self.new_meal(order, purchased_item)
     Order.create(customer_name: Order.format_name(order["customerInfo"]["fullName"]),
                  customer_email: order["customerInfo"]["email"],
                  meal_size: Order.variants(purchased_item["variantName"], "Size"),
                  meal_protein: Order.variants(purchased_item["variantName"], "Protein"),
                  meal_custom: Order.variants(purchased_item["variantName"], "Customise"),
-                 notes: order["customData"][1]["textArea"],
+                 notes: Order.format_notes(order["customData"][1]["textArea"]),
                  telephone: order["customData"][0]["textInput"],
                  delivery_address: Order.delivery_address(order),
                  category: Order.assign_category(purchased_item),
