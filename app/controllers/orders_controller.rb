@@ -21,7 +21,11 @@ class OrdersController < ApplicationController
     @orders = Order.paginate(page: params[:page], per_page: 40).order(created_at: :desc)
   end
 
-  def show(order)
+  def show
+    @order = Order.find(params[:id])
+  end
+
+  def edit
     @order = Order.find(params[:id])
   end
 
@@ -30,7 +34,17 @@ class OrdersController < ApplicationController
     @order.save
     if @order.save
       redirect_to deliveries_path
+      flash[:alert] = "Pedido modificado, Gracias Jessica!"
+    else
+      render :edit
+      flash[:alert] = "Error al modificar pedido!"
+
     end
+  end
+
+  def destroy
+    @order = Order.find(params[:id])
+    @order.destroy
   end
 
 
