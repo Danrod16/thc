@@ -23,15 +23,19 @@
   justify-content: space-between;
   width: 100%;
   padding: 0px 20px;
-  margin-bottom: -3px;
+  margin-bottom: 15px;
 }
 
 .toggler {
   background-color: black;
   color: white !important;
   padding: 8px 16px;
-  border-radius: 5px 5px 0 0;
-  &:hover{
+  border-radius: 5px;
+  position: absolute;
+  right: 222px;
+  top: 96px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  &:hover {
     background-color: rgba(0,0,0,0.8);
   }
 }
@@ -70,4 +74,19 @@
   letter-spacing: 0.2em;
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
   margin: 0px 5px;
+}
+
+.button-primary {
+  background: $yellow;
+  border-radius: 5px;
+  font-size: 16px;
+  color: black !important;
+  padding: 8px 30px;
+  text-decoration: none;
+/* identical to box height */
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.form-control {
+  border-radius: 5px;
 }

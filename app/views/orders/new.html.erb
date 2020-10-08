@@ -1,20 +1,7 @@
   <div class="form-inputs">
     <div class="row">
       <div class="col-6">
-      <%= simple_form_for(@order) do |f| %>
-        <%= f.error_notification %>
-          <%= f.input :customer_name,
-                      required: true,
-                      label: "Nombre de Cliente",
-                      autofocus: true %>
-          <%= f.input :customer_email,
-                      required: true,
-                      label: "Email de cliente",
-                      autofocus: true %>
-        <%= f.input :telephone,
-                    required: true,
-                    label: "Telefono",
-                    autofocus: true %>
+        <%= simple_form_for(@order) do |f| %>
         <%= f.association :product,
                     required: true,
                     label: "Producto",
@@ -24,38 +11,52 @@
                     label: "Categoría",
                     collection: ["Meals", "Snacks", "Desserts"],
                     autofocus: true %>
-          <%= f.input :meal_size,
-                      required: true,
-                      collection: ["regular", "large"],
-                      label: "Tamaño del producto" %>
-          <%= f.input :meal_protein,
-                      required: true,
-                      collection: ["no customisation", "vegetarian", "vegan"],
-                      label: "Proteína" %>
-          <%= f.input :meal_custom,
-                      required: true,
-                      collection: ["no customisation", "low carb", "high carb", "high protein", "keto", "high protein/low carb"],
-                      label: "Otra customización" %>
-      </div>
-      <div class="col-6">
+        <%= f.input :meal_size,
+                    required: true,
+                    collection: ["regular", "large"],
+                    label: "Tamaño del producto" %>
+        <%= f.input :meal_protein,
+                    required: true,
+                    collection: ["no customisation", "vegetarian", "vegan"],
+                    label: "Proteína" %>
+        <%= f.input :meal_custom,
+                    required: true,
+                    collection: ["no customisation", "low carb", "high carb", "high protein", "keto", "high protein/low carb"],
+                    label: "Otra customización" %>
         <%= f.input :meal_date,
                     required: true,
                     placeholder: "ej: 01-12-2020",
                     label: "Fecha de entrega del pedido",
                     autofocus: true %>
-        <%= f.input :delivery_address,
-                    required: true,
-                    label: "Dirección",
-                    autofocus: true %>
         <%= f.input :notes,
                     required: true,
                     label: "Notas",
                     autofocus: true %>
-        <div class="form-actions">
-          <%= f.button :submit, "Crear orden", class: "nav-pills-current" %>
         </div>
+      <div class="col-6">
+        <%= f.error_notification %>
+        <%= f.input :customer_name,
+                    required: true,
+                    label: "Nombre de Cliente",
+                    autofocus: true %>
+        <%= f.input :customer_email,
+                    required: true,
+                    label: "Email de cliente",
+                    autofocus: true %>
+        <%= f.input :telephone,
+                    required: true,
+                    label: "Telefono",
+                    autofocus: true %>
+        <%= f.input :delivery_address,
+                    required: true,
+                    label: "Dirección",
+                    autofocus: true %>
+        <div class="form-actions">
+          <%= f.button :submit, "Crear pedido", class: "button-primary" %>
+        </div>      
       </div>
     <% end %>
-
     </div>
 </div>
+
+

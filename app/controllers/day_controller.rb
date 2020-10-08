@@ -4,6 +4,7 @@ class DayController < ApplicationController
   
   def monday
     monday = assign_date("Monday")
+    @path = "monday"
     @meals = Order.where(meal_date: monday, category: "Meals")
     @snacks = Order.where(meal_date: monday, category: "Snacks")
     @desserts = Order.where(meal_date: monday, category: "Desserts")
@@ -16,6 +17,7 @@ class DayController < ApplicationController
 
   def tuesday
     tuesday = assign_date("Tuesday")
+    @path = "tuesday"
     @meals = Order.where(meal_date: tuesday, category: "Meals")
     @snacks = Order.where(meal_date: tuesday, category: "Snacks")
     @desserts = Order.where(meal_date: tuesday, category: "Desserts")
@@ -28,6 +30,7 @@ class DayController < ApplicationController
 
   def wednesday
     wednesday = assign_date("Wednesday")
+    @path = "wednesday"
     @meals = Order.where(meal_date: wednesday, category: "Meals")
     @snacks = Order.where(meal_date: wednesday, category: "Snacks")
     @desserts = Order.where(meal_date: wednesday, category: "Desserts")
@@ -40,6 +43,7 @@ class DayController < ApplicationController
 
   def thursday
     thursday = assign_date("Thursday")
+    @path = "thursday"
     @meals = Order.where(meal_date: thursday, category: "Meals")
     @snacks = Order.where(meal_date: thursday, category: "Snacks")
     @desserts = Order.where(meal_date: thursday, category: "Desserts")
@@ -52,6 +56,7 @@ class DayController < ApplicationController
 
   def friday
     friday = assign_date("Friday")
+    @path = "friday"
     @meals = Order.where(meal_date: friday, category: "Meals")
     @snacks = Order.where(meal_date: friday, category: "Snacks")
     @desserts = Order.where(meal_date: friday, category: "Desserts")

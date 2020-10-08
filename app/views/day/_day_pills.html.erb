@@ -25,4 +25,8 @@
       </li>
     </ul>
   </div>
+  <%= link_to polymorphic_path(@path, format: :pdf), target: "_blank", class: "button-primary" do %>
+    Descargar
+  <i class="fas fa-file-download"></i>
+  <% end %>
 </div>
