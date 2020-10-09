@@ -18,7 +18,11 @@ class OrdersController < ApplicationController
   end
 
   def index
-    @orders = Order.paginate(page: params[:page], per_page: 40).order(created_at: :desc)
+    if params[:query].present?
+      @orders = Order.search_orders(params[:query])
+    else
+      @orders = Order.paginate(page: params[:page], per_page: 40).order(created_at: :desc)
+    end
   end
 
   def show
