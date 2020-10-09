@@ -1,0 +1,12 @@
+.search-bar form{
+  display: flex;
+  margin-bottom: 10px;
+  #query {
+    background-color: #e8e8e8;
+    margin-right: 5px;
+  }
+  input {
+    line-height: 18px !important;
+    border-style: none;
+  }
+}

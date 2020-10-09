@@ -7,8 +7,8 @@ class Order < ApplicationRecord
                          error: 'Fecha invalida' }, on: :create
 
   include PgSearch::Model
-  pg_search_scope :search,
-    against: [ :customer_name, :customer_email, :meal_date, :product],
+  pg_search_scope :search_orders,
+    against: [ :customer_name, :customer_email, :meal_date ],
     using: {
       tsearch: { prefix: true } # <-- now `superman batm` will return something!
     }

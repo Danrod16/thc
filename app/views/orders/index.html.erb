@@ -1,6 +1,18 @@
+<div class="search-bar">
+  <%= form_tag orders_path, method: :get do %>
+    <%= text_field_tag :query,
+      params[:query],
+      class: "form-control",
+      placeholder: "Buscar pedido por Nombre, Email o Fecha"
+    %>
+    <%= submit_tag "Buscar", class: "button-primary" %>
+  <% end %>
+</div>
+
 <div class="table-responsive-raw">
   <table class="table table-striped">
       <tr>
+        <th>Fecha</th>
         <th>Nombre</th>
         <th>Dirección</th>
         <th>Producto</th>
@@ -14,6 +26,7 @@
     <tbody>
       <% @orders.each do |order| %>
           <tr>
+            <td><%= order.meal_date %></td>
             <td><%= order.customer_name %></td>
             <td><%= order.delivery_address %></td>
             <td><%= order.product.meal_name.downcase.capitalize %></td>
@@ -27,6 +40,8 @@
     </tbody>
   </table>
 </div>
+<% unless params[:query].present? %>
 <div class="apple_pagination">
   <%= will_paginate @orders %>
 </div>
+<% end %>
