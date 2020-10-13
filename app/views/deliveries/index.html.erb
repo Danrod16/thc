@@ -1,6 +1,7 @@
 <%= render 'riders/rider_pills' %>
 <div class="header">
   <h1>Grupos de reparto</h1>
+ <p> <strong>#Pedidos no asignados:</strong> <%= @remaining_orders %></p>
 </div>
 <div class="cards">
   <% @delivery_groups.each do |delivery| %>
@@ -17,5 +18,12 @@
         </div>
       </div>
     <% end %>
+  <% end %>
+  <%= link_to new_delivery_path do %>
+    <div class="card-category new-card">
+      <div class="card-img">
+          <i class="fas fa-plus-square"></i>
+      </div>
+    </div>
   <% end %>
 </div>
