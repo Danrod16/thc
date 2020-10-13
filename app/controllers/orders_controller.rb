@@ -35,10 +35,10 @@ class OrdersController < ApplicationController
 
   def update
     @order = Order.find(params[:id])
-    @order.save
+    @order.update(order_params)
     if @order.save
       redirect_to deliveries_path
-      flash[:alert] = "Pedido modificado, Gracias Jessica!"
+      flash[:alert] = "Pedido modificado, Gracias #{current_user.first_name}!"
     else
       render :edit
       flash[:alert] = "Error al modificar pedido!"

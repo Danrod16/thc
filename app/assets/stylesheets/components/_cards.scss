@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 35px;
+  padding: 20px 0px;
 }
 
 .cards-orders {
@@ -20,7 +21,7 @@
   min-height: 200px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   color: black;
   font-size: 24px;
@@ -31,6 +32,19 @@
   padding: 10px;
   &:hover {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  &.new-card {
+      justify-content: center;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  p {
+    margin-bottom: 0px;
+    line-height: 20px;
   }
 }
 

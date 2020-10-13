@@ -2,6 +2,7 @@ class DeliveriesController < ApplicationController
   def index
     @delivery_groups = Delivery.all
     @riders = Rider.all
+    @remaining_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil).count
   end
 
   def show
@@ -10,7 +11,7 @@ class DeliveriesController < ApplicationController
 
   def new
     @delivery_group = Delivery.new
-    @today_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"))
+    @today_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil)
   end
 
   def create
@@ -25,6 +26,20 @@ class DeliveriesController < ApplicationController
   end
 
   def edit
+    @delivery_group = Delivery.find(params[:id])
+    @today_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"))
+  end
+
+  def update
+    @delivery_group = Delivery.find(params[:id])
+    @delivery_group.update(delivery_params)
+    if @delivery_group.save
+      redirect_to delivery_path(@delivery_group)
+      flash[:alert] = "Reparto modificado, Gracias #{current_user.first_name}!"
+    else
+      render :edit
+      flash[:alert] = "Error al modificar reparto!"
+    end
   end
 
 
