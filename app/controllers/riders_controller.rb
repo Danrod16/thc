@@ -51,5 +51,4 @@ class RidersController < ApplicationController
   #     "#{rider.user.first_name}"
   #   end
   # end
-
 end

@@ -2,6 +2,10 @@
 <div class="header">
   <h1><%= @delivery_group.name %></h1>
   <p>Rider: <%= @delivery_group.rider.name %></p>
+  <%= link_to delivery_path(@delivery_group, format: :pdf), target: "_blank", class: "button-primary" do %>
+  <i class="fas fa-file-download"></i> 
+  Descargar
+  <% end %>
 </div>
 <div class="table-responsive-raw">
   <table class="table table-striped">
