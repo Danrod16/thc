@@ -35,7 +35,7 @@ class Order < ApplicationRecord
   def grouped_orders
     "<td>#{customer_name}</td>
     <td>#{delivery_address}</td>
-    <td>#{notes}</td>".html_safe
+    <td>#{notes}</td>".html_saf
   end
 
   private

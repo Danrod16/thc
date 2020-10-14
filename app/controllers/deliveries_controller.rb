@@ -7,6 +7,7 @@ class DeliveriesController < ApplicationController
 
   def show
     @delivery_group = Delivery.find(params[:id])
+    generate_pdf(@delivery_group)
   end
 
   def new
@@ -63,5 +64,17 @@ class DeliveriesController < ApplicationController
       end
     end
     meal_date
+  end
+  
+  def generate_pdf(delivery_group)
+    respond_to do |format|
+      format.html
+      format.pdf do 
+        pdf = DeliveryPdf.new(delivery_group)
+        send_data pdf.render, filename: "delivery.pdf",
+                              type: "application/pdf",
+                              disposition: "inline"
+      end     
+    end
   end
 end
