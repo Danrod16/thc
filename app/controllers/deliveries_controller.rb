@@ -10,7 +10,7 @@ class DeliveriesController < ApplicationController
 
   def new
     @delivery_group = Delivery.new
-    @today_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"))
+    @today_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y")).order(customer_name: :asc)
   end
 
   def create
@@ -26,8 +26,6 @@ class DeliveriesController < ApplicationController
 
   def edit
   end
-
-
 
   private
 
