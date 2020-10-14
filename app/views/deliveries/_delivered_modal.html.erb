@@ -1,0 +1,9 @@
+    <%= simple_form_for(order) do |f| %>
+      <%= f.error_notification %>
+        <%= f.input :delivered,
+                    required: true,
+                    label: false,
+                    :as => :hidden,
+                    autofocus: true %>
+        <%= f.button :submit, "Entregar", class: "button-primary" %>
+    <% end %>

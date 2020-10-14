@@ -3,7 +3,7 @@
   <h1><%= @delivery_group.name %></h1>
   <p>Rider: <%= @delivery_group.rider.name %></p>
   <%= link_to delivery_path(@delivery_group, format: :pdf), target: "_blank", class: "button-primary" do %>
-  <i class="fas fa-file-download"></i> 
+  <i class="fas fa-file-download"></i>
   Descargar
   <% end %>
 </div>
@@ -27,7 +27,22 @@
           <td><%= order.telephone %></td>
           <td><%= order.delivery_address %></td>
           <td><%= order.notes %></td>
-          <!-- <td><%#= link_to 'Delete', order, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+          <td>
+              <%= simple_form_for(order) do |f| %>
+              <%= f.error_notification %>
+              <%= f.input :delivered,
+              required: true,
+              label: false,
+              :as => :hidden,
+              input_html: {value: true},
+              autofocus: true %>
+              <% if order.delivered == true %>
+                <%= f.button :submit, "Entragado", class: "btn", data: { confirm: "Confirmar entrega" } %>
+              <% else %>
+                <%= f.button :submit, "Entragar", class: "button-primary", data: { confirm: "Confirmar entrega" } %>
+              <% end %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>
@@ -35,6 +50,8 @@
 </div>
 <div class="buttons-wrapper">
   <%= link_to "Editar", edit_delivery_path(@delivery_group), class: "button-primary"  %>
+  <%= link_to "Eliminar", delivery_path(@delivery_group), method: :delete, class: "button-primary", data: {confirm: "Confirmar?"} %>
+
 </div>
 
 

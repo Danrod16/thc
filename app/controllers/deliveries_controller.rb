@@ -43,6 +43,12 @@ class DeliveriesController < ApplicationController
     end
   end
 
+  def destroy
+    @delivery_group = Delivery.find(params[:id])
+    @delivery_group.destroy
+    redirect_to deliveries_path
+  end
+
   private
 
   def delivery_params
@@ -65,16 +71,23 @@ class DeliveriesController < ApplicationController
     end
     meal_date
   end
-  
+
+
+  def send_mailer
+    mail = OrderMailer.with(order: @order).delivered
+    mail.deliver_now
+    redirect_to delivery_path(@order.delivery)
+  end
+
   def generate_pdf(delivery_group)
     respond_to do |format|
       format.html
-      format.pdf do 
+      format.pdf do
         pdf = DeliveryPdf.new(delivery_group)
         send_data pdf.render, filename: "delivery.pdf",
                               type: "application/pdf",
                               disposition: "inline"
-      end     
+      end
     end
   end
 end

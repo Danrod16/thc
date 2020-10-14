@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_06_114738) do
+ActiveRecord::Schema.define(version: 2020_10_14_103642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 2020_10_06_114738) do
     t.string "meal_date"
     t.string "category"
     t.bigint "delivery_id"
+    t.boolean "delivered", default: false
     t.index ["delivery_id"], name: "index_orders_on_delivery_id"
     t.index ["product_id"], name: "index_orders_on_product_id"
   end
