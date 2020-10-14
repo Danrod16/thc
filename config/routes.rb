@@ -10,7 +10,8 @@ Rails.application.routes.draw do
   root :to => 'passthrough#index'
   resources :orders
   resources :riders, only: [:index, :show]
-  resources :deliveries, only: [:index, :show, :edit, :new, :create, :update, :destroy]
+  resources :deliveries
+  resources :stickers
   get 'riders-deliveries', to: 'riders#deliveries', as: "riders_deliveries"
   get '/today', to: 'orders#today'
 end

@@ -1,7 +1,7 @@
 class DayController < ApplicationController
   before_action :set_days
   before_action :webflow_fetch
-  
+
   def monday
     monday = assign_date("Monday")
     @path = "monday"
@@ -72,12 +72,12 @@ class DayController < ApplicationController
   def generate_pdf(meals_summary, snacks_summary, desserts_summary, day)
     respond_to do |format|
       format.html
-      format.pdf do 
+      format.pdf do
         pdf = OrdersPdf.new(meals_summary, snacks_summary, desserts_summary, day)
         send_data pdf.render, filename: "orders.pdf",
                               type: "application/pdf",
                               disposition: "inline"
-      end     
+      end
     end
   end
 

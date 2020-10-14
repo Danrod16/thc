@@ -38,6 +38,16 @@ class Order < ApplicationRecord
     <td>#{notes}</td>".html_safe
   end
 
+  def sticker_orders
+    "<td>#{customer_name}</td>
+    <td>#{product.meal_name.downcase.capitalize}</td>
+    <td>#{meal_size.downcase.capitalize}</td>
+    <td>#{meal_protein.downcase.capitalize}</td>
+    <td>#{meal_custom.downcase.capitalize}</td>
+    <td>#{notes}</td>".html_safe
+  end
+
+
   private
 
   def self.fetch_orders(client)
