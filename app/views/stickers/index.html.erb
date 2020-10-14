@@ -1,0 +1,25 @@
+<div class="header">
+  <h1>Etiquetas</h1>
+ <p> <strong>Etiquetas no impresas</strong> <%= @remaining_orders %></p>
+</div>
+<div class="cards">
+  <% @stickers.each do |sticker| %>
+    <%= link_to sticker_path(sticker) do %>
+      <div class="card-category">
+        <div class="card-img">
+          <%= image_tag("https://res.cloudinary.com/therainycloud/image/upload/v1602684570/THC/Untitled_design_29_nlqeu1.png") %>
+        </div>
+        <div class="card-title">
+          <%= sticker.created_at.strftime("%d-%m-%Y %H:%M") %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  <%= link_to new_sticker_path do %>
+    <div class="card-category new-card">
+      <div class="card-img">
+          <i class="fas fa-plus-square"></i>
+      </div>
+    </div>
+  <% end %>
+</div>

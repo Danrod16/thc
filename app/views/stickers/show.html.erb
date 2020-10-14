@@ -1,0 +1,41 @@
+<%= link_to "< Atrás", stickers_path %>
+<div class="header">
+  <h1><%= @sticker.created_at %></h1>
+  <%= link_to sticker_path(@sticker, format: :pdf), target: "_blank", class: "button-primary" do %>
+  <i class="fas fa-file-download"></i>
+  Descargar
+  <% end %>
+</div>
+<div class="table-responsive-raw">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th class="name">Nombre</th>
+        <th class="product">Producto</th>
+        <th>Talla</th>
+        <th>Proteín</th>
+        <th class="custom">Custom</th>
+        <th class="notes">Notas</th>
+      </tr>
+    </thead>
+    <tbody>  <!-- sortable target -->
+      <% @selected_orders.each do |order| %>
+        <tr>
+          <td><%= order.customer_name %></td>
+          <td><%= order.product.meal_name.downcase.capitalize %></td>
+          <td><%= order.meal_size.downcase.capitalize %></td>
+          <td><%= order.meal_protein.downcase.capitalize %></td>
+          <td><%= order.meal_custom.downcase.capitalize %></td>
+          <td><%= order.notes %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="buttons-wrapper">
+  <%= link_to "Editar", edit_sticker_path(@sticker), class: "button-primary"  %>
+  <%= link_to "Eliminar", sticker_path(@sticker), method: :delete, class: "button-primary", data: {confirm: "Confirmar?"} %>
+
+</div>
+
+

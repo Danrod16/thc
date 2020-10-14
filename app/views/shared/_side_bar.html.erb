@@ -4,6 +4,7 @@
   </div>
   <ul class="list">
     <li><%= link_to "Cocina", root_path %></li>
+    <li><%= link_to "Etiquetas", stickers_path %></li>
     <% if Rider.exists? %>
       <li><%= link_to "Reparto", deliveries_path %></li>
     <% end %>
