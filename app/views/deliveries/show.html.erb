@@ -1,6 +1,9 @@
-<h1><%= @delivery_group.name %></h1>
-<h2>Rider: <%= @delivery_group.rider.name %></h2>
-<div class="table-responsive">
+<%= link_to "< Atrás", deliveries_path %>
+<div class="header">
+  <h1><%= @delivery_group.name %></h1>
+  <p>Rider: <%= @delivery_group.rider.name %></p>
+</div>
+<div class="table-responsive-raw">
   <table class="table table-striped">
     <thead>
           <tr>
@@ -12,9 +15,9 @@
             <th>Notas</th>
           </tr>
         </thead>
-    <tbody class="sortable">  <!-- sortable target -->
+    <tbody class="sortable" data-id=<%= "#{@delivery_group.id}" %>>  <!-- sortable target -->
       <% @delivery_group.orders.each do |order| %>
-        <tr data-id = <%= "#{order.id}" %> >
+        <tr data-id = <%= "#{order.id}" %>>
           <td><%= order.meal_date %></td>
           <td><%= order.customer_name %></td>
           <td><%= order.telephone %></td>
@@ -25,6 +28,9 @@
       <% end %>
     </tbody>
   </table>
+</div>
+<div class="buttons-wrapper">
+  <%= link_to "Editar", edit_delivery_path(@delivery_group), class: "button-primary"  %>
 </div>
 
 
