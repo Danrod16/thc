@@ -6,12 +6,7 @@
 }
 
 .cards-orders {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 35px;
-  li {
-    list-style-type: none;
-  }
+  margin: 35px 0px;
 }
 
 .card-category {
@@ -50,19 +45,47 @@
 
 .order-card {
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    padding: 20px;
+    padding: 35px;
     border-radius: 10px;
-
+    
+    h1 { margin-bottom: 35px; }
 }
 
-  .card-img {
-    display: flex;
-    justify-content: center;
-    img {
-    width: 50px;
-    margin: 10px;
-    }
+.order-card-wrapper {
+  display: flex;
+}
+
+.card-info-client {
+  width: 50%;
+  background-color: #fffaf1;
+  margin-right: 35px;
+  border-radius: 10px;
+  padding: 30px;
+}
+
+.info-title {
+  h2 { margin-bottom: 25px; }
+}
+
+.info-content { 
+  ul {list-style-type: none; }
+}
+
+.card-info-order { 
+  width: 50%;
+  background-color: #fffaf1;
+  border-radius: 10px;
+  padding: 30px;
+}
+
+.card-img {
+  display: flex;
+  justify-content: center;
+  img {
+  width: 50px;
+  margin: 10px;
   }
+}
 
 .card-title {
   text-align: center;

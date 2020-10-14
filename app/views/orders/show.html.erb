@@ -1,28 +1,40 @@
-<%= link_to '< Atrás', :back %>
-<h1>Pedido: #<%= @order.id %></h1>
+<%= link_to '< Atrás', orders_path %>
 <div class="cards-orders">
   <div class="order-card">
-        <h2>Info cliente</h2>
-        <ul>
-          <li><strong>Nombre: </strong> <%= @order.customer_name %></li>
-          <li><strong>Email: </strong><%= @order.customer_email %></li>
-          <li><strong>Teléfono: </strong><%= @order.telephone %></li>
-          <li><strong>Dirección: </strong><%= @order.delivery_address %></li>
-        </ul>
-  </div>
-  <div class="order-card">
-          <h2>Info de pedido</h2>
+    <h1>Pedido: #<%= @order.id %></h1>
+      <div class="order-card-wrapper">
+        <div class="card-info-client">
+          <div class="info-title">
+            <h2>Información del cliente</h2>
+          </div>
+          <div class="info-content">
+            <ul>
+              <li><strong>Nombre: </strong> <%= @order.customer_name %></li>
+              <li><strong>Email: </strong><%= @order.customer_email %></li>
+              <li><strong>Teléfono: </strong><%= @order.telephone %></li>
+              <li><strong>Dirección: </strong><%= @order.delivery_address %></li>
+            </ul>
+          </div> 
+        </div>
+        <div class="card-info-order">
+        <div class="info-title">
+          <h2>Información del pedido</h2>
+        </div>
+        <div class="info-content">
           <ul>
-            <li><strong>Producto: </strong><%= @order.product.meal_name %></li>
+            <li><strong>Producto: </strong><%= @order.product.meal_name.downcase.capitalize %></li>
             <li><strong>Categoria: </strong><%= @order.category %></li>
-            <li><strong>Talla: </strong><%= @order.meal_size %></li>
-            <li><strong>Proteína: </strong><%= @order.meal_protein %>
-            <li><strong>Costumización: </strong><%= @order.meal_custom %></li>
+            <li><strong>Talla: </strong><%= @order.meal_size.capitalize %></li>
+            <li><strong>Proteína: </strong><%= @order.meal_protein.capitalize %>
+            <li><strong>Costumización: </strong><%= @order.meal_custom.capitalize %></li>
             <li><strong>Fecha de entrega: </strong><%= @order.meal_date %></li>
             <li><strong>Notas: </strong><%= @order.notes %></li>
           </ul>
+        </div>
+        </div>
+      </div>
   </div>
-  <div class="buttons-wrapper">
-    <%= link_to "Editar", edit_order_path(@order), class: "button-primary"  %>
-  </div>
+</div>
+<div class="buttons-wrapper">
+  <%= link_to "Editar", edit_order_path(@order), class: "button-primary"  %>
 </div>

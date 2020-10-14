@@ -9,22 +9,40 @@
                       label: "Nombre del grupo",
                       autofocus: true %>
         <%= f.association :rider,
-                    required: true,
-                    label: "Rider",
-                    autofocus: true %>
+                          required: true,
+                          label: "Rider",
+                          autofocus: true %>
           <div class="table-responsive">
-        <%= f.association :orders,
-                    collection: @today_orders,
-                    as: :check_boxes,
-                    label_method: :grouped_orders,
-                    value_method: :id,
-                    include_blank: false %>
+          <table class="table table-striped">
+            <thead class="thead">
+              <tr>
+                <th></th>
+                <th class="name">Nombre</th>
+                <th class="custom">Dirección</th>
+                <th class="notes">Notas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @today_orders.each do |order| %>
+                <tr>
+                  <td>
+                    <%= f.association :orders, 
+                                      collection: [order],
+                                      as: :check_boxes,
+                                      label_method: :grouped_orders,
+                                      value_method: :id,
+                                      include_blank: false %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
           </div>
         <div class="form-actions">
           <%= f.button :submit, "Crear grupo", class: "nav-pills-current" %>
         </div>
       </div>
     <% end %>
-
     </div>
 </div>
+

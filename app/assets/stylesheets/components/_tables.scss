@@ -39,13 +39,13 @@
 
   td { vertical-align: inherit;}
 
-  .date { min-width: 105px; }
+  .date { min-width: 110px; }
 
   .name { min-width: 200px; }
 
   .product { min-width: 180px; }
 
-  .custom { min-width: 180px; }
+  .custom { min-width: fit-content; }
 }
 
 table th, .table td {
@@ -91,3 +91,7 @@ table th, .table td {
   background-color: black;
   color: white !important;
 }
+
+.col-form-label { display: none; }
+
+.delivery_orders { margin-bottom: 0px; }

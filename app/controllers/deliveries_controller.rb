@@ -42,8 +42,6 @@ class DeliveriesController < ApplicationController
     end
   end
 
-
-
   private
 
   def delivery_params
