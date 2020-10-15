@@ -5,7 +5,7 @@
   height: 30vh;
   margin-bottom: 20px;
   z-index: 5;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  box-shadow: $box-shadow;
 }
 
 .table-responsive-summary {
@@ -14,6 +14,7 @@
   overflow: none;
   height: 40vh;
   margin-bottom: 20px;
+  box-shadow: none;
 }
 
 .table-responsive-raw {
@@ -23,7 +24,7 @@
   overflow-x: scroll;
   height: 70vh;
   margin-bottom: 20px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  box-shadow: $box-shadow;
 }
 
 .form-check {
@@ -35,13 +36,12 @@
   font-size: 14px;
   line-height: 16px;
   border-top: none !important;
-  // box-shadow: 0 0 15px rgba(0,0,0,0.2);
 
   td { vertical-align: inherit;}
 
   .date { min-width: 110px; }
 
-  .name { min-width: 200px; }
+  .name { min-width: 150px; }
 
   .product { min-width: 180px; }
 
@@ -90,6 +90,7 @@ table th, .table td {
   border-radius: 5px 5px 5px 5px;
   background-color: black;
   color: white !important;
+  box-shadow: $box-shadow;
 }
 
 .col-form-label { display: none; }

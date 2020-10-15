@@ -32,7 +32,7 @@ section {
 .navbar a {
   color: black;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 18px;
     &:hover{
     color: rgba(0,0,0,0.8);
   }
@@ -44,22 +44,19 @@ section {
 }
 
 .navbar ul a:hover {
-  font-size: 25px;
   color: #fffc63;
 }
 .navbar ul {
   list-style: none;
-  margin-top: 10vh;
 }
 .navbar ul li {
-  margin-bottom: 10vh;
+  margin-bottom: 5vh;
 }
 
 .navbar li {
   background-color: white;
   border-radius: 5px;
   padding: 5px;
-  text-align: center;
   &:active {
     background-color: $yellow;
   }
