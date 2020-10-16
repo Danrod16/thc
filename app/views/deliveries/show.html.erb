@@ -19,8 +19,8 @@
             <th>Notas</th>
           </tr>
         </thead>
-    <tbody class="sortable" data-id=<%= "#{@delivery_group.id}" %>>  <!-- sortable target -->
-      <% @delivery_group.orders.each do |order| %>
+    <tbody class="sortable" data-id="<%= @delivery_group.id %>">  <!-- sortable target -->
+      <% @delivery_group.orders.order(:sequence).each do |order| %>
         <tr data-id = <%= "#{order.id}" %>>
           <td><%= order.meal_date %></td>
           <td><%= order.customer_name %></td>

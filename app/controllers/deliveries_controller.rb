@@ -17,6 +17,7 @@ class DeliveriesController < ApplicationController
 
   def create
     @delivery_group = Delivery.create(delivery_params)
+    @today_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil)
     if @delivery_group.save
       flash[:alert] = "Grupo creado!"
       redirect_to new_delivery_path
@@ -47,6 +48,15 @@ class DeliveriesController < ApplicationController
     @delivery_group = Delivery.find(params[:id])
     @delivery_group.destroy
     redirect_to deliveries_path
+  end
+
+  def reorganize
+    @delivery_group = Delivery.find(params[:delivery_id])
+    @orders = @delivery_group.orders
+    params[:order_ids].each_with_index do |id, index|
+      order = @orders.find(id)
+      order.update(sequence: index + 1)
+    end
   end
 
   private

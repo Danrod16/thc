@@ -6,6 +6,8 @@ class Order < ApplicationRecord
   validates :meal_date, presence: true, format: { with: /\d{2}-\d{2}-\d{4}/,
                          error: 'Fecha invalida' }, on: :create
 
+  after_update :set_sequence, if: :will_save_change_to_delivery_id?
+
   include PgSearch::Model
   pg_search_scope :search_orders,
     against: [ :customer_name, :customer_email, :meal_date ],
@@ -30,6 +32,13 @@ class Order < ApplicationRecord
         end
       end
     end
+  end
+
+  def set_sequence
+    return unless delivery
+
+    self.sequence = delivery.orders.count
+    save
   end
 
   def grouped_orders

@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   root :to => 'passthrough#index'
   resources :orders
   resources :riders, only: [:index, :show]
-  resources :deliveries
+  resources :deliveries do
+    post '/reorganize', to: "deliveries#reorganize"
+  end
   resources :stickers
   get 'riders-deliveries', to: 'riders#deliveries', as: "riders_deliveries"
   get '/today', to: 'orders#today'
