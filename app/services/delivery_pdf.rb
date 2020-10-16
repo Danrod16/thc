@@ -1,6 +1,6 @@
 class DeliveryPdf
   include Prawn::View
-  
+
   def initialize(delivery_group)
     @delivery_group = delivery_group
     @date = set_date
@@ -22,7 +22,7 @@ class DeliveryPdf
     image "thc-logo-1.png", at: [10, 715], width: 120
     bounding_box([435, 700], width: 150, height: 100) do
       text "Reparto", size: 20, style: :bold
-      text "#{@date}"  
+      text "#{@date}"
       text "Hora: #{@hour}"
      end
   end
@@ -34,7 +34,7 @@ class DeliveryPdf
 
   def delivery_table
     arr = []
-    @delivery_group.orders.each_with_index do |order, index| 
+    @delivery_group.orders.order(:sequence).each_with_index do |order, index|
       arr << [index + 1, order.customer_name, order.telephone, order.delivery_address, order.notes]
     end
     [["" ,"Nombre", "Teléfono", "Dirección", "Notas"]] + arr
