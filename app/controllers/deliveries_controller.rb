@@ -72,7 +72,6 @@ class DeliveriesController < ApplicationController
     meal_date
   end
 
-
   def send_mailer
     mail = OrderMailer.with(order: @order).delivered
     mail.deliver_now

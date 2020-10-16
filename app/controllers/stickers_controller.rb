@@ -1,16 +1,20 @@
 class StickersController < ApplicationController
   before_action :set_sticker, only: [:show, :edit, :update, :destroy]
   before_action :selected_orders, only: [:new, :edit]
+  
   def index
     @stickers = Sticker.all
+    @remaining_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), sticker_id: nil).count
   end
 
   def show
     @selected_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), sticker_id: @sticker)
+    generate_pdf(@selected_orders)
   end
 
   def new
     @sticker = Sticker.new
+    @selected_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), sticker_id: nil)
   end
 
   def create
@@ -49,5 +53,17 @@ class StickersController < ApplicationController
 
   def selected_orders
     @selected_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), printed: false)
+  end
+
+  def generate_pdf(selected_orders)
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = StickerPdf.new(selected_orders)
+        send_data pdf.render, filename:"etiquetas.pdf",
+                              type: "application/pdf",
+                              disposition: "inline"
+      end
+    end
   end
 end

@@ -54,8 +54,6 @@ class OrdersController < ApplicationController
     @order.destroy
   end
 
-
-
   private
 
   def order_params
