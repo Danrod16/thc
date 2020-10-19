@@ -1,7 +1,7 @@
 body {
   height: 100vh;
   overflow: hidden;
-  padding: 20px;
+  // padding: 20px;
   background-color: white !important;
 }
 
@@ -13,6 +13,18 @@ a {
 button {
   border-style: none;
 }
+
+#background {
+  margin: auto;
+  justify-self: center;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+
 
 // Smallest device
 @media (min-width: 100px) and (max-width: 575px) {
