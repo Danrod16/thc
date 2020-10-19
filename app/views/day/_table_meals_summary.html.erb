@@ -1,4 +1,4 @@
-<div class="table-responsive-summary" data-controller="orders" data-path="<%= @path %>">
+<div class="table-responsive-summary">
     <table class="table table-striped" >
       <thead class="thead">
         <tr>
@@ -11,7 +11,7 @@
           <th>High Protein/Low Carb</th>
         </tr>
       </thead>
-      <tbody data-target="orders.meals_summary">
+      <tbody data-target="orders.mealsSummary">
         <% @meals_summary.each do |e| %>
           <tr>
           <th><%= e[0].capitalize %></th>
