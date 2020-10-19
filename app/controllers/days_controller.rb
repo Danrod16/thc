@@ -1,4 +1,4 @@
-class DayController < ApplicationController
+class DaysController < ApplicationController
   before_action :set_days
   before_action :webflow_fetch
 
