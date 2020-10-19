@@ -14,7 +14,7 @@
               <li><strong>Teléfono: </strong><%= @order.telephone %></li>
               <li><strong>Dirección: </strong><%= @order.delivery_address %></li>
             </ul>
-          </div> 
+          </div>
         </div>
         <div class="card-info-order">
         <div class="info-title">
@@ -35,6 +35,8 @@
       </div>
   </div>
 </div>
-<div class="buttons-wrapper">
-  <%= link_to "Editar", edit_order_path(@order), class: "button-primary"  %>
-</div>
+<% if policy(Order).edit? %>
+  <div class="buttons-wrapper">
+    <%= link_to "Editar", edit_order_path(@order), class: "button-primary"  %>
+  </div>
+<% end %>

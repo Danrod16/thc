@@ -10,3 +10,22 @@ a {
   text-decoration: none !important;
 }
 
+button {
+  border-style: none;
+}
+
+// Smallest device
+@media (min-width: 100px) and (max-width: 575px) {
+  body {
+    overflow: visible;
+    height: 100%;
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) and (max-width: 812px) {
+  body {
+    overflow: visible;
+     height: 100%;
+  }
+}

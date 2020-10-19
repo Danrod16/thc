@@ -5,6 +5,7 @@ class OrdersController < ApplicationController
 
   def new
     @order = Order.new
+    authorize @order
   end
 
   def create
@@ -15,22 +16,26 @@ class OrdersController < ApplicationController
     else
       render :new
     end
+    authorize @order
   end
 
   def index
     if params[:query].present?
-      @orders = Order.search_orders(params[:query])
+      @orders = policy_scope(Order).search_orders(params[:query])
     else
-      @orders = Order.paginate(page: params[:page], per_page: 40).order(created_at: :desc)
+      @orders = policy_scope(Order).paginate(page: params[:page], per_page: 40).order(created_at: :desc)
     end
+    authorize @orders
   end
 
   def show
     @order = Order.find(params[:id])
+    authorize @order
   end
 
   def edit
     @order = Order.find(params[:id])
+    authorize @order
   end
 
   def update
@@ -47,11 +52,13 @@ class OrdersController < ApplicationController
       render :edit
       flash[:alert] = "Error al modificar pedido!"
     end
+    authorize @order
   end
 
   def destroy
     @order = Order.find(params[:id])
     @order.destroy
+    authorize @order
   end
 
   private

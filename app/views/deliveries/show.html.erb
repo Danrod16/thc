@@ -48,10 +48,11 @@
     </tbody>
   </table>
 </div>
-<div class="buttons-wrapper">
-  <%= link_to "Editar", edit_delivery_path(@delivery_group), class: "button-primary"  %>
-  <%= link_to "Eliminar", delivery_path(@delivery_group), method: :delete, class: "button-primary", data: {confirm: "Confirmar?"} %>
-
-</div>
+<% if policy(Delivery).edit? %>
+  <div class="buttons-wrapper">
+    <%= link_to "Editar", edit_delivery_path(@delivery_group), class: "button-primary"  %>
+    <%= link_to "Eliminar", delivery_path(@delivery_group), method: :delete, class: "button-primary", data: {confirm: "Confirmar?"} %>
+  </div>
+<% end %>
 
 
