@@ -9,7 +9,6 @@ class Order < ApplicationRecord
 
   after_update :set_sequence, if: :will_save_change_to_delivery_id?
 
-  include PgSearch::Model
   pg_search_scope :search_orders,
     against: [ :customer_name, :customer_email, :meal_date ],
     using: {
@@ -186,7 +185,8 @@ class Order < ApplicationRecord
                  category: Order.assign_category(purchased_item),
                  order_id: order["orderId"],
                  product_id: Order.assign_product(purchased_item),
-                 meal_date: Order.fetch_snack_date(order, purchased_item))
+                 meal_date: Order.fetch_snack_date(order, purchased_item),
+                 meal_name: Order.assign_product_name(purchased_item['productId']))
   end
 
   def self.new_meal(order, purchased_item)
@@ -242,6 +242,10 @@ class Order < ApplicationRecord
 
   def self.assign_product(purchased_item)
     Product.where(product_id: purchased_item['productId']).first.id
+  end
+
+  def self.assign_product_name(id)
+    Product.find_by(product_id: id).meal_name.downcase.capitalize
   end
 
   def self.assign_category(purchased_item)

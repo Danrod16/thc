@@ -5,8 +5,7 @@ export default class extends Controller {
                      'mealsSummary', 'snacksSummary', 'dessertsSummary' ];
 
   connect() {
-    console.log("Meals controller")
-    setInterval(this.refresh, 10000);
+    setInterval(this.refresh, 20000);
   }
 
   refresh = () => {
@@ -15,6 +14,7 @@ export default class extends Controller {
    .then(response => response.json())
    .then((data) => {
 
+    const mealName = data.meal_name;
     // Meals raw table
     this.mealsRawTarget.innerHTML = ""
     data.meals.forEach( e => {
@@ -22,7 +22,7 @@ export default class extends Controller {
         `<tr>
           <td>${e.meal_date}</td>
           <td>${e.customer_name}</td>
-          <td>Nada</td>
+          <td>${mealName}</td>
           <td>${e.meal_size}</td>
           <td>${e.meal_protein}</td>
           <td>${e.meal_custom}</td>
@@ -50,7 +50,7 @@ export default class extends Controller {
         `<tr>
           <td>${e.meal_date}</td>
           <td>${e.customer_name}</td>
-          <td>Nada</td>
+          <td>${e.meal_name}</td>
           <td>${e.notes}</td>
         </tr>`)});
     
@@ -70,7 +70,7 @@ export default class extends Controller {
       `<tr>
         <td>${e.meal_date}</td>
         <td>${e.customer_name}</td>
-        <td>Nada</td>
+        <td>${e.meal_name}</td>
         <td>${e.notes}</td>
       </tr>`)});
     
