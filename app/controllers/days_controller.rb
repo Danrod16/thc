@@ -27,6 +27,7 @@ class DaysController < ApplicationController
     @snacks_summary = snacks_summary(tuesday)
     @desserts_summary = desserts_summary(tuesday)
     @total_orders = Order.where(meal_date: tuesday).count
+    @meal_name = @meals.first.product.meal_name.downcase.capitalize
     generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, tuesday)
     set_json
   end
@@ -41,6 +42,7 @@ class DaysController < ApplicationController
     @snacks_summary = snacks_summary(wednesday)
     @desserts_summary = desserts_summary(wednesday)
     @total_orders = Order.where(meal_date: wednesday).count
+    @meal_name = @meals.first.product.meal_name.downcase.capitalize
     generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, wednesday)
     set_json
   end
@@ -55,6 +57,7 @@ class DaysController < ApplicationController
     @snacks_summary = snacks_summary(thursday)
     @desserts_summary = desserts_summary(thursday)
     @total_orders = Order.where(meal_date: thursday).count
+    @meal_name = @meals.first.product.meal_name.downcase.capitalize
     generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, thursday)
     set_json
   end
@@ -69,6 +72,7 @@ class DaysController < ApplicationController
     @snacks_summary = snacks_summary(friday)
     @desserts_summary = desserts_summary(friday)
     @total_orders = Order.where(meal_date: friday).count
+    @meal_name = @meals.first.product.meal_name.downcase.capitalize
     generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, friday)
     set_json
   end
