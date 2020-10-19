@@ -1,16 +1,24 @@
-<div class="nav-wrapper">
-  <ul class="nav mb-3" %>
-      <% if current_page?(deliveries_path) %>
-        <%= link_to "Pedidos totales", deliveries_path, class: "nav-pills-current" %>
-      <% else %>
-        <%= link_to "Pedidos totales", deliveries_path, class: "nav-pills" %>
-      <% end %>
-      <% @riders.each do |rider| %>
-        <% if current_page?(rider_path(rider)) %>
-            <%= link_to "#{rider.user.first_name} #{rider.user.last_name}", rider_path(rider), class: "nav-pills-current" %>
+<div class="riders-pills">
+  <% if policy(Delivery).create? %>
+    <%= link_to "Nuevo Grupo", new_delivery_path, class: "button-secondary" %>
+  <% end %>
+  <div class="dropdown">
+    <button class="button-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Riders
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <% if current_page?(deliveries_path) %>
+          <%= link_to "Pedidos totales", deliveries_path, class: "dropdown-item" %>
         <% else %>
-            <%= link_to "#{rider.user.first_name} #{rider.user.last_name}", rider_path(rider), class: "nav-pills" %>
+          <%= link_to "Pedidos totales", deliveries_path, class: "dropdown-item" %>
         <% end %>
-      <% end %>
-  </ul>
+        <% @riders.each do |rider| %>
+          <% if current_page?(rider_path(rider)) %>
+              <%= link_to "#{rider.user.first_name} #{rider.user.last_name}", rider_path(rider), class: "dropdown-item-current" %>
+          <% else %>
+              <%= link_to "#{rider.user.first_name} #{rider.user.last_name}", rider_path(rider), class: "dropdown-item" %>
+          <% end %>
+        <% end %>
+    </div>
+  </div>
 </div>

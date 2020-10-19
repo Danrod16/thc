@@ -13,7 +13,7 @@ export default class extends Controller {
    .then(response => response.json())
    .then((data) => {
      this.meals_summaryTarget.innerHTML = ""
-     data.meals.forEach( e => {
+     data.meals_summary.forEach( e => {
       this.meals_summaryTarget.insertAdjacentHTML("beforeend",
         `<tr>
         <th>${e[0]}</th>

@@ -96,3 +96,25 @@ table th, .table td {
 .col-form-label { display: none; }
 
 .delivery_orders { margin-bottom: 0px; }
+
+// Smallest device
+@media (min-width: 100px) and (max-width: 575px) {
+  .table-responsive {
+    height: 60vh;
+  }
+  .table-responsive-raw {
+    height: 55vh;
+    margin-top: 15px;
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) and (max-width: 812px) {
+  .table-responsive {
+      height: 60vh;
+  }
+  .table-responsive-raw {
+   height: 55vh;
+    margin-top: 15px;
+  }
+}

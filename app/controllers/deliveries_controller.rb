@@ -1,18 +1,21 @@
 class DeliveriesController < ApplicationController
   def index
-    @delivery_groups = Delivery.all
+    @delivery_groups = policy_scope(Delivery).all
     @riders = Rider.all
     @remaining_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil).count
+    authorize @delivery_groups
   end
 
   def show
     @delivery_group = Delivery.find(params[:id])
     generate_pdf(@delivery_group)
+    authorize @delivery_group
   end
 
   def new
     @delivery_group = Delivery.new
     @today_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil)
+    authorize @delivery_group
   end
 
   def create
@@ -25,11 +28,13 @@ class DeliveriesController < ApplicationController
       flash[:alert] = "Error en creación"
       render :new
     end
+    authorize @delivery_group
   end
 
   def edit
     @delivery_group = Delivery.find(params[:id])
     @today_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"))
+    authorize @delivery_group
   end
 
   def update
@@ -42,6 +47,7 @@ class DeliveriesController < ApplicationController
       render :edit
       flash[:alert] = "Error al modificar reparto!"
     end
+    authorize @delivery_group
   end
 
   def destroy
@@ -57,6 +63,7 @@ class DeliveriesController < ApplicationController
       order = @orders.find(id)
       order.update(sequence: index + 1)
     end
+    authorize @delivery_group
   end
 
   private

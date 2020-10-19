@@ -5,7 +5,7 @@ class Product < ApplicationRecord
   def self.fetch_products(client)
     client.items("5ec79e4a047417204a44efdb").each do |product|
       if Product.product_exists?(product)
-        unless Product.product_update?(product)
+        if !Product.product_update?(product)
           Product.update_product(product)
         end
       else
