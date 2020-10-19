@@ -11,6 +11,7 @@ class DayController < ApplicationController
     @meals_summary = day_summary(monday)
     @snacks_summary = snacks_summary(monday)
     @desserts_summary = desserts_summary(monday)
+    @meal_name = @meals.first.product.meal_name.downcase.capitalize
     @total_orders = Order.where(meal_date: monday).count
     generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, monday)
     set_json
@@ -112,7 +113,8 @@ class DayController < ApplicationController
                                    snacks_summary: @snacks_summary,
                                    snacks: @snacks,
                                    desserts_summary: @desserts_summary,
-                                   desserts: @desserts} }
+                                   desserts: @desserts, 
+                                   meal_name: @meal_name } }
     end
   end
 
