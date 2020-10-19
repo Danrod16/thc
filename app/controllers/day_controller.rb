@@ -13,6 +13,7 @@ class DayController < ApplicationController
     @desserts_summary = desserts_summary(monday)
     @total_orders = Order.where(meal_date: monday).count
     generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, monday)
+    set_json
   end
 
   def tuesday
@@ -26,6 +27,7 @@ class DayController < ApplicationController
     @desserts_summary = desserts_summary(tuesday)
     @total_orders = Order.where(meal_date: tuesday).count
     generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, tuesday)
+    set_json
   end
 
   def wednesday
@@ -39,6 +41,7 @@ class DayController < ApplicationController
     @desserts_summary = desserts_summary(wednesday)
     @total_orders = Order.where(meal_date: wednesday).count
     generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, wednesday)
+    set_json
   end
 
   def thursday
@@ -52,6 +55,7 @@ class DayController < ApplicationController
     @desserts_summary = desserts_summary(thursday)
     @total_orders = Order.where(meal_date: thursday).count
     generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, thursday)
+    set_json
   end
 
   def friday
@@ -65,6 +69,7 @@ class DayController < ApplicationController
     @desserts_summary = desserts_summary(friday)
     @total_orders = Order.where(meal_date: friday).count
     generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, friday)
+    set_json
   end
 
   private
@@ -72,6 +77,7 @@ class DayController < ApplicationController
   def generate_pdf(meals_summary, snacks_summary, desserts_summary, day)
     respond_to do |format|
       format.html
+      format.json
       format.pdf do
         pdf = OrdersPdf.new(meals_summary, snacks_summary, desserts_summary, day)
         send_data pdf.render, filename: "orders.pdf",
@@ -96,6 +102,13 @@ class DayController < ApplicationController
       end
     end
     meal_date
+  end
+
+  def set_json
+    respond_to do |format|
+      format.html
+      format.json { render json: { meals_summary: @meals_summary } }
+    end
   end
 
   def set_days
