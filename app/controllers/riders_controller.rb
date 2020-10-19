@@ -1,21 +1,20 @@
 class RidersController < ApplicationController
   before_action :set_day, only: [:show, :deliveries]
-  def index
-  end
 
   def show
-    @riders = Rider.all
+    @riders = policy_scope(Rider).all
     @rider = Rider.find(params[:id])
     @delivery_groups = @rider.deliveries
     @orders = Order.where(meal_date: assign_date(@day), rider_id: @rider.id)
+    authorize @riders
   end
 
-  def deliveries
-    @riders = Rider.all
-    @users = User.all.where(role: "Delivery")
-    @orders = Order.where(meal_date: assign_date(@day))
-    # update_all
-  end
+  # def deliveries
+  #   @riders = Rider.all
+  #   @users = User.all.where(role: "Delivery")
+  #   @orders = Order.where(meal_date: assign_date(@day))
+  #   # update_all
+  # end
 
   # def update_all
   #   @order = Order.find_by(params[:id])

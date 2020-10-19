@@ -2,13 +2,12 @@ class PassthroughController < ApplicationController
   def index
   path =  case current_user.role
           when 'Cook'
-              root_path
-          # when 'Delivery'
-          #   rails_admin_path
+              current_day
+          when 'Delivery'
+              deliveries_path
           when 'Admin'
             orders_path
     end
-    path = current_day
     redirect_to path
   end
 

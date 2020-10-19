@@ -9,7 +9,9 @@
       <li><%= link_to "Reparto", deliveries_path %></li>
     <% end %>
     <li><%= link_to "Pedidos totales", orders_path %></li>
-    <li><%= link_to "", new_order_path, class: "fas fa-plus-square" %></li>
+    <% if current_user && policy(Order).create? %>
+      <li><%= link_to "", new_order_path, class: "fas fa-plus-square" %></li>
+    <% end %>
     <li><%= link_to "", destroy_user_session_path, method: :delete, class: "fas fa-sign-out-alt" %></li>
   </ul>
 </nav>

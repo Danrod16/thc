@@ -1,20 +1,23 @@
 class StickersController < ApplicationController
   before_action :set_sticker, only: [:show, :edit, :update, :destroy]
   before_action :selected_orders, only: [:new, :edit]
-  
+
   def index
-    @stickers = Sticker.all
+    @stickers = policy_scope(Sticker).all
     @remaining_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), sticker_id: nil).count
+    authorize @stickers
   end
 
   def show
     @selected_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), sticker_id: @sticker)
     generate_pdf(@selected_orders)
+    authorize @sticker
   end
 
   def new
     @sticker = Sticker.new
     @selected_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), sticker_id: nil)
+    authorize @sticker
   end
 
   def create
@@ -25,6 +28,7 @@ class StickersController < ApplicationController
     else
       render :new
     end
+    authorize @sticker
   end
 
   def edit
@@ -34,11 +38,13 @@ class StickersController < ApplicationController
     @sticker.update(stickers_params)
     redirect_to stickers_path
     flash[:alert] = "Etiquetas actualizadas"
+    authorize @sticker
   end
 
   def destroy
     @sticker.destroy
     redirect_to stickers_path
+    authorize @sticker
   end
 
   private

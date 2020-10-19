@@ -1,4 +1,4 @@
-section {
+.content {
   margin-left: 140px;
   width: 90%;
   -webkit-transition: all .5s ease;
@@ -8,6 +8,7 @@ section {
   transition: all .5s ease;
 }
 .navbar {
+  display: block;
   background-color: white;
   width: 150px;
   position: absolute;
@@ -66,3 +67,23 @@ section {
   width: 90px;
 }
 
+// Smallest device
+@media (min-width: 100px) and (max-width: 575px) {
+  .content {
+      margin-left: 0px;
+  }
+  .navbar {
+    display: none;
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) and (max-width: 812px) {
+  .content {
+      margin: 0px;
+      width: 100%;
+  }
+  .navbar {
+    display: none;
+  }
+}

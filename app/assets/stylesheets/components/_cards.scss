@@ -100,3 +100,37 @@
     font-weight: 300;
   }
 }
+
+.form-control {
+  border-radius: 5px;
+}
+
+// Smallest device
+@media (min-width: 100px) and (max-width: 575px) {
+  .cards {
+    grid-template-columns: 1fr
+  }
+
+  .header {
+    display: block;
+    p {
+      margin-bottom: 10px;
+      line-height: 20px;
+    }
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) and (max-width: 812px) {
+  .cards {
+      grid-template-columns: 1fr
+  }
+  .header {
+    display: block;
+    p {
+      margin-bottom: 10px;
+      line-height: 20px;
+    }
+  }
+}
+
