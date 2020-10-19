@@ -107,7 +107,12 @@ class DaysController < ApplicationController
   def set_json
     respond_to do |format|
       format.html
-      format.json { render json: { meals_summary: @meals_summary } }
+      format.json { render json: { meals_summary: @meals_summary,
+                                   meals: @meals,
+                                   snacks_summary: @snacks_summary,
+                                   snacks: @snacks,
+                                   desserts_summary: @desserts_summary,
+                                   desserts: @desserts} }
     end
   end
 
