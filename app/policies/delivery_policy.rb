@@ -5,7 +5,7 @@ class DeliveryPolicy < ApplicationPolicy
     end
   end
   def new?
-    user.role == "admin"
+    user.admin?
   end
 
   def create?
@@ -21,10 +21,10 @@ class DeliveryPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.role == "admin"
+    user.admin?
   end
 
   def destroy
-    user.role == "admin"
+    user.admin?
   end
 end
