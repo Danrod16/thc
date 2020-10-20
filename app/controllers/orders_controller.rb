@@ -12,7 +12,7 @@ class OrdersController < ApplicationController
     @order = Order.create(order_params)
     if @order.save
       redirect_to new_order_path
-      flash[:alert] = "Nuevo pedido creado, Gracias Jessica!"
+      flash[:alert] = "Nuevo pedido creado, Gracias #{current_user.first_name}!!"
     else
       render :new
     end
