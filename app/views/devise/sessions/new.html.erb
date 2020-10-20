@@ -6,14 +6,17 @@
   <%= image_tag("https://res.cloudinary.com/therainycloud/image/upload/v1601637674/thc-logo-1_dfmhnc.png") %>
     <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="form-inputs">
-        <%= f.input :email,
-                    required: false,
-                    autofocus: true,
-                    input_html: { autocomplete: "email" } %>
+        <%= f.input :user_name,
+                    label: "Nombre de usuario",
+                    required: true,
+                    autofocus: true %>
         <%= f.input :password,
-                    required: false,
+                    label: "Contraseña",
+                    required: true,
                     input_html: { autocomplete: "current-password" } %>
-        <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+        <%= f.input :remember_me, 
+                    label: "Recordarme",
+                    as: :boolean if devise_mapping.rememberable? %>
       </div>
 
       <div class="form-actions">

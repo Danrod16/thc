@@ -135,10 +135,10 @@ class Order < ApplicationRecord
   end
 
   def self.format_notes(note)
-    if note.downcase.match?(/(^no$)|(^none$)|(^ninguno$)|(^nothing$)/)
+    if note.downcase.match?(/(^no$)|(^none$)|(^ninguno$)|(^nothing$)|(^nope$)/)
       "-"
     else
-      note
+      note.downcase.capitalize
     end
   end
 
@@ -148,7 +148,8 @@ class Order < ApplicationRecord
                               .find { |e| e[variant_type]}
                               .gsub(regex, "")
                               .downcase
-    if new_format.include?("no customisation")
+                              .capitalize
+    if new_format.include?("No customisation")
       "-"
     elsif new_format.match?(/\(.*\)/)
       new_format.gsub(/ \(.*\)/, "")

@@ -1,6 +1,26 @@
 <div class="tab-content" id="myTabContent" data-controller="orders" data-path="<%= @path %>">
-    <a class="toggler" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"></i>Resumen</a>
-    <%# <i class="fas fa-arrows-alt-v"> %>
+  <div class="nav-wrapper-tabs">
+    <div class="tabs-wrapper">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#meals" role="tab" aria-controls="meals" aria-selected="true">Bowls</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#snacks" role="tab" aria-controls="snacks" aria-selected="false">Snacks</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="contact-tab" data-toggle="tab" href="#desserts" role="tab" aria-controls="desserts" aria-selected="false">Postres</a>
+        </li>
+      </ul>
+    </div>
+    <div class="">
+      <a class="toggler" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"></i>Resumen</a>
+      <%= link_to polymorphic_path(@path, format: :pdf), target: "_blank", class: "button-primary" do %>
+        <i class="fas fa-file-download"></i> 
+        Descargar
+      <% end %>
+    </div>
+  </div>
   <div class="tab-pane fade show active" id="meals" role="tabpanel" aria-labelledby="home-tab">
     <div class="collapse multi-collapse" id="multiCollapseExample1">
       <%= render 'table_meals_summary' %>
@@ -23,17 +43,17 @@
               <tr>
                 <td><%= meal.meal_date %></td>
                 <td><%= meal.customer_name %></td>
-                <td><%= meal.product.meal_name.downcase.capitalize %></td>
-                <td><%= meal.meal_size.capitalize %></td>
-                <td><%= meal.meal_protein.capitalize %></td>
-                <td><%= meal.meal_custom.capitalize %></td>
-                <td><%= meal.notes.downcase.capitalize %></td>
+                <td><%= meal.product.meal_name %></td>
+                <td><%= meal.meal_size %></td>
+                <td><%= meal.meal_protein %></td>
+                <td><%= meal.meal_custom %></td>
+                <td><%= meal.notes %></td>
               </tr>
             <% end %>
           </tbody>
         </table>
     </div>
-    <p><strong>Total pedidos de hoy: <%= @total_orders %></strong></p>
+    <p data-target="orders.totalOrders"><strong>Total pedidos de hoy: <%= @total_orders %></strong></p>
   </div>
 
   <div class="tab-pane fade" id="snacks" role="tabpanel" aria-labelledby="profile-tab">
@@ -55,8 +75,8 @@
               <tr>
                 <td><%= snack.meal_date %></td>
                 <td><%= snack.customer_name %></td>
-                <td><%= snack.product.meal_name.downcase.capitalize %></td>
-                <td><%= snack.notes.downcase.capitalize %></td>
+                <td><%= snack.product.meal_name %></td>
+                <td><%= snack.notes %></td>
               </tr>
             <% end %>
           </tbody>
@@ -83,8 +103,8 @@
             <tr>
               <td><%= dessert.meal_date %></td>
               <td><%= dessert.customer_name %></td>
-              <td><%= dessert.product.meal_name.downcase.capitalize %></td>
-              <td><%= dessert.notes.downcase.capitalize %></td>
+              <td><%= dessert.product.meal_name %></td>
+              <td><%= dessert.notes %></td>
             </tr>
           <% end %>
         </tbody>

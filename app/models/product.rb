@@ -17,14 +17,14 @@ class Product < ApplicationRecord
   def self.create_products(product)
     Product.create(product_id: product['_id'],
                    name: product['name'], description: product['description'],
-                   meal_name: product['meal-name'],
+                   meal_name: product['meal-name'].downcase.capitalize,
                    category_id: Product.assign_category(product['category'].first))
   end
 
   def self.update_product(product)
   new_product = Product.find_by(product_id: product['_id'])
   new_product.update(name: product['name'], description: product['description'],
-                 meal_name: product['meal-name'])
+                 meal_name: product['meal-name'].downcase.capitalize)
   end
 
   def self.assign_category(category_id)

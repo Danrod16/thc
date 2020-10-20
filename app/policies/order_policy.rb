@@ -6,7 +6,7 @@ class OrderPolicy < ApplicationPolicy
   end
 
   def new?
-    user.role == "admin"
+    user.admin?
   end
 
   def create?
@@ -22,10 +22,10 @@ class OrderPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.role == "admin"
+    user.admin?
   end
 
   def destroy?
-    user.role == "admin"
+    user.admin?
   end
 end

@@ -11,7 +11,7 @@ class DaysController < ApplicationController
     @meals_summary = day_summary(monday)
     @snacks_summary = snacks_summary(monday)
     @desserts_summary = desserts_summary(monday)
-    @meal_name = @meals.first.product.meal_name.downcase.capitalize
+    @meal_name = @meals.first.product.meal_name
     @total_orders = Order.where(meal_date: monday).count
     generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, monday)
     set_json
@@ -27,7 +27,7 @@ class DaysController < ApplicationController
     @snacks_summary = snacks_summary(tuesday)
     @desserts_summary = desserts_summary(tuesday)
     @total_orders = Order.where(meal_date: tuesday).count
-    @meal_name = @meals.first.product.meal_name.downcase.capitalize
+    @meal_name = @meals.first.product.meal_name
     generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, tuesday)
     set_json
   end
@@ -42,7 +42,7 @@ class DaysController < ApplicationController
     @snacks_summary = snacks_summary(wednesday)
     @desserts_summary = desserts_summary(wednesday)
     @total_orders = Order.where(meal_date: wednesday).count
-    @meal_name = @meals.first.product.meal_name.downcase.capitalize
+    @meal_name = @meals.first.product.meal_name
     generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, wednesday)
     set_json
   end
@@ -57,7 +57,7 @@ class DaysController < ApplicationController
     @snacks_summary = snacks_summary(thursday)
     @desserts_summary = desserts_summary(thursday)
     @total_orders = Order.where(meal_date: thursday).count
-    @meal_name = @meals.first.product.meal_name.downcase.capitalize
+    @meal_name = @meals.first.product.meal_name
     generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, thursday)
     set_json
   end
@@ -72,7 +72,7 @@ class DaysController < ApplicationController
     @snacks_summary = snacks_summary(friday)
     @desserts_summary = desserts_summary(friday)
     @total_orders = Order.where(meal_date: friday).count
-    @meal_name = @meals.first.product.meal_name.downcase.capitalize
+    @meal_name = @meals.first.product.meal_name
     generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, friday)
     set_json
   end
@@ -112,13 +112,15 @@ class DaysController < ApplicationController
   def set_json
     respond_to do |format|
       format.html
+      format.pdf
       format.json { render json: { meals_summary: @meals_summary,
                                    meals: @meals,
                                    snacks_summary: @snacks_summary,
                                    snacks: @snacks,
                                    desserts_summary: @desserts_summary,
                                    desserts: @desserts, 
-                                   meal_name: @meal_name } }
+                                   meal_name: @meal_name,
+                                   total_orders: @total_orders } }
     end
   end
 
@@ -127,9 +129,9 @@ class DaysController < ApplicationController
   end
 
   def day_summary(day)
-    size = ["regular", "large"]
-    protein = ["-", "vegetarian", "vegan"]
-    customisation = ["-", "low carb", "high carb", "high protein", "keto", "high protein/low carb"]
+    size = ["Regular", "Large"]
+    protein = ["-", "Vegetarian", "Vegan"]
+    customisation = ["-", "Low carb", "High carb", "High protein", "Keto", "High protein/low carb"]
 
     summary = []
     meal = []
