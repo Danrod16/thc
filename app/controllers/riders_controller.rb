@@ -5,22 +5,9 @@ class RidersController < ApplicationController
     @riders = policy_scope(Rider).all
     @rider = Rider.find(params[:id])
     @delivery_groups = @rider.deliveries
-    @orders = Order.where(meal_date: assign_date(@day), rider_id: @rider.id)
+    # @orders = Order.where(meal_date: assign_date(@day), rider_id: @rider.id)
     authorize @riders
   end
-
-  # def deliveries
-  #   @riders = Rider.all
-  #   @users = User.all.where(role: "Delivery")
-  #   @orders = Order.where(meal_date: assign_date(@day))
-  #   # update_all
-  # end
-
-  # def update_all
-  #   @order = Order.find_by(params[:id])
-  #   @order.rider_id = rider_id
-  #   @order.save
-  # end
 
   private
 
@@ -44,10 +31,4 @@ class RidersController < ApplicationController
   def set_day
     @day = Date.today.strftime("%A")
   end
-
-  # def rider_names
-  #   @riders = Rider.all.each do |rider|
-  #     "#{rider.user.first_name}"
-  #   end
-  # end
 end

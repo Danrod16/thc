@@ -14,11 +14,11 @@ class StickerPolicy < ApplicationPolicy
   end
 
   def index?
-    return true
+    user.admin? || user.cook?
   end
 
   def show?
-    return true
+    user.admin? || user.cook?
   end
 
   def edit?

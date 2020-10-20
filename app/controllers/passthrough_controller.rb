@@ -6,7 +6,7 @@ class PassthroughController < ApplicationController
           when "cook"
             current_day
           when "rider"
-              deliveries_path
+              rider_path(current_user.riders.first)
     end
     redirect_to path
   end

@@ -1,4 +1,9 @@
-<%= link_to "< Atrás", deliveries_path %>
+<% if current_user && current_user.rider? %>
+  <%= link_to "< Atrás", rider_path(current_user.riders.first) %>
+<% else %>
+  <%= link_to "< Atrás", deliveries_path %>
+<% end %>
+
 <div class="header">
   <h1><%= @delivery_group.name %></h1>
   <p>Rider: <%= @delivery_group.rider.name %></p>
@@ -13,7 +18,6 @@
           <tr>
             <th>Fecha</th>
             <th>Nombre</th>
-            <!-- <th>Producto</th> -->
             <th>Telefono</th>
             <th>Dirección</th>
             <th>Notas</th>
