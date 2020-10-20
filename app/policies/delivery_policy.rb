@@ -13,7 +13,7 @@ class DeliveryPolicy < ApplicationPolicy
   end
 
   def index?
-    return true
+    user.admin? || user.cook?
   end
 
   def show?

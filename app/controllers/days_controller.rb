@@ -119,7 +119,6 @@ class DaysController < ApplicationController
                                    snacks: @snacks,
                                    desserts_summary: @desserts_summary,
                                    desserts: @desserts, 
-                                   meal_name: @meal_name,
                                    total_orders: @total_orders } }
     end
   end

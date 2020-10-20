@@ -14,7 +14,6 @@ export default class extends Controller {
    .then(response => response.json())
    .then((data) => {
 
-    const mealName = data.meal_name;
     // Meals raw table
     this.mealsRawTarget.innerHTML = ""
     data.meals.forEach( e => {
@@ -22,7 +21,6 @@ export default class extends Controller {
         `<tr>
           <td>${e.meal_date}</td>
           <td>${e.customer_name}</td>
-          <td>${mealName}</td>
           <td>${e.meal_size}</td>
           <td>${e.meal_protein}</td>
           <td>${e.meal_custom}</td>

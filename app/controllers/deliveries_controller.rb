@@ -8,7 +8,8 @@ class DeliveriesController < ApplicationController
 
   def show
     @delivery_group = Delivery.find(params[:id])
-    generate_pdf(@delivery_group)
+    @total_delivery_orders = Order.where(delivery_id: @delivery_group).count
+    generate_pdf(@delivery_group, @total_delivery_orders)
     authorize @delivery_group
   end
 
@@ -95,11 +96,11 @@ class DeliveriesController < ApplicationController
     redirect_to delivery_path(@order.delivery)
   end
 
-  def generate_pdf(delivery_group)
+  def generate_pdf(delivery_group, total_delivery_orders)
     respond_to do |format|
       format.html
       format.pdf do
-        pdf = DeliveryPdf.new(delivery_group)
+        pdf = DeliveryPdf.new(delivery_group, total_delivery_orders)
         send_data pdf.render, filename: "delivery.pdf",
                               type: "application/pdf",
                               disposition: "inline"

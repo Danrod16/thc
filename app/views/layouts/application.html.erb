@@ -13,15 +13,17 @@
 
   <body>
     <%= render 'shared/flashes' %>
-    <% if current_user %>
-    <%= render "shared/side_bar" %>
-    <section class="content">
+    <% if !current_user || current_user.rider? %>
       <div class="dashboard">
         <%= yield %>
       </div>
-    </section>
     <% else %>
+      <%= render "shared/side_bar" %>
+      <section class="content">
+        <div class="dashboard">
           <%= yield %>
+      </div>
+    </section>
     <% end %>
   </body>
 </html>

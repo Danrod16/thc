@@ -1,6 +1,12 @@
-<%= link_to "< Atrás", deliveries_path %>
+<% if current_user && current_user.rider? %>
+  <%= link_to "< Atrás", rider_path(current_user.riders.first) %>
+<% else %>
+  <%= link_to "< Atrás", deliveries_path %>
+<% end %>
+
 <div class="header">
   <h1><%= @delivery_group.name %></h1>
+  <p>Total de pedidos: <%= @total_delivery_orders %></p>
   <p>Rider: <%= @delivery_group.rider.name %></p>
   <%= link_to delivery_path(@delivery_group, format: :pdf), target: "_blank", class: "button-primary" do %>
   <i class="fas fa-file-download"></i>
@@ -13,7 +19,6 @@
           <tr>
             <th>Fecha</th>
             <th>Nombre</th>
-            <!-- <th>Producto</th> -->
             <th>Telefono</th>
             <th>Dirección</th>
             <th>Notas</th>
@@ -37,7 +42,7 @@
               input_html: {value: true},
               autofocus: true %>
               <% if order.delivered == true %>
-                <%= f.button :submit, "Entragado", class: "btn", data: { confirm: "Confirmar entrega" } %>
+                <%= f.button :submit, "Entregado", class: "btn", data: { confirm: "Confirmar entrega" } %>
               <% else %>
                 <%= f.button :submit, "Entregar", class: "button-primary", data: { confirm: "Confirmar entrega" } %>
               <% end %>
