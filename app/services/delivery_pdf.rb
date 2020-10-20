@@ -1,8 +1,9 @@
 class DeliveryPdf
   include Prawn::View
 
-  def initialize(delivery_group)
+  def initialize(delivery_group, total_delivery_orders)
     @delivery_group = delivery_group
+    @total_delivery_orders = total_delivery_orders
     @date = set_date
     @hour = Time.now.strftime("%H:%M")
     delivery_summary
@@ -29,6 +30,8 @@ class DeliveryPdf
 
   def delivery_rider
     text "#{@delivery_group.rider.user.first_name} #{@delivery_group.rider.user.last_name}", size: 14, style: :bold
+    move_down 10
+    text "Total de pedidos: #{@total_delivery_orders}"
     move_down 10
   end
 

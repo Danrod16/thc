@@ -13,7 +13,7 @@
 
   <body>
     <%= render 'shared/flashes' %>
-    <% if current_user && current_user.rider? %>
+    <% if !current_user || current_user.rider? %>
       <div class="dashboard">
         <%= yield %>
       </div>
@@ -22,8 +22,8 @@
       <section class="content">
         <div class="dashboard">
           <%= yield %>
-        </div>
-      </section>
+      </div>
+    </section>
     <% end %>
   </body>
 </html>
