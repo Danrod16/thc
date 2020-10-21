@@ -2,26 +2,26 @@
     <div class="row">
       <div class="col-6">
         <%= simple_form_for(@order) do |f| %>
+        <%= f.error_notification %>
         <%= f.association :product,
                     required: true,
-                    label: "Producto",
-                    autofocus: true %>
+                    label: "Producto" %>
         <%= f.input :category,
                     required: true,
                     label: "Categoría",
                     collection: ["Meals", "Snacks", "Desserts"] %>
         <%= f.input :meal_size,
                     required: true,
-                    collection: ["regular", "large"],
+                    collection: ["Regular", "Large"],
                     label: "Tamaño del producto" %>
         <%= f.input :meal_protein,
                     required: true,
-                    collection: ["no customisation", "vegetarian", "vegan"],
+                    collection: ["-", "Vegetarian", "Vegan"],
                     label: "Proteína" %>
         <%= f.input :meal_custom,
                     required: true,
-                    collection: ["no customisation", "low carb", "high carb", "high protein", "keto", "high protein/low carb"],
-                    label: "Otra customización" %>
+                    collection: ["-", "Low carb", "High carb", "High protein", "Keto", "High protein/low carb"],
+                    label: "Customización" %>
         <%= f.input :meal_date,
                     required: true,
                     placeholder: "ej: 01-12-2020",
@@ -31,16 +31,15 @@
                     label: "Notas" %>
         </div>
       <div class="col-6">
-        <%= f.error_notification %>
         <%= f.input :customer_name,
                     required: true,
                     label: "Nombre de Cliente" %>
         <%= f.input :customer_email,
                     required: true,
-                    label: "Email de cliente" %>
+                    label: "Email de Cliente" %>
         <%= f.input :telephone,
                     required: true,
-                    label: "Telefono" %>
+                    label: "Teléfono" %>
         <%= f.input :delivery_address,
                     required: true,
                     label: "Dirección" %>
@@ -51,5 +50,3 @@
     <% end %>
     </div>
 </div>
-
-
