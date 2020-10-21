@@ -32,6 +32,7 @@ class StickersController < ApplicationController
   end
 
   def edit
+    authorize @sticker
   end
 
   def update
