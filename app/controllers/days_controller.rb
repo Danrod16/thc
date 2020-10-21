@@ -1,6 +1,6 @@
 class DaysController < ApplicationController
   before_action :set_days
-  before_action :webflow_fetch
+  # before_action :webflow_fetch
 
   def monday
     monday = assign_date("Monday")
