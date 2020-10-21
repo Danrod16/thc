@@ -22,8 +22,8 @@
   border-radius: 10px;
   overflow-y: scroll;
   overflow-x: scroll;
-  height: 70vh;
-  margin-bottom: 20px;
+  height: 75vh;
+  margin-bottom: 10px;
   box-shadow: $box-shadow;
 }
 
@@ -41,7 +41,7 @@
 
   .date { min-width: 120px; }
 
-  .name { min-width: 270px; }
+  .name { min-width: 170px; }
 
   .product { min-width: 180px; }
 

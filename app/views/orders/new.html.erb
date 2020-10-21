@@ -9,8 +9,7 @@
         <%= f.input :category,
                     required: true,
                     label: "Categoría",
-                    collection: ["Meals", "Snacks", "Desserts"],
-                    autofocus: true %>
+                    collection: ["Meals", "Snacks", "Desserts"] %>
         <%= f.input :meal_size,
                     required: true,
                     collection: ["regular", "large"],
@@ -26,34 +25,28 @@
         <%= f.input :meal_date,
                     required: true,
                     placeholder: "ej: 01-12-2020",
-                    label: "Fecha de entrega del pedido",
-                    autofocus: true %>
+                    label: "Fecha de entrega del pedido" %>
         <%= f.input :notes,
                     required: true,
-                    label: "Notas",
-                    autofocus: true %>
+                    label: "Notas" %>
         </div>
       <div class="col-6">
         <%= f.error_notification %>
         <%= f.input :customer_name,
                     required: true,
-                    label: "Nombre de Cliente",
-                    autofocus: true %>
+                    label: "Nombre de Cliente" %>
         <%= f.input :customer_email,
                     required: true,
-                    label: "Email de cliente",
-                    autofocus: true %>
+                    label: "Email de cliente" %>
         <%= f.input :telephone,
                     required: true,
-                    label: "Telefono",
-                    autofocus: true %>
+                    label: "Telefono" %>
         <%= f.input :delivery_address,
                     required: true,
-                    label: "Dirección",
-                    autofocus: true %>
+                    label: "Dirección" %>
         <div class="form-actions">
           <%= f.button :submit, "Crear pedido", class: "button-primary" %>
-        </div>      
+        </div>
       </div>
     <% end %>
     </div>

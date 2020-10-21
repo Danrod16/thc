@@ -23,7 +23,7 @@ class DeliveriesController < ApplicationController
     @delivery_group = Delivery.create(delivery_params)
     @today_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil)
     if @delivery_group.save
-      flash[:alert] = "Grupo creado!"
+      flash[:success] = "Grupo creado!"
       redirect_to new_delivery_path
     else
       flash[:alert] = "Error en creación"
@@ -43,7 +43,7 @@ class DeliveriesController < ApplicationController
     @delivery_group.update(delivery_params)
     if @delivery_group.save
       redirect_to delivery_path(@delivery_group)
-      flash[:alert] = "Reparto modificado, Gracias #{current_user.first_name}!"
+      flash[:success] = "Reparto modificado, Gracias #{current_user.first_name}!"
     else
       render :edit
       flash[:alert] = "Error al modificar reparto!"
