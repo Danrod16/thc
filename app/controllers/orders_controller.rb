@@ -12,7 +12,7 @@ class OrdersController < ApplicationController
     @order = Order.create(order_params)
     if @order.save
       redirect_to new_order_path
-      flash[:alert] = "Nuevo pedido creado, Gracias #{current_user.first_name}!!"
+      flash[:success] = "Nuevo pedido creado, Gracias #{current_user.first_name}!!"
     else
       render :new
     end
@@ -46,7 +46,7 @@ class OrdersController < ApplicationController
         send_mailer
       else
         redirect_to deliveries_path
-        flash[:alert] = "Pedido modificado, Gracias #{current_user.first_name}!"
+        flash[:success] = "Pedido modificado, Gracias #{current_user.first_name}!"
       end
     else
       render :edit

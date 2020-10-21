@@ -24,7 +24,7 @@ class StickersController < ApplicationController
     @sticker = Sticker.new(stickers_params)
     if @sticker.save
       redirect_to stickers_path
-      flash[:alert] = "Etiquetas creadas"
+      flash[:success] = "Etiquetas creadas"
     else
       render :new
     end
@@ -37,7 +37,7 @@ class StickersController < ApplicationController
   def update
     @sticker.update(stickers_params)
     redirect_to stickers_path
-    flash[:alert] = "Etiquetas actualizadas"
+    flash[:success] = "Etiquetas actualizadas"
     authorize @sticker
   end
 

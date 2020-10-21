@@ -4,14 +4,14 @@
   </div>
   <ul class="list">
     <li><%= link_to "Cocina", root_path %></li>
-    <li><%= link_to "Etiquetas", stickers_path %></li>
+    <!-- <li><%#= link_to "Etiquetas", stickers_path %></li> -->
     <% if Rider.exists? %>
       <li><%= link_to "Reparto", deliveries_path %></li>
     <% end %>
     <li><%= link_to "Pedidos totales", orders_path %></li>
     <% if current_user && policy(Order).create? %>
       <li><%= link_to "", new_order_path, class: "fas fa-plus-square" %></li>
-      <li><%= link_to "", rails_admin_path, class: "fas fa-cogs" %></li>
+      <!-- <li><%#= link_to "", rails_admin_path, class: "fas fa-cogs" %></li> -->
     <% end %>
     <li><%= link_to "", destroy_user_session_path, method: :delete, class: "fas fa-sign-out-alt" %></li>
   </ul>

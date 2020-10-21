@@ -12,13 +12,12 @@ before_action :authenticate_user!
     { host: ENV["DOMAIN"] || "localhost:3000" }
   end
 
-  # Uncomment when you *really understand* Pundit!
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   def user_not_authorized
-    flash[:alert] = "No estas autorizado/a"
+    flash[:alert] = "No estas autorizado/a para completar esta acción"
     redirect_to(root_path)
   end
-  
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :user_name])
     devise_parameter_sanitizer.permit(:sign_in, keys: [:user_name])
