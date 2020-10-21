@@ -3,7 +3,9 @@
     <%= image_tag("https://res.cloudinary.com/therainycloud/image/upload/v1602757951/THC/5ea17a313db0d2b2f27e1b6c_small_logo_y-01_c6xnob.png") %>
   </div>
   <ul class="list">
-    <li><%= link_to "Cocina", root_path %></li>
+    <li>
+      <%= image_tag("https://res.cloudinary.com/therainycloud/image/upload/v1603285182/Untitled_design_31_atox2n.png") %>
+      <%= link_to "Cocina", root_path %></li>
     <!-- <li><%#= link_to "Etiquetas", stickers_path %></li> -->
     <% if Rider.exists? %>
       <li><%= link_to "Reparto", deliveries_path %></li>
