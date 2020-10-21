@@ -58,6 +58,7 @@ class OrdersController < ApplicationController
   def destroy
     @order = Order.find(params[:id])
     @order.destroy
+    redirect_to orders_path
     authorize @order
   end
 
