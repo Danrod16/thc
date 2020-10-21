@@ -6,4 +6,11 @@ class User < ApplicationRecord
   has_many :riders, dependent: :destroy
 
   enum role: [:admin, :cook, :rider]
+  after_create :create_rider
+
+  def create_rider
+    if self.rider?
+      Rider.create(name: self.first_name, user_id: self.id)
+    end
+  end
 end

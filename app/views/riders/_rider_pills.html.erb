@@ -2,16 +2,16 @@
   <% if policy(Delivery).create? %>
     <%= link_to "Nuevo Grupo", new_delivery_path, class: "button-secondary" %>
   <% end %>
+      <% if current_page?(deliveries_path) %>
+        <%= link_to "Pedidos totales", deliveries_path, class: "nav-pills-current" %>
+      <% else %>
+        <%= link_to "Pedidos totales", deliveries_path, class: "nav-pills" %>
+      <% end %>
   <div class="dropdown">
     <button class="button-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Riders
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <% if current_page?(deliveries_path) %>
-          <%= link_to "Pedidos totales", deliveries_path, class: "dropdown-item" %>
-        <% else %>
-          <%= link_to "Pedidos totales", deliveries_path, class: "dropdown-item" %>
-        <% end %>
         <% @riders.each do |rider| %>
           <% if current_page?(rider_path(rider)) %>
               <%= link_to "#{rider.user.first_name} #{rider.user.last_name}", rider_path(rider), class: "dropdown-item-current" %>

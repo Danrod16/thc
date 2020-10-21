@@ -24,13 +24,15 @@ RailsAdmin.config do |config|
   # config.show_gravatar = true
 
   config.actions do
+    edit do
+      only ['User', 'Rider']
+    end
     dashboard                     # mandatory
     index                         # mandatory
     new
     export
     bulk_delete
     show
-    edit
     delete
     show_in_app
 
