@@ -39,7 +39,7 @@
   <div class="buttons-wrapper">
     <%= link_to "Editar", edit_order_path(@order), class: "button-primary"  %>
     <% if @order.order_id.nil? %>
-        <%= link_to "Eliminar", order_path(@order), method: :delete, class: "button-secondary"  %>
+        <%= link_to "Eliminar", order_path(@order), method: :delete, class: "button-secondary", data: {confirm: "Está seguro que quiere eliminar este pedido?"}  %>
     <% end %>
   </div>
 <% end %>
