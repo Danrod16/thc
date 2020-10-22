@@ -5,7 +5,8 @@
         <%= f.error_notification %>
         <%= f.association :product,
                     required: true,
-                    label: "Producto" %>
+                    label: "Producto",
+                    autofocus: true %>
         <%= f.input :category,
                     required: true,
                     label: "Categoría",
