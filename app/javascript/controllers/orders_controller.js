@@ -2,7 +2,8 @@ import { Controller } from "stimulus";
 
 export default class extends Controller {
   static targets = [ 'mealsRaw', 'snacksRaw', 'dessertsRaw',
-                     'mealsSummary', 'snacksSummary', 'dessertsSummary', 'totalOrders' ];
+                     'mealsSummary', 'snacksSummary', 'dessertsSummary', 
+                     'totalOrders', 'updatedAt' ];
 
   connect() {
     setInterval(this.refresh, 120000);
@@ -81,6 +82,9 @@ export default class extends Controller {
           <td>${e[1]}</td>
         </tr>`)});
 
+    // Updated at
+    this.updatedAtTarget.innerHTML = `Actualizado: <strong>${data.updated_at}</strong>`
+    
     // Total orders
     this.totalOrdersTarget.innerHTML = `<strong>Total pedidos de hoy: ${data.total_orders}</strong>`
 

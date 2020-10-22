@@ -13,7 +13,10 @@
         </li>
       </ul>
     </div>
-    <div class="">
+    <div class="flex-wrapper">
+      <p data-target="orders.updatedAt">Actualizado: <strong><%= @updated_at %></strong></p>
+    </div>
+    <div class="flex-wrapper">
       <a class="toggler" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"></i>Resumen</a>
       <%= link_to polymorphic_path(@path, format: :pdf), target: "_blank", class: "button-primary" do %>
         <i class="fas fa-file-download"></i> 
