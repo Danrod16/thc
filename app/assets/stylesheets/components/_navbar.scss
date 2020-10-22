@@ -74,8 +74,8 @@
 
 // Smallest device
 @media (min-width: 100px) and (max-width: 575px) {
-  .content {
-      margin-left: 0px;
+  .app-content {
+    padding-left: 0px;
   }
   .navbar {
     display: none;
@@ -84,9 +84,9 @@
 
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) and (max-width: 812px) {
-  .content {
-      margin: 0px;
-      width: 100%;
+  .app-content {
+    padding-left: 0px;
+    width: 100%;
   }
   .navbar {
     display: none;
