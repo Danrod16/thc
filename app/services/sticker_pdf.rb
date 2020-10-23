@@ -44,7 +44,7 @@ class StickerPdf
         image "thc-logo-1.png", width: 130
         move_down 10
         draw_text(order.product.meal_name, :at => [135, 80], :style => :bold, :size => 10)
-        bounding_box([135, 70], width: 125, height: 85) do
+        bounding_box([135, 70], width: 125, height: 120) do
           font_size(8)
           text order.customer_name  
           text "Talla: #{order.meal_size}"
