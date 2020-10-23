@@ -6,12 +6,13 @@
       placeholder: "Buscar pedido por Nombre, Email o Fecha"
     %>
     <%= submit_tag "Buscar", class: "button-primary" %>
-    <%= link_to "", :back, class: "fas fa-undo button-secondary", style: "line-height: 21px; margin-left: 2px;"  %>
+    <%= link_to "", :back, class: "fas fa-undo toggler", style: "line-height: 22px; margin-left: 5px;"  %>
   <% end %>
 </div>
 
 <div class="table-responsive-raw">
   <table class="table table-striped">
+    <thead>
       <tr>
         <th class="date">Fecha</th>
         <th class="name">Nombre</th>
@@ -21,7 +22,7 @@
         <th>Proteína</th>
         <th>Custom</th>
         <th>Notas</th>
-        <th>Ver pedido</th>
+        <th class="show">Ver pedido</th>
       </tr>
     </thead>
     <tbody>
@@ -35,7 +36,7 @@
             <td><%= order.meal_protein.capitalize %></td>
             <td><%= order.meal_custom.capitalize %></td>
             <td><%= order.notes.downcase.capitalize %></td>
-            <td><%= link_to "", order_path(order), class: "far fa-eye" %></td>
+            <td id="show"><%= link_to "", order_path(order), class: "far fa-eye" %></td>
           </tr>
       <% end %>
     </tbody>

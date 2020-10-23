@@ -1,1 +1,4 @@
 <%= render 'riders_table' %>
+<% if current_user.rider? %>
+  <%= link_to "", destroy_user_session_path, method: :delete, class: "fas fa-sign-out-alt" %>
+<% end %>
