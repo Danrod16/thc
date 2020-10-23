@@ -55,6 +55,7 @@ class DeliveriesController < ApplicationController
     @delivery_group = Delivery.find(params[:id])
     @delivery_group.destroy
     redirect_to deliveries_path
+    authorize @delivery_group
   end
 
   def reorganize
