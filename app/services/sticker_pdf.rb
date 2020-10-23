@@ -55,11 +55,11 @@ class StickerPdf
         end
         # stroke_bounds
       end    
-      bounding_box([0, 80], width: 270, height: 100) do
-      image "thc-QRCode.png", width: 80
-      bounding_box([108, 95], width: 140, height: 50) do
-        stroke_bounds
-      end
+      bounding_box([0, 85], width: 270, height: 100) do
+      image "thc-QRCode.png", width: 90
+      # bounding_box([108, 95], width: 140, height: 50) do
+      #   # stroke_bounds
+      # end
       # stroke_bounds
       end
     end
