@@ -28,6 +28,6 @@ before_action :authenticate_user!
   private
 
   def skip_pundit?
-    devise_controller? || params[:controller] =~ /(^(rails_)?admin)|(^pages$)|(^passthrough$)|(^days$)/
+    devise_controller? || params[:controller] =~ /(^(rails_)?admin)|(^pages$)|(^passthrough$)|(^days$)|(^orders$)/
   end
 end
