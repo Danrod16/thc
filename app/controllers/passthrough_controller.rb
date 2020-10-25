@@ -16,7 +16,7 @@ class PassthroughController < ApplicationController
   def current_day
     day = Date.today.strftime("%A").downcase
     if day == "sunday" || day == "saturday"
-      "/friday"
+      "/monday"
     else
       "/#{day}"
     end

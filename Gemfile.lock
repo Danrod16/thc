@@ -138,6 +138,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
+    json (2.3.0)
     kaminari (1.2.1)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.1)
@@ -176,6 +177,11 @@ GEM
     pg_search (2.3.3)
       activerecord (>= 5.2)
       activesupport (>= 5.2)
+    postmark (1.20.0)
+      json
+    postmark-rails (0.20.0)
+      actionmailer (>= 3.0.0)
+      postmark (~> 1.15)
     prawn (2.3.0)
       pdf-core (~> 0.8.1)
       ttfunk (~> 1.6)
@@ -336,6 +342,7 @@ DEPENDENCIES
   listen (~> 3.2)
   pg (>= 0.18, < 2.0)
   pg_search (~> 2.3.0)
+  postmark-rails
   prawn
   prawn-labels
   prawn-table
