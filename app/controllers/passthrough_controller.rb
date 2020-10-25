@@ -6,7 +6,7 @@ class PassthroughController < ApplicationController
           when "cook"
             current_day
           when "rider"
-              rider_path(current_user.riders.first)
+            rider_path(current_user.riders.first)
     end
     redirect_to path
   end
@@ -15,6 +15,10 @@ class PassthroughController < ApplicationController
 
   def current_day
     day = Date.today.strftime("%A").downcase
-    "/#{day}"
+    if day == "sunday" || day == "saturday"
+      "/monday"
+    else
+      "/#{day}"
+    end
   end
 end
