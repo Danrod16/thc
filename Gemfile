@@ -74,3 +74,5 @@ gem 'rails_sortable'
 gem 'will_paginate', '~> 3.1.0'
 gem 'pg_search', '~> 2.3.0'
 gem 'pundit'
+gem 'postmark-rails'
+

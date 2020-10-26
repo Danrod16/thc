@@ -4,7 +4,7 @@
 // that code so it'll be compiled.
 
 require("@rails/ujs").start()
-require("turbolinks").start()
+// require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
@@ -26,15 +26,13 @@ require("channels")
 import "bootstrap";
 
 // Internal imports, e.g:
-// import { initSelect2 } from '../components/init_select2';
-import { initSortable } from './init_sortable'; // <-- add this
 
 
 
-document.addEventListener('turbolinks:load', () => {
+// document.addEventListener('turbolinks:load', () => {
   // Call your functions here, e.g:
   // initSelect2();
-  initSortable(); // <-- add this
-});
-
+// });
+initSortable(); // <-- add this
+import { initSortable } from './init_sortable'; // <-- add this
 import "controllers"

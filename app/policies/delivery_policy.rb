@@ -28,7 +28,7 @@ class DeliveryPolicy < ApplicationPolicy
     edit?
   end
 
-  def destroy
+  def destroy?
     user.admin?
   end
 end

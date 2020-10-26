@@ -61,10 +61,13 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "thc_production"
 
   config.action_mailer.perform_caching = false
-
+    onfig.action_mailer.delivery_method     = :postmark
+  config.action_mailer.postmark_settings   = { api_token: ENV['POSTMARK_API_TOKEN'] }
+  config.action_mailer.default_url_options = { host: "thc-app.herokuapp.com" }
+  # or your custom domain name eg. "www.yourdomain.com"
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = false
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).

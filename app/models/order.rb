@@ -92,13 +92,41 @@ class Order < ApplicationRecord
   end
 
   def self.create_weekly(order, purchased_item)
-    days = Order.fetch_days(order, 5)
+    days = Order.fetch_days_weekly(order, 5)
     days.each do |day|
       Order.new_combo(order, purchased_item, day)
     end
   end
 
-  def self.fetch_days(order, days)
+  def self.create_monthly(order, purchased_item)
+    days = Order.fetch_days_monthly(order, 20)
+      days.each do |day|
+       Order.new_combo(order, purchased_item, day)
+     end
+   end
+
+  def self.fetch_days_monthly(order, days)
+    array = []
+    full_date = order["acceptedOn"].split("T")[0]
+    accepted_time = order["acceptedOn"].gsub("T", " ").split(".")[0].to_time
+    limited_time = "#{full_date} 11:00:00".to_time
+    if accepted_time > limited_time
+      day = Date.parse(full_date) + 1
+    else
+      day = Date.parse(full_date)
+    end
+    while array.length < days
+      if day.wday == 6 || day.wday == 0
+        day = day.next_day
+      else
+        array << { name: day.strftime("%A"), date: day.strftime("%d-%m-%Y")}
+        day = day.next_day
+      end
+    end
+    array
+  end
+
+  def self.fetch_days_weekly(order, days)
     array = []
     full_date = order["acceptedOn"].split("T")[0]
     day = Date.parse(full_date)
@@ -167,12 +195,6 @@ class Order < ApplicationRecord
     Product.where(name: name).first.id
   end
 
-  def self.create_monthly(order, purchased_item)
-    days = Order.fetch_days(order, 20)
-      days.each do |day|
-       Order.new_combo(order, purchased_item, day)
-     end
-   end
 
   def self.new_snack(order, purchased_item)
     Order.create(customer_name: Order.format_name(order["customerInfo"]["fullName"]),
@@ -207,10 +229,21 @@ class Order < ApplicationRecord
 
   def self.fetch_snack_date(order, purchased_item)
     day = Date.parse(order["acceptedOn"].split("T")[0])
-    if day.wday == 6
-      day = day.next_day.next_day
-    elsif day.wday == 0
-      day = day.next_day
+    if day.wday == 6 || day.wday == 0 #weekend
+      if day.wday == 6
+        day += 2
+      elsif day.wday == 0
+        day += 1
+      end
+    else
+      accepted_day = order["acceptedOn"].split("T")[0]
+      accepted_time = order["acceptedOn"].gsub("T", " ").split(".")[0].to_time
+      limited_time = "#{accepted_day} 11:00:00".to_time
+      if accepted_time > limited_time
+        day += 1
+      else
+        day
+      end
     end
     meal_date = day.strftime("%d-%m-%Y")
   end

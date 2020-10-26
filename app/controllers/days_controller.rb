@@ -1,5 +1,6 @@
 class DaysController < ApplicationController
   before_action :set_days
+  before_action :updated_at
   before_action :webflow_fetch
 
   def monday
@@ -118,8 +119,9 @@ class DaysController < ApplicationController
                                    snacks_summary: @snacks_summary,
                                    snacks: @snacks,
                                    desserts_summary: @desserts_summary,
-                                   desserts: @desserts, 
-                                   total_orders: @total_orders } }
+                                   desserts: @desserts,
+                                   total_orders: @total_orders,
+                                   updated_at: @updated_at } }
     end
   end
 
@@ -174,6 +176,10 @@ class DaysController < ApplicationController
       summary << dessert
     end
     summary
+  end
+
+  def updated_at
+    @updated_at = Time.now.strftime("%H:%M")
   end
 
   def webflow_fetch

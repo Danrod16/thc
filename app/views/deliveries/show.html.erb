@@ -29,24 +29,26 @@
         <tr data-id = <%= "#{order.id}" %>>
           <td><%= order.meal_date %></td>
           <td><%= order.customer_name %></td>
-          <td><%= order.telephone %></td>
+          <td><%= order.telephone if customer_name.present? %></td>
           <td><%= order.delivery_address %></td>
           <td><%= order.notes %></td>
           <td>
-              <%# = simple_form_for(order) do |f| %>
-              <%#= f.error_notification %>
-              <%#= f.input :delivered,
-              required: true,
-              label: false,
-              :as => :hidden,
-              input_html: {value: true},
-              autofocus: true %>
-              <%# if order.delivered == true %>
-                <%#= f.button :submit, "Entregado", class: "btn", data: { confirm: "Confirmar entrega" } %>
-              <%# else %>
-                <%#= f.button :submit, "Entregar", class: "button-primary", data: { confirm: "Confirmar entrega" } %>
-              <%# end %>
-            <%# end %>
+            <% if order.customer_email.present? %>
+                <% = simple_form_for(order) do |f| %>
+                <%= f.error_notification %>
+                <%= f.input :delivered,
+                required: true,
+                label: false,
+                :as => :hidden,
+                input_html: {value: true},
+                autofocus: true %>
+                <% if order.delivered == true %>
+                  <%= f.button :submit, "Entregado", class: "btn", data: { confirm: "Confirmar entrega" } %>
+                <% else %>
+                  <%= f.button :submit, "Entregar", class: "button-primary", data: { confirm: "Confirmar entrega" } %>
+                <% end %>
+              <% end %>
+            <% end %>
           </td>
         </tr>
       <% end %>

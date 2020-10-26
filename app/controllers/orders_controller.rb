@@ -1,4 +1,4 @@
-class OrdersController < ApplicationController
+  class OrdersController < ApplicationController
   def weekly
     @orders = Order.paginate(page: params[:page], per_page: 40)
   end

@@ -1,3 +1,5 @@
+.search-bar { margin-bottom: 18px; }
+
 .search-bar form{
   display: flex;
   margin-bottom: 10px;
@@ -9,4 +11,6 @@
     line-height: 18px !important;
     border-style: none;
   }
+
+  .button-primary { margin: 0 5px; }
 }
