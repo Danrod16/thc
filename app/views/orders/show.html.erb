@@ -10,8 +10,8 @@
           <div class="info-content">
             <ul>
               <li><strong>Nombre: </strong> <%= @order.customer_name %></li>
-              <li><strong>Email: </strong><%= @order.customer_email %></li>
-              <li><strong>Teléfono: </strong><%= @order.telephone %></li>
+              <li><strong>Email: </strong><%= @order.customer_email if @order.customer_email.present? %></li>
+              <li><strong>Teléfono: </strong><%= @order.telephone if @order.telephone.present? %></li>
               <li><strong>Dirección: </strong><%= @order.delivery_address %></li>
             </ul>
           </div>
