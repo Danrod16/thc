@@ -6,7 +6,12 @@
     <li>
       <%= image_tag("https://res.cloudinary.com/therainycloud/image/upload/v1603285182/Untitled_design_31_atox2n.png") %>
       <%= link_to "Cocina", root_path %></li>
-    <!-- <li><%#= link_to "Etiquetas", stickers_path %></li> -->
+      <% if current_user && policy(Sticker).create? %>
+        <li>
+          <%= image_tag("https://res.cloudinary.com/therainycloud/image/upload/v1602684570/THC/Untitled_design_29_nlqeu1.png") %>
+          <%= link_to "Etiquetas", stickers_path %>
+          </li>
+      <% end %>
     <% if Rider.exists? %>
       <li>
       <%= image_tag("https://res.cloudinary.com/therainycloud/image/upload/v1603287638/THC/Untitled_design_33_b7tjm3.png") %>

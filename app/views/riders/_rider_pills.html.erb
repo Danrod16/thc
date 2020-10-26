@@ -2,7 +2,7 @@
   <% if policy(Delivery).create? %>
     <%= link_to "Nuevo Grupo", new_delivery_path, class: "button-secondary" %>
   <% end %>
-      <%= link_to "Pedidos", deliveries_path, class: "button-secondary" %>
+      <%= link_to "Pedidos", deliveries_path, class: "button-secondary", style: "margin-left: 5px;" %>
   <div class="dropdown">
     <button class="button-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Riders
