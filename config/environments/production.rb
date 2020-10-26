@@ -61,7 +61,7 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "thc_production"
 
   config.action_mailer.perform_caching = false
-    onfig.action_mailer.delivery_method     = :postmark
+  config.action_mailer.delivery_method     = :postmark
   config.action_mailer.postmark_settings   = { api_token: ENV['POSTMARK_API_TOKEN'] }
   config.action_mailer.default_url_options = { host: "thc-app.herokuapp.com" }
   # or your custom domain name eg. "www.yourdomain.com"
