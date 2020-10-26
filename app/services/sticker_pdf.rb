@@ -54,8 +54,9 @@ class StickerPdf
           # stroke_bounds
         end
         # stroke_bounds
-      end    
-      bounding_box([0, 85], width: 270, height: 100) do
+      end 
+        # subir el QRCode 
+      bounding_box([0, 95], width: 270, height: 100) do
       image "thc-QRCode.png", width: 90
       # bounding_box([108, 95], width: 140, height: 50) do
       #   # stroke_bounds
