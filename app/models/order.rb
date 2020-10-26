@@ -8,7 +8,6 @@ class Order < ApplicationRecord
                          error: 'Fecha invalida' }, on: :create
 
   after_update :set_sequence, if: :will_save_change_to_delivery_id?
-
   pg_search_scope :search_orders,
     against: [ :customer_name, :customer_email, :meal_date ],
     using: {
@@ -56,7 +55,6 @@ class Order < ApplicationRecord
     <td>#{notes}</td>".html_safe
   end
 
-
   private
 
   def self.fetch_orders(client)
@@ -82,6 +80,7 @@ class Order < ApplicationRecord
       Order.new_meal(order, purchased_item)
     end
   end
+
 
   def self.is_weekly?(purchased_item)
     purchased_item["productName"] == "Weekly Combo"

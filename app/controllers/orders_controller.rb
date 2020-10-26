@@ -1,4 +1,6 @@
   class OrdersController < ApplicationController
+  after_action :create_combos, only: [:create]
+  
   def weekly
     @orders = Order.paginate(page: params[:page], per_page: 40)
   end
@@ -72,5 +74,35 @@
     mail = OrderMailer.with(order: @order).delivered
     mail.deliver_now
     redirect_to delivery_path(@order.delivery)
+  end
+
+  def create_combos
+    order = Order.last
+    start_date = Date.parse(order.meal_date) + 1
+    days = 0
+    if order.product.name.include?("Weekly Combo")
+      days = 4
+    elsif order.product.name.include?("Monthly Combo")
+      days = 19
+    end
+    days.times do
+      Order.create(customer_name: order.customer_name,
+                  customer_email: order.customer_email,
+                  meal_size: order.meal_size,
+                  meal_protein: order.meal_protein,
+                  meal_custom: order.meal_custom,
+                  notes: order.notes,
+                  telephone: order.telephone,
+                  delivery_address: order.delivery_address,
+                  category: order.category,
+                  product_id: order.product_id,
+                  meal_date: start_date.strftime("%d-%m-%Y"))
+      start_date += 1
+      if start_date.wday == 6
+        start_date += 2
+      elsif start_date.wday == 0
+        start_date += 1
+      end
+    end
   end
 end

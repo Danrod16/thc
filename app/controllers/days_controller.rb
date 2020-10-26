@@ -6,9 +6,9 @@ class DaysController < ApplicationController
   def monday
     monday = assign_date("Monday")
     @path = "monday"
-    @meals = Order.where(meal_date: monday, category: "Meals")
-    @snacks = Order.where(meal_date: monday, category: "Snacks")
-    @desserts = Order.where(meal_date: monday, category: "Desserts")
+    @meals = Order.where(meal_date: monday, category: "Meals").order(created_at: :desc)
+    @snacks = Order.where(meal_date: monday, category: "Snacks").order(created_at: :desc)
+    @desserts = Order.where(meal_date: monday, category: "Desserts").order(created_at: :desc)
     @meals_summary = day_summary(monday)
     @snacks_summary = snacks_summary(monday)
     @desserts_summary = desserts_summary(monday)
