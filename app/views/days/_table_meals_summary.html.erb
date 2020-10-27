@@ -2,7 +2,9 @@
     <table class="table table-striped" >
       <thead class="thead">
         <tr>
-          <th></th>
+          <th>
+            <p data-target="orders.totalOrders"><strong>Total pedidos de hoy: <%= @total_orders %></strong></p>
+          </th>
           <th>Normal</th>
           <th>Low Carb</th>
           <th>High Carb</th>
@@ -25,5 +27,4 @@
         <% end %>
       </tbody>
     </table>
-    <p data-target="orders.totalOrders"><strong>Total pedidos de hoy: <%= @total_orders %></strong></p>
 </div>

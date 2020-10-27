@@ -4,15 +4,21 @@
       <div class="col-12">
         <%= simple_form_for(@delivery_group) do |f| %>
           <%= f.error_notification %>
-            <%= f.input :name,
-                        required: true,
-                        label: "Nombre del grupo",
-                        autofocus: true %>
-          <%= f.association :rider,
+            <div class="row">
+              <div class="col-6">
+                <%= f.input :name,
                             required: true,
-                            label: "Rider",
+                            label: "Nombre del grupo",
                             autofocus: true %>
-            <div class="table-responsive">
+              </div>
+              <div class="col-6">
+                <%= f.association :rider,
+                                required: true,
+                                label: "Rider",
+                                autofocus: true %>
+              </div>
+            </div>
+            <div class="table-responsive-raw">
             <table class="table table-striped">
               <thead class="thead">
                 <tr>
