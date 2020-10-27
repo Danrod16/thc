@@ -37,27 +37,30 @@ class StickerPdf
   end
 
   def sticker(order)
-    bounding_box([10,190], width: 270, height: 190) do
+    bounding_box([5,190], width: 270, height: 190) do
       # stroke_bounds
       bounding_box([0,190], width: 270, height: 100) do
+        move_down 7
+        image "thc-logo-1.png", width: 120
         move_down 10
-        image "thc-logo-1.png", width: 130
-        move_down 10
-        draw_text(order.product.meal_name, :at => [135, 80], :style => :bold, :size => 10)
-        bounding_box([135, 70], width: 125, height: 120) do
+        draw_text(order.product.meal_name, :at => [125, 80], :style => :bold, :size => 10)
+        bounding_box([125, 70], width: 140, height: 140) do
           font_size(8)
-          text order.customer_name  
-          text "Talla: #{order.meal_size}"
-          text "Proteína: #{order.meal_protein}"
-          text "Customización: #{order.meal_custom}"
-          text "Notas: #{order.notes}"
+          text order.customer_name
+          text order.delivery_address
+          text order.telephone 
+          text "Size: #{order.meal_size}"
+          text "Protein: #{order.meal_protein}"
+          text "Customization: #{order.meal_custom}"
+          text "Notes: #{order.notes}"
           # stroke_bounds
         end
         # stroke_bounds
       end 
-        # subir el QRCode 
-      bounding_box([0, 95], width: 270, height: 100) do
-      image "thc-QRCode.png", width: 90
+      bounding_box([0, 108], width: 270, height: 100) do
+      image "thc-QRCode.png", width: 85
+      draw_text("Scan me for more info", :at => [5, 12], :style => :bold, :size => 6)
+      draw_text("about calories and macros", :at => [5, 6], :style => :bold, :size => 6)     
       # bounding_box([108, 95], width: 140, height: 50) do
       #   # stroke_bounds
       # end
@@ -66,4 +69,5 @@ class StickerPdf
     end
   end
 end
+
 

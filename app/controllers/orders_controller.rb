@@ -82,8 +82,10 @@
     days = 0
     if order.product.name.include?("Weekly Combo")
       days = 4
+      order.update(product_id: assign_new_product_id(start_date - 1))
     elsif order.product.name.include?("Monthly Combo")
       days = 19
+      order.update(product_id: assign_new_product_id(start_date - 1))
     end
     days.times do
       Order.create(customer_name: order.customer_name,
@@ -95,7 +97,7 @@
                   telephone: order.telephone,
                   delivery_address: order.delivery_address,
                   category: order.category,
-                  product_id: order.product_id,
+                  product_id: assign_new_product_id(start_date),
                   meal_date: start_date.strftime("%d-%m-%Y"))
       start_date += 1
       if start_date.wday == 6
@@ -104,5 +106,10 @@
         start_date += 1
       end
     end
+  end
+
+  def assign_new_product_id(date)
+    product_name = date.strftime("%A")
+    Product.find_by(name: product_name).id
   end
 end
