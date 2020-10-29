@@ -21,9 +21,9 @@ class DaysController < ApplicationController
   def tuesday
     tuesday = assign_date("Tuesday")
     @path = "tuesday"
-    @meals = Order.where(meal_date: tuesday, category: "Meals")
-    @snacks = Order.where(meal_date: tuesday, category: "Snacks")
-    @desserts = Order.where(meal_date: tuesday, category: "Desserts")
+    @meals = Order.where(meal_date: tuesday, category: "Meals").order(created_at: :desc)
+    @snacks = Order.where(meal_date: tuesday, category: "Snacks").order(created_at: :desc)
+    @desserts = Order.where(meal_date: tuesday, category: "Desserts").order(created_at: :desc)
     @meals_summary = day_summary(tuesday)
     @snacks_summary = snacks_summary(tuesday)
     @desserts_summary = desserts_summary(tuesday)
@@ -36,9 +36,9 @@ class DaysController < ApplicationController
   def wednesday
     wednesday = assign_date("Wednesday")
     @path = "wednesday"
-    @meals = Order.where(meal_date: wednesday, category: "Meals")
-    @snacks = Order.where(meal_date: wednesday, category: "Snacks")
-    @desserts = Order.where(meal_date: wednesday, category: "Desserts")
+    @meals = Order.where(meal_date: wednesday, category: "Meals").order(created_at: :desc)
+    @snacks = Order.where(meal_date: wednesday, category: "Snacks").order(created_at: :desc)
+    @desserts = Order.where(meal_date: wednesday, category: "Desserts").order(created_at: :desc)
     @meals_summary = day_summary(wednesday)
     @snacks_summary = snacks_summary(wednesday)
     @desserts_summary = desserts_summary(wednesday)
@@ -51,9 +51,9 @@ class DaysController < ApplicationController
   def thursday
     thursday = assign_date("Thursday")
     @path = "thursday"
-    @meals = Order.where(meal_date: thursday, category: "Meals")
-    @snacks = Order.where(meal_date: thursday, category: "Snacks")
-    @desserts = Order.where(meal_date: thursday, category: "Desserts")
+    @meals = Order.where(meal_date: thursday, category: "Meals").order(created_at: :desc)
+    @snacks = Order.where(meal_date: thursday, category: "Snacks").order(created_at: :desc)
+    @desserts = Order.where(meal_date: thursday, category: "Desserts").order(created_at: :desc)
     @meals_summary = day_summary(thursday)
     @snacks_summary = snacks_summary(thursday)
     @desserts_summary = desserts_summary(thursday)
@@ -66,9 +66,9 @@ class DaysController < ApplicationController
   def friday
     friday = assign_date("Friday")
     @path = "friday"
-    @meals = Order.where(meal_date: friday, category: "Meals")
-    @snacks = Order.where(meal_date: friday, category: "Snacks")
-    @desserts = Order.where(meal_date: friday, category: "Desserts")
+    @meals = Order.where(meal_date: friday, category: "Meals").order(created_at: :desc)
+    @snacks = Order.where(meal_date: friday, category: "Snacks").order(created_at: :desc)
+    @desserts = Order.where(meal_date: friday, category: "Desserts").order(created_at: :desc)
     @meals_summary = day_summary(friday)
     @snacks_summary = snacks_summary(friday)
     @desserts_summary = desserts_summary(friday)
