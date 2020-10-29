@@ -4,19 +4,19 @@ class StickersController < ApplicationController
 
   def index
     @stickers = policy_scope(Sticker).all
-    @remaining_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), sticker_id: nil).count
+    @remaining_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), sticker_id: nil, category: "Meals").count
     authorize @stickers
   end
 
   def show
-    @selected_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), sticker_id: @sticker)
+    @selected_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), sticker_id: @sticker, category: "Meals").order(created_at: :asc)
     generate_pdf(@selected_orders)
     authorize @sticker
   end
 
   def new
     @sticker = Sticker.new
-    @selected_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), sticker_id: nil)
+    @selected_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), sticker_id: nil, category: "Meals").order(created_at: :asc)
     authorize @sticker
   end
 
@@ -32,6 +32,9 @@ class StickersController < ApplicationController
   end
 
   def edit
+    without_stickers = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), sticker_id: nil, category: "Meals").order(created_at: :asc)
+    with_this_sticker = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), sticker_id: @sticker, category: "Meals")
+    @selected_orders = with_this_sticker + without_stickers
     authorize @sticker
   end
 
@@ -59,7 +62,7 @@ class StickersController < ApplicationController
   end
 
   def selected_orders
-    @selected_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), printed: false)
+    @selected_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), sticker_id: nil, category: "Meals").order(created_at: :asc)
   end
 
   def generate_pdf(selected_orders)
