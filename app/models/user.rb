@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :riders, dependent: :destroy
   validates :role, presence: true
+  validates :user_name, presence: true
   enum role: [:admin, :cook, :rider]
   after_create :create_rider
 

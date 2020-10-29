@@ -62,7 +62,7 @@ class Order < ApplicationRecord
   end
 
   def self.order_exists?(order)
-    Order.find_by(order_id: order['orderId'])
+    return true if order['status'].include?('refunded') || Order.find_by(order_id: order['orderId'])
   end
 
   def self.order_type(order, purchased_item)
