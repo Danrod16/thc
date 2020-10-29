@@ -25,9 +25,9 @@
         <%= image_tag("https://res.cloudinary.com/therainycloud/image/upload/v1603288761/THC/Untitled_design_35_o7odyx.png") %>
         <%= link_to "Crear", new_order_path %></li>
       </li>
-        <li><%= link_to "", rails_admin_path, class: "fas fa-cogs" %></li>
+        <li><%= link_to "", rails_admin_path, class: "fas fa-cogs", title: "Panel de administrador" %></li>
     <% end %>
-      <li><%= link_to "", "https://res.cloudinary.com/therainycloud/image/upload/v1603965401/THC/FIRST_STEPS____THE_HEALTHIEST_CHOICE_xequwy.pdf"  ,target: "_blank", class: "fas fa-question-circle" %></li>
-      <li><%= link_to "", destroy_user_session_path, method: :delete, class: "fas fa-sign-out-alt" %></li>
+      <li><%= link_to "", "https://res.cloudinary.com/therainycloud/image/upload/v1603968771/THC/Manual_de_usario_THC-app_s6c8j9.pdf"  ,target: "_blank", class: "fas fa-question-circle", title: "Manual de usuario" %></li>
+      <li><%= link_to "", destroy_user_session_path, method: :delete, class: "fas fa-sign-out-alt", title: "Desconectar"%></li>
   </ul>
 </nav>
