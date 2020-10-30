@@ -37,10 +37,10 @@ class StickerPdf
   end
 
   def sticker(order)
-    bounding_box([5,190], width: 270, height: 190) do
+    bounding_box([0,190], width: 270, height: 190) do
       # stroke_bounds
       bounding_box([0,190], width: 270, height: 100) do
-        move_down 7
+        move_down 10
         image "thc-logo-1.png", width: 120
         move_down 10
         draw_text(order.product.meal_name, :at => [125, 80], :style => :bold, :size => 10)

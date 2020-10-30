@@ -12,9 +12,11 @@ class DeliveryPdf
   def delivery_summary
     delivery_title
     delivery_rider
-    table(delivery_table, :cell_style => { :size => 10 }) do
+    table(delivery_data, :column_widths => [30,120,100,150,140], :cell_style => { :size => 10 }) do
       row(0).size = 12
       row(0).font_style = :bold
+      row(1..-1).columns(0).align = :center
+      row(1..-1).columns(0..-1).valign = :center
       self.row_colors = ["FFFFFF", "FEFAF1"]
     end
   end
@@ -35,7 +37,7 @@ class DeliveryPdf
     move_down 10
   end
 
-  def delivery_table
+  def delivery_data
     arr = []
     @delivery_group.orders.order(:sequence).each_with_index do |order, index|
       arr << [index + 1, order.customer_name, order.telephone, order.delivery_address, order.notes]
