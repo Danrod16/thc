@@ -8,9 +8,11 @@
   <h1><%= @delivery_group.name %></h1>
   <p>Total de pedidos: <%= @total_delivery_orders %></p>
   <p>Rider: <%= @delivery_group.rider.name %></p>
-  <%= link_to delivery_path(@delivery_group, format: :pdf), target: "_blank", class: "button-primary" do %>
-  <i class="fas fa-file-download"></i>
-  Descargar
+  <% if @delivery_group.orders.any? %>
+    <%= link_to delivery_path(@delivery_group, format: :pdf), target: "_blank", class: "button-primary" do %>
+    <i class="fas fa-file-download"></i>
+    Descargar
+    <% end %>    
   <% end %>
 </div>
 <div class="table-responsive-raw">

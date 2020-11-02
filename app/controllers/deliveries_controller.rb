@@ -2,7 +2,11 @@ class DeliveriesController < ApplicationController
   def index
     @delivery_groups = policy_scope(Delivery).all
     @riders = Rider.all
-    @remaining_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil).count
+    if Time.now.strftime("%H").to_i >= "15".to_i
+      @remaining_orders = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_id: nil).count
+    else
+      @remaining_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil).count
+    end
     authorize @delivery_groups
   end
 
@@ -15,7 +19,11 @@ class DeliveriesController < ApplicationController
 
   def new
     @delivery_group = Delivery.new
-    @today_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil).order(created_at: :asc)
+    if Time.now.strftime("%H").to_i >= "15".to_i
+      @today_orders = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_id: nil).order(created_at: :asc)
+    else
+      @today_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil).order(created_at: :asc)
+    end
     authorize @delivery_group
   end
 
