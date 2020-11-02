@@ -45,8 +45,6 @@ class StickerPdf
         move_down 10
         draw_text(order.product.meal_name, :at => [125, 80], :style => :bold, :size => 10)
         bounding_box([125, 75], width: 140, height: 30) do
-          text "(Allergies: none)", size: 7
-          
           if order.product.description.include?("Allergies")
             allergies = order.product.description.split("Allergies:").last.strip
             font_size(7)
