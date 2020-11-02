@@ -17,8 +17,8 @@ module Thc
     config.load_defaults 6.0
 
     # Configure time zone
-    config.time_zone = "Madrid"
-    config.active_record.default_timezone = :local
+    # config.time_zone = "Madrid"
+    config.active_record.default_timezone = "Madrid"
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

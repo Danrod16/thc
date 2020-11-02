@@ -7,7 +7,7 @@ Rails.application.configure do
   config.cache_classes = false
 
   # Configure time zone
-  config.time_zone = "Madrid"
+  # config.time_zone = "Madrid"
 
   # Do not eager load code on boot.
   config.eager_load = false
