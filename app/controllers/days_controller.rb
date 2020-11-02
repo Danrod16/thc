@@ -179,7 +179,7 @@ class DaysController < ApplicationController
   end
 
   def updated_at
-    @updated_at = Time.now.strftime("%H:%M")
+    @updated_at = Time.zone.now.strftime("%H:%M")
   end
 
   def webflow_fetch
