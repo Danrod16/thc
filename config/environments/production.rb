@@ -16,6 +16,7 @@ Rails.application.configure do
 
   # Configure time zone
   config.time_zone = "Madrid"
+  config.active_record.default_timezone = :local
 
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
   # or in config/master.key. This key is used to decrypt credentials (and other encrypted files).

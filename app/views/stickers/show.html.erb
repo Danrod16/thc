@@ -1,9 +1,11 @@
 <%= link_to "< Atrás", stickers_path %>
 <div class="header">
   <h1><%= @sticker.created_at.strftime("%d-%m-%Y %H:%M") %></h1>
-  <%= link_to sticker_path(@sticker, format: :pdf), target: "_blank", class: "button-primary" do %>
-  <i class="fas fa-file-download"></i>
-  Descargar
+  <% if @selected_orders.any? %>
+    <%= link_to sticker_path(@sticker, format: :pdf), target: "_blank", class: "button-primary" do %>
+    <i class="fas fa-file-download"></i>
+    Descargar
+    <% end %>
   <% end %>
 </div>
 <div class="table-responsive-raw">

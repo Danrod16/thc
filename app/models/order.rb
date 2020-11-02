@@ -41,7 +41,8 @@ class Order < ApplicationRecord
   end
 
   def grouped_orders
-    "<td>#{customer_name}</td>
+    "<td>#{meal_date}</td>
+    <td>#{customer_name}</td>
     <td>#{delivery_address}</td>
     <td>#{notes}</td>".html_safe
   end
