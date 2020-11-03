@@ -7,8 +7,10 @@
 <div class="header">
   <h1><%= @delivery_group.name %></h1>
   <p>Total de pedidos: <%= @total_delivery_orders %></p>
-  <p>Rider: <%= @delivery_group.rider.name %></p>
-  <% if @delivery_group.orders.any? %>
+  <% if !current_user.rider? %>
+    <p>Rider: <%= @delivery_group.rider.name %></p>
+  <% end %>
+  <% if @delivery_group.orders.any?  && !current_user.rider? %>
     <%= link_to delivery_path(@delivery_group, format: :pdf), target: "_blank", class: "button-primary" do %>
     <i class="fas fa-file-download"></i>
     Descargar
@@ -19,18 +21,22 @@
   <table class="table table-striped">
     <thead>
           <tr>
-            <th class="date">Fecha</th>
+            <% if !current_user.rider? %>
+              <th class="date">Fecha</th>
+            <% end %>
             <th class="name">Nombre</th>
             <th>Telefono</th>
-            <th>Dirección</th>
-            <th>Notas</th>
+            <th class="custom">Dirección</th>
+            <th class="custom">Notas</th>
             <th></th>
           </tr>
         </thead>
     <tbody class="sortable" data-id="<%= @delivery_group.id %>">  <!-- sortable target -->
       <% @delivery_group.orders.order(:sequence).each do |order| %>
         <tr data-id = <%= "#{order.id}" %>>
-          <td><%= order.meal_date %></td>
+          <% if !current_user.rider? %>
+            <td><%= order.meal_date %></td>
+          <% end %>
           <td><%= order.customer_name %></td>
           <td><%= order.telephone if order.telephone.present? %></td>
           <td><%= order.delivery_address %></td>
