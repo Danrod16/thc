@@ -27,14 +27,16 @@ class OrdersPdf
       row(1..-1).columns(1..-1).align = :center
       self.row_colors = ["FFFFFF", "FEFAF1"]
     end
-    # move_down 15
-    # order_subtitle("Postres")
-    # table(desserts_table) do
-    #   row(0).font_style = :bold
-    #   row(1..-1).columns(0).size = 10
-    #   row(1..-1).columns(1..-1).align = :center
-    #   self.row_colors = ["FFFFFF", "FEFAF1"]
-    # end
+    if !@desserts_summary.nil?    
+      move_down 15
+      order_subtitle("Postres")
+      table(desserts_table) do
+        row(0).font_style = :bold
+        row(1..-1).columns(0).size = 10
+        row(1..-1).columns(1..-1).align = :center
+        self.row_colors = ["FFFFFF", "FEFAF1"]
+      end
+    end
   end
 
   def order_title
