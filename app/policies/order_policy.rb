@@ -22,11 +22,11 @@ class OrderPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.admin?
+    return true
   end
 
   def update?
-    edit?
+    return true
   end
 
   def destroy?
