@@ -5,7 +5,7 @@ class DeliveryPdf
     @delivery_group = delivery_group
     @total_delivery_orders = total_delivery_orders
     @date = set_date
-    @hour = Time.now.strftime("%H:%M")
+    @hour = Time.zone.now.strftime("%H:%M")
     delivery_summary
   end
 

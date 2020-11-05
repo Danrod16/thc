@@ -6,7 +6,7 @@ class OrdersPdf
     @snacks_summary = snacks_summary
     @desserts_summary = desserts_summary
     @date = set_date(day)
-    @hour = Time.now.strftime("%H:%M")
+    @hour = Time.zone.now.strftime("%H:%M")
     orders_summary
   end
 
@@ -27,16 +27,16 @@ class OrdersPdf
       row(1..-1).columns(1..-1).align = :center
       self.row_colors = ["FFFFFF", "FEFAF1"]
     end
-    if !@desserts_summary.nil?    
-      move_down 15
-      order_subtitle("Postres")
-      table(desserts_table) do
-        row(0).font_style = :bold
-        row(1..-1).columns(0).size = 10
-        row(1..-1).columns(1..-1).align = :center
-        self.row_colors = ["FFFFFF", "FEFAF1"]
-      end
-    end
+    move_down 15
+    order_subtitle("Postres")
+    move_down 15
+    text "Cuando empiecen a vender postres comunícate con El Taco Lab para habilitar el cuadro resumen", size: 15, style: :bold
+    # table(desserts_table) do
+    #   row(0).font_style = :bold
+    #   row(1..-1).columns(0).size = 10
+    #   row(1..-1).columns(1..-1).align = :center
+    #   self.row_colors = ["FFFFFF", "FEFAF1"]
+    # end
   end
 
   def order_title

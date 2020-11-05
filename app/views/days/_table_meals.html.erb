@@ -36,7 +36,8 @@
               <th class="name">Nombre</th>
               <th>Talla</th>
               <th>Proteína</th>
-              <th class="custom">Custom</th>
+              <th class="custom">Customización</th>
+              <th class="custom">Dirección</th>
               <th class="notes">Notas</th>
             </tr>
           </thead>
@@ -48,6 +49,7 @@
                 <td><%= meal.meal_size %></td>
                 <td><%= meal.meal_protein %></td>
                 <td><%= meal.meal_custom %></td>
+                <td><%= meal.delivery_address %></td>
                 <td><%= meal.notes %></td>
               </tr>
             <% end %>
@@ -67,7 +69,8 @@
               <th class="date">Fecha</th>
               <th class="name">Nombre</th>
               <th class="product">Producto</th>
-              <th>Notas</th>
+              <th class="custom">Dirección</th>
+              <th class="notes">Notas</th>
             </tr>
           </thead>
           <tbody data-target="orders.snacksRaw">
@@ -76,6 +79,7 @@
                 <td><%= snack.meal_date %></td>
                 <td><%= snack.customer_name %></td>
                 <td><%= snack.product.meal_name %></td>
+                <td><%= snack.delivery_address %></td>
                 <td><%= snack.notes %></td>
               </tr>
             <% end %>
@@ -95,7 +99,8 @@
             <th class="date">Fecha</th>
             <th class="name">Nombre</th>
             <th class="product">Producto</th>
-            <th>Notas</th>
+            <th class="custom">Dirección</th>
+            <th class="notes">Notas</th>
           </tr>
         </thead>
         <tbody data-target="orders.dessertsRaw">
@@ -104,6 +109,7 @@
               <td><%= dessert.meal_date %></td>
               <td><%= dessert.customer_name %></td>
               <td><%= dessert.product.meal_name %></td>
+              <td><%= dessert.delivery_address %></td>
               <td><%= dessert.notes %></td>
             </tr>
           <% end %>
