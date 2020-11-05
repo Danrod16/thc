@@ -43,8 +43,13 @@ class StickerPdf
         move_down 10
         image "thc-logo-1.png", width: 120
         move_down 10
-        draw_text(order.product.meal_name, :at => [125, 80], :style => :bold, :size => 10)
-        bounding_box([125, 75], width: 140, height: 30) do
+        text_box order.product.meal_name, at: [125, 85], width: 140,
+                                          height: 20,
+                                          style: :bold,
+                                          size: 14,
+                                          overflow: :shrink_to_fit, 
+                                          min_font_size: 6
+        bounding_box([125, 63], width: 140, height: 30) do
           if order.product.description.include?("Allergies")
             allergies = order.product.description.split("Allergies:").last.strip
             font_size(7)
@@ -52,7 +57,7 @@ class StickerPdf
             # stroke_bounds
           end
         end
-        bounding_box([125, 50], width: 140, height: 140) do
+        bounding_box([125, 43], width: 140, height: 140) do
           font_size(8)
           text order.customer_name
           text order.delivery_address
