@@ -29,7 +29,7 @@
             <th class="custom">Notas</th>
             <th></th>
             <% else %>
-            <th class="name">Nombre</th>
+            <th class="name">Dirección</th>
             <th style="text-align: center;">Ver pedido</th>
             <% end %>
           </tr>
@@ -62,9 +62,9 @@
             <% end %>
           </td>
           <% else %>
-            <td><%= order.customer_name %></td>
+            <td><%= order.delivery_address %></td>
             <td><div class="show" type="button" data-toggle="modal" data-target="#exampleModalCenter" style="text-align: center;">
-              <span class="far fa-eye"></span>
+              <span class="far fa-list-alt" style="font-size: 25px;"></span>
             </div></td>
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
