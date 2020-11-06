@@ -5,6 +5,8 @@ const initSortable = () => {
   const token = document.querySelector("meta[name='csrf-token']").getAttribute('content')
   Sortable.create(list, {
     group: "localStorage-example",
+    delay: 750,
+    delayOnTouchOnly: true,
     store: {
       /**
        * Get the order of elements. Called once during initialization.
@@ -20,7 +22,7 @@ const initSortable = () => {
        * Save the order of elements. Called onEnd (when the item is dropped).
        * @param {Sortable}  sortable
        */
-       set: function (sortable) {
+    set: function (sortable) {
         var order = sortable.toArray();
         const deliveryId = list.dataset.id;
         console.log(order)

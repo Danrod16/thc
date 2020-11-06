@@ -14,7 +14,7 @@
     <%= link_to delivery_path(@delivery_group, format: :pdf), target: "_blank", class: "button-primary" do %>
     <i class="fas fa-file-download"></i>
     Descargar
-    <% end %>    
+    <% end %>
   <% end %>
 </div>
 <div class="table-responsive-raw">
@@ -40,7 +40,7 @@
           <td><%= order.customer_name %></td>
           <td><%= order.telephone if order.telephone.present? %></td>
           <td><%= order.delivery_address %></td>
-          <td><%= order.notes %></td>
+          <td class="my-handle"></td>
           <td>
             <% if order.customer_email.present? %>
                 <%= simple_form_for(order) do |f| %>
