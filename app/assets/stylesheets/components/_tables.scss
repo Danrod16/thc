@@ -46,7 +46,7 @@
   .product { min-width: 180px; }
 
   .custom { min-width: 180px; }
-  
+
   .show { min-width: 100px; }
 
   #show { text-align: center;}
@@ -110,24 +110,6 @@ table th, .table td {
     height: 72vh;
     margin-top: 15px;
   }
-  ::-webkit-scrollbar {
-    -webkit-appearance: none;
-  }
-  ::-webkit-scrollbar:vertical {
-      width: 20px;
-  }
-  ::-webkit-scrollbar:horizontal {
-      height: 20px;
-  }
-  ::-webkit-scrollbar-thumb {
-      background-color: rgba(0, 0, 0, .5);
-      border-radius: 10px;
-      border: 2px solid #ffffff;
-  }
-  ::-webkit-scrollbar-track {
-      border-radius: 10px;  
-      background-color: #ffffff; 
-  }
 }
 
 // Small devices (landscape phones, 576px and up)
@@ -138,23 +120,5 @@ table th, .table td {
   .table-responsive-raw {
    height: 55vh;
     margin-top: 15px;
-  }
-  ::-webkit-scrollbar {
-    -webkit-appearance: none;
-  }
-  ::-webkit-scrollbar:vertical {
-      width: 12px;
-  }
-  ::-webkit-scrollbar:horizontal {
-      height: 12px;
-  }
-  ::-webkit-scrollbar-thumb {
-      background-color: rgba(0, 0, 0, .5);
-      border-radius: 10px;
-      border: 2px solid #ffffff;
-  }
-  ::-webkit-scrollbar-track {
-      border-radius: 10px;  
-      background-color: #ffffff; 
   }
 }
