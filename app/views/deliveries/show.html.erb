@@ -29,8 +29,9 @@
             <th class="custom">Notas</th>
             <th></th>
             <% else %>
-            <th class="name">Dirección</th>
-            <th style="text-align: center;">Ver pedido</th>
+            <th class="custom">Dirección</th>
+            <th style="text-align: center;" class="icon">Ver</th>
+            <th class="icon"></th>
             <% end %>
           </tr>
         </thead>
@@ -63,10 +64,15 @@
           </td>
           <% else %>
             <td><%= order.delivery_address %></td>
-            <td><div class="show" type="button" data-toggle="modal" data-target="#exampleModalCenter" style="text-align: center;">
-              <span class="far fa-list-alt" style="font-size: 25px;"></span>
-            </div></td>
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <td>
+              <div type="button" data-toggle="modal" style="text-align: center;" data-target=<%="#order-#{order.id}"%>>
+                <span class="far fa-list-alt icon" style="font-size: 25px;"></span>
+              </div>
+            </td>
+            <% if order.delivered == true %>
+              <td class="icon"><i class="fas fa-check"></i></td>
+            <% end %>
+            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id=<%="order-#{order.id}"%>>
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
