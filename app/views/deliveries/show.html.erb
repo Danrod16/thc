@@ -22,25 +22,27 @@
     <thead>
           <tr>
             <% if !current_user.rider? %>
-              <th class="date">Fecha</th>
-            <% end %>
+            <th class="date">Fecha</th>
             <th class="name">Nombre</th>
-            <th>Telefono</th>
             <th class="custom">Dirección</th>
+            <th>Telefono</th>
             <th class="custom">Notas</th>
             <th></th>
+            <% else %>
+            <th class="name">Nombre</th>
+            <th style="text-align: center;">Ver pedido</th>
+            <% end %>
           </tr>
         </thead>
     <tbody class="sortable" data-id="<%= @delivery_group.id %>">  <!-- sortable target -->
       <% @delivery_group.orders.order(:sequence).each do |order| %>
         <tr data-id = <%= "#{order.id}" %>>
           <% if !current_user.rider? %>
-            <td><%= order.meal_date %></td>
-          <% end %>
+          <td><%= order.meal_date %></td>
           <td><%= order.customer_name %></td>
-          <td><%= order.telephone if order.telephone.present? %></td>
           <td><%= order.delivery_address %></td>
-          <td class="my-handle"></td>
+          <td><%= order.telephone if order.telephone.present? %></td>
+          <td><%= order.notes %></td>
           <td>
             <% if order.customer_email.present? %>
                 <%= simple_form_for(order) do |f| %>
@@ -59,7 +61,50 @@
               <% end %>
             <% end %>
           </td>
-        </tr>
+          <% else %>
+            <td><%= order.customer_name %></td>
+            <td><div class="show" type="button" data-toggle="modal" data-target="#exampleModalCenter" style="text-align: center;">
+              <span class="far fa-eye"></span>
+            </div></td>
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle"><%= order.customer_name %></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <ul>
+                      <li><strong>Fecha:</strong> <%= order.meal_date %></li>
+                      <li><strong>Teléfono:</strong> <%= order.telephone if order.telephone.present? %></li>
+                      <li><strong>Dirección:</strong> <%= order.delivery_address %></li>
+                      <li><strong>Notas:</strong> <%= order.notes %></li>
+                    </ul>
+                  </div>
+                  <div class="modal-footer">
+                    <% if order.customer_email.present? %>
+                        <%= simple_form_for(order) do |f| %>
+                        <%= f.error_notification %>
+                        <%= f.input :delivered,
+                        required: true,
+                        label: false,
+                        :as => :hidden,
+                        input_html: {value: true},
+                        autofocus: true %>
+                        <% if order.delivered == true %>
+                        <%= f.button :submit, "Entregado", class: "btn", data: { confirm: "Confirmar entrega" } %>
+                        <% else %>
+                        <%= f.button :submit, "Entregar", class: "button-primary", data: { confirm: "Confirmar entrega" } %>
+                        <% end %>
+                        <% end %>
+                        <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+        <% end %>
       <% end %>
     </tbody>
   </table>
