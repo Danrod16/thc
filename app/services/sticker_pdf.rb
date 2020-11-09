@@ -9,16 +9,6 @@ class StickerPdf
 
 
   def create_stickers
-    font_path = "ArialUnicode.ttf"
-    font_families.update(
-      'Panic Sans' => {
-      normal: { file: font_path, font: 'Arial' },
-      italic: { file: font_path, font: 'Arial-italic' },
-      bold: { file: font_path, font: 'Arial.bold' },
-      bold_italic: { file: font_path, font: 'Arial-BoldItalic' }
-      })
-      # text 'ὕαλον φαγεῖν δύναμαι· τοῦτο οὔ με βλάπτει.'
-      # text 'There you go.'
       start_new_page(margin: [10, 30, 10, 30])
       define_grid columns: 2, rows: 4, column_gutter: 5
 
@@ -70,15 +60,17 @@ class StickerPdf
             end
           end
           bounding_box([125, 43], width: 140, height: 140) do
-            font_size(8)
-            text order.customer_name
-            text order.delivery_address
-            text order.telephone
-            text "Size: #{order.meal_size}"
-            text "Protein: #{order.meal_protein}"
-            text "Customization: #{order.meal_custom}"
-            # text "Notes: #{order.notes}"
-            # stroke_bounds
+            font("ArialUnicode.ttf") do
+              font_size(8)
+              text order.customer_name
+              text order.delivery_address
+              text order.telephone
+              text "Size: #{order.meal_size}"
+              text "Protein: #{order.meal_protein}"
+              text "Customization: #{order.meal_custom}"
+              # text "Notes: #{order.notes}"
+              # stroke_bounds
+            end
           end
           # stroke_bounds
         end
