@@ -70,7 +70,8 @@ class StickersController < ApplicationController
       format.html
       format.pdf do
         pdf = StickerPdf.new(selected_orders)
-        send_data pdf.render, filename:"etiquetas.pdf",
+        pdf.delete_page(0)
+        send_data pdf.render, filename: "etiquetas.pdf",
                               type: "application/pdf",
                               disposition: "inline"
       end

@@ -11,7 +11,6 @@ class StickerPdf
   def create_stickers
       start_new_page(margin: [10, 30, 10, 30])
       define_grid columns: 2, rows: 4, column_gutter: 5
-
       # grid.show_all
       # stroke_bounds
 
