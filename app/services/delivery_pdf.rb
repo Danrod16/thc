@@ -1,4 +1,5 @@
 class DeliveryPdf
+  require 'prawn'
   include Prawn::View
 
   def initialize(delivery_group, total_delivery_orders)
@@ -6,6 +7,7 @@ class DeliveryPdf
     @total_delivery_orders = total_delivery_orders
     @date = set_date
     @hour = Time.zone.now.strftime("%H:%M")
+    font("ArialUnicode.ttf")
     delivery_summary
   end
 
@@ -14,7 +16,7 @@ class DeliveryPdf
     delivery_rider
     table(delivery_data, :column_widths => [30,120,100,150,140], :cell_style => { :size => 10 }) do
       row(0).size = 12
-      row(0).font_style = :bold
+      # row(0).font_style = :bold
       row(1..-1).columns(0).align = :center
       row(1..-1).columns(0..-1).valign = :center
       self.row_colors = ["FFFFFF", "FEFAF1"]
@@ -24,14 +26,14 @@ class DeliveryPdf
   def delivery_title
     image "thc-logo-1.png", at: [10, 715], width: 120
     bounding_box([435, 700], width: 150, height: 100) do
-      text "Reparto", size: 20, style: :bold
+      text "Reparto", size: 20
       text "#{@date}"
       text "Hora: #{@hour}"
      end
   end
 
   def delivery_rider
-    text "#{@delivery_group.rider.user.first_name} #{@delivery_group.rider.user.last_name}", size: 14, style: :bold
+    text "#{@delivery_group.rider.user.first_name} #{@delivery_group.rider.user.last_name}", size: 14
     move_down 10
     text "Total de pedidos: #{@total_delivery_orders}"
     move_down 10
