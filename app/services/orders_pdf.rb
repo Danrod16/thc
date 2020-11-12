@@ -26,7 +26,7 @@ class OrdersPdf
       self.row_colors = ["FFFFFF", "FEFAF1"]
     end
     move_down 15
-    text "Cuando empiecen a vender postres comunícate con El Taco Lab para habilitar el cuadro resumen", size: 15, style: :bold
+    text "Cuando añadan postres a webflow comunícate con El Taco Lab para habilitar el cuadro resumen", size: 15, style: :bold
     # bounding_box([250, 314], width: 280, height: 320) do
     #   order_subtitle("Postres")
     #   table(desserts_table, :cell_style => { :size => 8 }) do
@@ -69,8 +69,8 @@ class OrdersPdf
   end
 
   def desserts_table
-    arr = [["Postre_1", 0], ["Postre_2", 0], ["Postre_3", 0], ["Postre_4", 0], ["Postre_5", 0]]
-    # @desserts_summary.each { |e| arr << e }
+    arr = []
+    @desserts_summary.each { |e| arr << e }
     [["Nombre", "Cantidad"]] + arr
   end
 
