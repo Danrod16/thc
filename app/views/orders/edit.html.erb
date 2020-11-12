@@ -14,15 +14,15 @@
                   collection: ["Meals", "Snacks", "Desserts"] %>
       <%= f.input :meal_size,
                   required: true,
-                  collection: ["Regular", "Large"],
+                  collection: ["Small", "Regular", "Large"],
                   label: "Tamaño del producto" %>
       <%= f.input :meal_protein,
                   required: true,
-                  collection: ["-", "Vegetarian", "Vegan"],
+                  collection: ["-", "Vegetarian", "Vegan", "Lean meat"],
                   label: "Proteína" %>
       <%= f.input :meal_custom,
                   required: true,
-                  collection: ["-", "Low carb", "High carb", "High protein", "Keto", "High protein/low carb"],
+                  collection: ["-", "Low carb", "High carb", "High protein", "Keto", "High protein/low carb", "High protein/high carb"],
                   label: "Customización" %>
       <%= f.input :meal_date,
                   required: true,
