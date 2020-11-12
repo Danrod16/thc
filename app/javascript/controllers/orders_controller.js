@@ -26,6 +26,7 @@ export default class extends Controller {
           <td>${e.meal_protein}</td>
           <td>${e.meal_custom}</td>
           <td>${e.notes}</td>
+          <td>${e.delivery_address}</td>
         </tr>`)});
 
     // Meals summary table
@@ -51,6 +52,7 @@ export default class extends Controller {
           <td>${e.customer_name}</td>
           <td>${e.meal_name}</td>
           <td>${e.notes}</td>
+          <td>${e.delivery_address}</td>
         </tr>`)});
 
     // Snacks summary table
@@ -71,6 +73,7 @@ export default class extends Controller {
         <td>${e.customer_name}</td>
         <td>${e.meal_name}</td>
         <td>${e.notes}</td>
+        <td>${e.delivery_address}</td>
       </tr>`)});
 
     // Desserts summary table

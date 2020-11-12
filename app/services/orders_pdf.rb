@@ -13,38 +13,38 @@ class OrdersPdf
   def orders_summary
     order_title
     order_subtitle("Bowls")
-    table(bowls_table) do
+    table(bowls_table, :column_widths => [80,40,50,50,60,40,70,70,70], :cell_style => { :size => 8 }) do
       row(0).font_style = :bold
-      row(1..-1).columns(0).size = 10
-      row(1..-1).columns(1..-1).align = :center
+      row(0..-1).columns(1..-1).align = :center
       self.row_colors = ["FFFFFF", "FEFAF1"]
     end
     move_down 15
     order_subtitle("Snacks")
-    table(snacks_table) do
+    table(snacks_table, :cell_style => { :size => 8 }) do
       row(0).font_style = :bold
-      row(1..-1).columns(0).size = 10
       row(1..-1).columns(1..-1).align = :center
       self.row_colors = ["FFFFFF", "FEFAF1"]
     end
     move_down 15
-    order_subtitle("Postres")
-    move_down 15
     text "Cuando empiecen a vender postres comunícate con El Taco Lab para habilitar el cuadro resumen", size: 15, style: :bold
-    # table(desserts_table) do
-    #   row(0).font_style = :bold
-    #   row(1..-1).columns(0).size = 10
-    #   row(1..-1).columns(1..-1).align = :center
-    #   self.row_colors = ["FFFFFF", "FEFAF1"]
+    # bounding_box([250, 314], width: 280, height: 320) do
+    #   order_subtitle("Postres")
+    #   table(desserts_table, :cell_style => { :size => 8 }) do
+    #     row(0).font_style = :bold
+    #     row(1..-1).columns(1..-1).align = :center
+    #     self.row_colors = ["FFFFFF", "FEFAF1"]
+    #   end
+      # stroke_bounds
     # end
   end
 
   def order_title
     image "thc-logo-1.png", at: [10, 715], width: 120
-    bounding_box([435, 700], width: 150, height: 100) do
+    bounding_box([435, 700], width: 120, height: 90) do
       text "Cocina", size: 20, style: :bold
       text "#{@date}"
       text "Hora: #{@hour}"
+      # stroke_bounds
      end
   end
 
@@ -59,7 +59,7 @@ class OrdersPdf
       e[0] = e.first.capitalize
       arr << e
     end
-    [["Nombre", "Normal", "Low Carb", "High Carb", "High Protein", "Keto", "High Protein/Low Carb"]] + arr
+    [["Nombre", "Normal", "Low Carb", "High Carb", "High Protein", "Keto", "High P/ Low C", "High P/ High C", "Extra Veggies"]] + arr
   end
 
   def snacks_table
@@ -69,8 +69,8 @@ class OrdersPdf
   end
 
   def desserts_table
-    arr = []
-    @desserts_summary.each { |e| arr << e }
+    arr = [["Postre_1", 0], ["Postre_2", 0], ["Postre_3", 0], ["Postre_4", 0], ["Postre_5", 0]]
+    # @desserts_summary.each { |e| arr << e }
     [["Nombre", "Cantidad"]] + arr
   end
 
