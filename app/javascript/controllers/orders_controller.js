@@ -41,6 +41,8 @@ export default class extends Controller {
           <td>${e[4]}</td>
           <td>${e[5]}</td>
           <td>${e[6]}</td>
+          <td>${e[7]}</td>
+          <td>${e[8]}</td>
         </tr>`)});
 
     // Snacks raw table
