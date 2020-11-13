@@ -2,7 +2,7 @@ import { Controller } from "stimulus";
 
 export default class extends Controller {
   static targets = [ 'mealsRaw', 'snacksRaw', 'dessertsRaw',
-                     'mealsSummary', 'snacksSummary', 'dessertsSummary', 
+                     'mealsSummary', 'snacksSummary', 'dessertsSummary',
                      'totalOrders', 'updatedAt' ];
 
   connect() {
@@ -26,6 +26,7 @@ export default class extends Controller {
           <td>${e.meal_protein}</td>
           <td>${e.meal_custom}</td>
           <td>${e.notes}</td>
+          <td>${e.delivery_address}</td>
         </tr>`)});
 
     // Meals summary table
@@ -51,6 +52,7 @@ export default class extends Controller {
           <td>${e.customer_name}</td>
           <td>${e.meal_name}</td>
           <td>${e.notes}</td>
+          <td>${e.delivery_address}</td>
         </tr>`)});
 
     // Snacks summary table
@@ -71,6 +73,7 @@ export default class extends Controller {
         <td>${e.customer_name}</td>
         <td>${e.meal_name}</td>
         <td>${e.notes}</td>
+        <td>${e.delivery_address}</td>
       </tr>`)});
 
     // Desserts summary table
@@ -84,7 +87,7 @@ export default class extends Controller {
 
     // Updated at
     this.updatedAtTarget.innerHTML = `Actualizado: <strong>${data.updated_at}</strong>`
-    
+
     // Total orders
     this.totalOrdersTarget.innerHTML = `<strong>Total pedidos de hoy: ${data.total_orders}</strong>`
 
