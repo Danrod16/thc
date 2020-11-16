@@ -173,7 +173,7 @@ class Order < ApplicationRecord
   def self.variants(variant_name, variant_type)
     regex = Regexp.new(".*#{variant_type}: ")
     new_format = variant_name.split(", ")
-                              .find { |e| e[variant_type]}
+                              .find { |e| e["#{variant_type}:"]}
                               .gsub(regex, "")
                               .downcase
                               .capitalize
