@@ -132,7 +132,7 @@ class DaysController < ApplicationController
   def day_summary(day)
     size = ["Regular", "Large"]
     protein = ["-", "Vegetarian", "Vegan"]
-    customisation = ["-", "Low carb", "High carb", "High protein", "Keto", "High protein/low carb", "High protein/high carb", "Extra veggie"]
+    customisation = ["-", "Low carb", "High carb", "High protein", "Keto", "High protein/low carb", "High protein/high carb", "Extra veggies"]
 
     summary = []
     meal = []
