@@ -77,6 +77,8 @@ class Order < ApplicationRecord
       end
     when "Snacks"
       Order.new_snack(order, purchased_item)
+    when "Desserts"
+      Order.new_snack(order, purchased_item)
     else
       Order.new_meal(order, purchased_item)
     end
