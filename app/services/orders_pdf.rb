@@ -26,16 +26,15 @@ class OrdersPdf
       self.row_colors = ["FFFFFF", "FEFAF1"]
     end
     move_down 15
-    text "Cuando añadan postres a webflow comunícate con El Taco Lab para habilitar el cuadro resumen", size: 15, style: :bold
-    # bounding_box([250, 314], width: 280, height: 320) do
-    #   order_subtitle("Postres")
-    #   table(desserts_table, :cell_style => { :size => 8 }) do
-    #     row(0).font_style = :bold
-    #     row(1..-1).columns(1..-1).align = :center
-    #     self.row_colors = ["FFFFFF", "FEFAF1"]
-    #   end
-      # stroke_bounds
-    # end
+    bounding_box([250, 439], width: 280, height: 320) do
+      order_subtitle("Postres")
+      table(desserts_table, :cell_style => { :size => 8 }) do
+        row(0).font_style = :bold
+        row(1..-1).columns(1..-1).align = :center
+        self.row_colors = ["FFFFFF", "FEFAF1"]
+      end
+
+    end
   end
 
   def order_title
