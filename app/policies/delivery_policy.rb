@@ -31,4 +31,8 @@ class DeliveryPolicy < ApplicationPolicy
   def destroy?
     user.admin?
   end
+
+  def reorganize?
+    true
+  end
 end
