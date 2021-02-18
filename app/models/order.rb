@@ -35,7 +35,6 @@ class Order < ApplicationRecord
 
   def set_sequence
     return unless delivery
-
     self.sequence = delivery.orders.count
     save
   end
