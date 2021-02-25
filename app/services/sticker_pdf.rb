@@ -74,7 +74,7 @@ class StickerPdf
           # stroke_bounds
         end
         bounding_box([0, 108], width: 270, height: 100) do
-          image "thc-QRCode.png", width: 85
+          image order.product.qr, width: 85
           draw_text("Scan me for more info", :at => [5, 12], :style => :bold, :size => 6)
           draw_text("about calories and macros", :at => [5, 6], :style => :bold, :size => 6)
           bounding_box([108, 45], width: 170, height: 50) do
