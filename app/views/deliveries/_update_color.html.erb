@@ -1,0 +1,9 @@
+<%= simple_form_for(Order.find(id)) do |f|
+  <%= f.error_notification %>
+  <%= f.select :color,
+  required: true,
+  label: false,
+  :as => :hidden,
+  input_html: {value: true},
+  autofocus: true %>
+<%= end %>

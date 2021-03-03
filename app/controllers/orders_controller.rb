@@ -1,6 +1,8 @@
   class OrdersController < ApplicationController
   after_action :create_combos, only: [:create]
-  
+  skip_before_action :verify_authenticity_token, only: [:update]
+
+
   def weekly
     @orders = Order.paginate(page: params[:page], per_page: 40)
   end
@@ -46,6 +48,7 @@
     if @order.save
       if @order.delivered == true
         send_mailer
+      elsif !@order.color.nil?
       else
         redirect_to order_path(@order)
         flash[:alert] = "Pedido modificado, Gracias #{current_user.first_name}!"
@@ -67,7 +70,7 @@
   private
 
   def order_params
-    params.require(:order).permit(:customer_name, :customer_email, :meal_size, :meal_protein, :meal_custom, :notes, :telephone, :delivery_address, :order_id, :product_id, :meal_date, :category, :delivered, :printed)
+    params.permit(:customer_name, :customer_email, :meal_size, :meal_protein, :meal_custom, :notes, :telephone, :delivery_address, :order_id, :product_id, :meal_date, :category, :delivered, :printed, :color)
   end
 
   def send_mailer

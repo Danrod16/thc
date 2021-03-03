@@ -27,9 +27,11 @@
             <th class="custom">Dirección</th>
             <th>Telefono</th>
             <th class="custom">Notas</th>
+            <th>color</th>
             <th></th>
             <% else %>
             <th class="custom">Dirección</th>
+            <th>color</th>
             <th style="text-align: center;" class="icon">Ver</th>
             <th class="icon"></th>
             <% end %>
@@ -39,31 +41,46 @@
       <% @delivery_group.orders.order(:sequence).each do |order| %>
         <tr data-id = <%= "#{order.id}" %>>
           <% if !current_user.rider? %>
-          <td><%= order.meal_date %></td>
-          <td><%= order.customer_name %></td>
-          <td><%= order.delivery_address %></td>
-          <td><%= order.telephone if order.telephone.present? %></td>
-          <td><%= order.notes %></td>
-          <td>
-            <% if order.customer_email.present? %>
-                <%= simple_form_for(order) do |f| %>
-                <%= f.error_notification %>
-                <%= f.input :delivered,
-                required: true,
-                label: false,
-                :as => :hidden,
-                input_html: {value: true},
-                autofocus: true %>
-                <% if order.delivered == true %>
-                  <%= f.button :submit, "Entregado", class: "btn", data: { confirm: "Confirmar entrega" } %>
-                <% else %>
-                  <%= f.button :submit, "Entregar", class: "button-primary", data: { confirm: "Confirmar entrega" } %>
+            <td><%= order.meal_date %></td>
+            <td><%= order.customer_name %></td>
+            <td><%= order.delivery_address %></td>
+            <td><%= order.telephone if order.telephone.present? %></td>
+            <td><%= order.notes %></td>
+            <td>
+              <%= form_tag(order_path(order), method: :patch, remote: true) do %>
+                <%= select_tag(:color,
+                "<option selected='selected'>Grupo #{order.color}</option>
+                <option value='green'>Grupo verde</option>
+                 <option value='blue'>Grupo azul</option>
+                 <option value='black'>Grupo negro</option>
+                 <option value='pink'>Grupo rosa</option>
+                 <option value='yellow'>Grupo amarillo</option>
+                <option value='brown'>Grupo marrón</option>
+                <option value='rojo'>Grupo rojo</option>".html_safe, onchange: 'this.form.submit()')%>
+              <% end %>
+              <div style="margin: 10px auto; height: 20px; width: 20px; background-color: <%= order.color %>; border-radius: 100px;"></div>
+            </td>
+            <td>
+              <% if order.customer_email.present? %>
+                  <%= simple_form_for(order) do |f| %>
+                  <%= f.error_notification %>
+                  <%= f.input :delivered,
+                  required: true,
+                  label: false,
+                  :as => :hidden,
+                  input_html: {value: true},
+                  autofocus: true %>
+                  <% if order.delivered == true %>
+                    <%= f.button :submit, "Entregado", class: "btn", data: { confirm: "Confirmar entrega" } %>
+                  <% else %>
+                    <%= f.button :submit, "Entregar", class: "button-primary", data: { confirm: "Confirmar entrega" } %>
+                  <% end %>
                 <% end %>
               <% end %>
-            <% end %>
-          </td>
+            </td>
           <% else %>
             <td><%= order.delivery_address %></td>
+            <td><div style="align-self: center; height: 20px; width: 20px; background-color: <%= order.color %>; border-radius: 100px;"></div></td>
             <td>
               <div type="button" data-toggle="modal" style="text-align: center;" data-target=<%="#order-#{order.id}"%>>
                 <span class="far fa-list-alt icon" style="font-size: 25px;"></span>
@@ -91,21 +108,21 @@
                   </div>
                   <div class="modal-footer">
                     <% if order.customer_email.present? %>
-                        <%= simple_form_for(order) do |f| %>
-                        <%= f.error_notification %>
-                        <%= f.input :delivered,
-                        required: true,
-                        label: false,
-                        :as => :hidden,
-                        input_html: {value: true},
-                        autofocus: true %>
+                      <%= simple_form_for(order) do |f| %>
+                      <%= f.error_notification %>
+                      <%= f.input :delivered,
+                      required: true,
+                      label: false,
+                      :as => :hidden,
+                      input_html: {value: true},
+                      autofocus: true %>
                         <% if order.delivered == true %>
                         <%= f.button :submit, "Entregado", class: "btn", data: { confirm: "Confirmar entrega" } %>
                         <% else %>
                         <%= f.button :submit, "Entregar", class: "button-primary", data: { confirm: "Confirmar entrega" } %>
                         <% end %>
-                        <% end %>
-                        <% end %>
+                      <% end %>
+                    <% end %>
                   </div>
                 </div>
               </div>
@@ -121,5 +138,6 @@
     <%= link_to "Eliminar", delivery_path(@delivery_group), method: :delete, class: "button-primary", data: {confirm: "Confirmar?"} %>
   </div>
 <% end %>
+<%= console %>
 
 
