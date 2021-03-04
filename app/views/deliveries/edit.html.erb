@@ -1,8 +1,8 @@
-<%= link_to "< Atrás", deliveries_path %>
+<%= link_to "< Atrás", delivery_category_deliveries_path %>
 <div class="form-inputs">
     <div class="row">
       <div class="col-12">
-      <%= simple_form_for(@delivery_group) do |f| %>
+      <%= simple_form_for([@delivery_category, @delivery_group]) do |f| %>
         <%= f.error_notification %>
         <div class="row">
           <div class="col-6">

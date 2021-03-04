@@ -1,8 +1,8 @@
 <div class="riders-pills">
-  <% if policy(Delivery).create? %>
-    <%= link_to "Nuevo Grupo", new_delivery_category_delivery_path, class: "button-secondary" %>
+  <% if policy(DeliveryCategory).create? %>
+    <%= link_to "Nueva categoria", new_delivery_category_path, class: "button-secondary" %>
   <% end %>
-      <%= link_to "Pedidos", delivery_category_deliveries_path, class: "button-secondary", style: "margin-left: 5px;" %>
+      <%= link_to "Pedidos", delivery_categories_path, class: "button-secondary", style: "margin-left: 5px;" %>
   <div class="dropdown">
     <button class="button-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Riders

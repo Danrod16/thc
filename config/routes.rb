@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  get 'delivery_categories/new'
+  get 'delivery_categories/index'
+  get 'delivery_categories/show'
+  get 'delivery_categories/create'
+  get 'delivery_categories/update'
+  get 'delivery_categories/destroy'
   devise_for :users
   get 'monday', to: 'days#monday', as: "monday"
   get 'tuesday', to: 'days#tuesday', as: "tuesday"
@@ -10,8 +16,10 @@ Rails.application.routes.draw do
   root :to => 'passthrough#index'
   resources :orders
   resources :riders, only: [:index, :show]
-  resources :deliveries do
-    post '/reorganize', to: "deliveries#reorganize"
+  resources :delivery_categories do
+    resources :deliveries do
+      post '/reorganize', to: "deliveries#reorganize"
+    end
   end
   resources :stickers
   get 'riders-deliveries', to: 'riders#deliveries', as: "riders_deliveries"
