@@ -20,5 +20,7 @@
       </div>
     <% end %>
   <% end %>
-
+</div>
+<div class="buttons-wrapper">
+  <%= link_to "Eliminar Reparto", delivery_category_path(@delivery_category), method: :delete, class: "button-primary", data: {confirm: "Confirmar?"} %>
 </div>

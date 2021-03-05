@@ -32,6 +32,11 @@ class DeliveryCategoriesController < ApplicationController
   end
 
   def destroy
+    @delivery_category = DeliveryCategory.find(params[:id])
+    if @delivery_category.destroy
+      redirect_to delivery_categories_path
+    end
+    authorize @delivery_category
   end
 
   private
