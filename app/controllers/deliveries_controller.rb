@@ -2,7 +2,7 @@ class DeliveriesController < ApplicationController
   def index
     @delivery_groups = policy_scope(Delivery).all
     @riders = Rider.all
-    if Time.zone.now.strftime("%H").to_i >= "15".to_i
+    if Time.zone.now.strftime("%H").to_i >= "14".to_i
       @remaining_orders = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_id: nil).count
     else
       @remaining_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil).count
@@ -19,7 +19,7 @@ class DeliveriesController < ApplicationController
 
   def new
     @delivery_group = Delivery.new
-    if Time.zone.now.strftime("%H").to_i >= "15".to_i
+    if Time.zone.now.strftime("%H").to_i >= "14".to_i
       @today_orders = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_id: nil).order(created_at: :asc)
     else
       @today_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil).order(created_at: :asc)
@@ -42,7 +42,7 @@ class DeliveriesController < ApplicationController
 
   def edit
     @delivery_group = Delivery.find(params[:id])
-    if Time.zone.now.strftime("%H").to_i >= "15".to_i
+    if Time.zone.now.strftime("%H").to_i >= "14".to_i
       without_delivery_group = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_id: nil).order(created_at: :asc)
       with_this_delivery_group = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_id: @delivery_group)
       @today_orders = with_this_delivery_group + without_delivery_group
