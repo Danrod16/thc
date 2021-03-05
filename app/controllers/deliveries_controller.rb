@@ -64,10 +64,10 @@ class DeliveriesController < ApplicationController
     @delivery_group.update(delivery_params)
     if @delivery_group.save
       redirect_to delivery_category_delivery_path(@delivery_category.id, @delivery_group)
-      flash[:alert] = "Reparto modificado, Gracias #{current_user.first_name}!"
+      flash[:alert] = "Grupo modificado, Gracias #{current_user.first_name}!"
     else
       render :edit
-      flash[:alert] = "Error al modificar reparto!"
+      flash[:alert] = "Error al modificar Grupo!"
     end
     authorize @delivery_group
   end
