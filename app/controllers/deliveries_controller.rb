@@ -4,11 +4,15 @@ class DeliveriesController < ApplicationController
   def index
     @delivery_groups = policy_scope(Delivery).where(delivery_category_id: @delivery_category.id)
     @riders = Rider.all
+    @rider_orders = []
     if Time.zone.now.strftime("%H").to_i >= "15".to_i
       @remaining_orders = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: @delivery_category.id).count
+      @total_orders = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: @delivery_category.id)∫
     else
       @remaining_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: @delivery_category.id).count
+      @total_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: @delivery_category.id)
     end
+    set_orders_array
     authorize @delivery_groups
   end
 
@@ -110,6 +114,15 @@ class DeliveriesController < ApplicationController
       end
     end
     meal_date
+  end
+
+  def set_orders_array
+    @total_orders.each do |order|
+      @rider_orders << order
+    end
+    @delivery_groups.each do |group|
+      @rider_orders << group
+    end
   end
 
   def set_delivery_category
