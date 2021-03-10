@@ -8,7 +8,7 @@
           <div class="col-6">
             <%= f.input :name,
                         required: true,
-                        label: "Nombre del grupo",
+                        label: "Nombre del reparto",
                         autofocus: true %>
           </div>
           <div class="col-6">
@@ -46,7 +46,8 @@
           </table>
           </div>
         <div class="form-actions">
-          <%= f.button :submit, "Actualizar grupo", class: "nav-pills-current" %>
+          <%= f.button :submit, "Actualizar reparto", class: "nav-pills-current" %>
+          <small>* Esta lista no incluye los pedidos en <strong>Grupos</strong>, solo los pedidos sueltos. Por favor, editar cada grupo individualmente.</small>
         </div>
       </div>
     <% end %>

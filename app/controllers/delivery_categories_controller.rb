@@ -31,13 +31,13 @@ class DeliveryCategoriesController < ApplicationController
   def edit
     @delivery_category = DeliveryCategory.find(params[:id])
     if Time.zone.now.strftime("%H").to_i >= "15".to_i
-      without_delivery_group = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_category_id: nil).order(created_at: :asc)
-      with_this_delivery_group = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_category_id: @delivery_category.id)
-      @today_orders = with_this_delivery_group + without_delivery_group
+      without_delivery_category = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: nil).order(created_at: :asc)
+      with_this_delivery_category = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: @delivery_category.id)
+      @today_orders = with_this_delivery_category + without_delivery_category
     else
-      without_delivery_group = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_category_id: nil).order(created_at: :asc)
-      with_this_delivery_group = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_category_id: @delivery_category.id)
-      @today_orders = with_this_delivery_group + without_delivery_group
+      without_delivery_category = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: nil).order(created_at: :asc)
+      with_this_delivery_category = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: @delivery_category.id)
+      @today_orders = with_this_delivery_category + without_delivery_category
     end
     authorize @delivery_category
   end

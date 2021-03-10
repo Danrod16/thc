@@ -1,6 +1,8 @@
 <div class="riders-pills">
-  <% if policy(Delivery).create? %>
-    <%= link_to "Nuevo Grupo", new_delivery_category_delivery_path, class: "button-secondary" %>
+  <% if current_user.role != "rider" %>
+    <%= link_to "Nuevo grupo", new_delivery_category_delivery_path(@delivery_category), class: "button-secondary" %>
+  <% else %>
+    <%= link_to "Desconectar", destroy_session_path(current_user), class: "button-secondary" %>
   <% end %>
       <%= link_to "Pedidos", delivery_category_deliveries_path, class: "button-secondary", style: "margin-left: 5px;" %>
   <div class="dropdown">

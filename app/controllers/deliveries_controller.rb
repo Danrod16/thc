@@ -66,7 +66,7 @@ class DeliveriesController < ApplicationController
     @delivery_group = Delivery.find(params[:id])
     @delivery_group.update(delivery_params)
     if @delivery_group.save
-      redirect_to delivery_category_delivery_path(@delivery_category.id, @delivery_group)
+      redirect_to delivery_category_deliveries_path(@delivery_category.id)
       flash[:alert] = "Grupo modificado, Gracias #{current_user.first_name}!"
     else
       render :edit
