@@ -1,5 +1,4 @@
 class DeliveriesController < ApplicationController
-
   before_action :set_delivery_category, only: [:index, :show, :edit, :new, :create, :update]
   def index
     @delivery_groups = policy_scope(Delivery).where(delivery_category_id: @delivery_category.id)
@@ -7,7 +6,7 @@ class DeliveriesController < ApplicationController
     @rider_orders = []
     if Time.zone.now.strftime("%H").to_i >= "15".to_i
       @remaining_orders = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: @delivery_category.id).count
-      @total_orders = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: @delivery_category.id)∫
+      @total_orders = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: @delivery_category.id)
     else
       @remaining_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: @delivery_category.id).count
       @total_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: @delivery_category.id)

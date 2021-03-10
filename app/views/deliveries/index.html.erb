@@ -29,7 +29,7 @@
       <% @rider_orders.each do |order| %>
         <tr data-id = <%= "#{order.id}" %>>
           <% if !current_user.rider? %>
-            <% if order == Order  %>
+            <% if order.class == Order  %>
               <td><%= order.meal_date %></td>
               <td><%= order.customer_name %></td>
               <td><%= order.delivery_address %></td>
@@ -53,6 +53,59 @@
                   <% end %>
                 <% end %>
               </td>
+            <% else %>
+              <td>Creado el: <%= order.created_at.strftime('%d-%m-%y') %></td>
+              <td><strong>nº pedidos:</strong> <%= order.orders.count %></td>
+              <td> <%= order.name %> </td>
+              <td>-</td>
+              <td>-</td>
+              <td>
+                <div type="button" data-toggle="modal" style="text-align: center;" data-target=<%="#order-#{order.id}"%>>
+                  <div class="modal-button-group">
+                    <%= image_tag("https://res.cloudinary.com/therainycloud/image/upload/v1614859236/THC/thc_bag_roe4qi.png") %>
+                  </div>
+                </div>
+              </td>
+              <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id=<%="order-#{order.id}"%>>
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle"><%= order.name %></h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <% order.orders.each do |group_order| %>
+                      <div class="background-group-list">
+                        <ul>
+                          <li>
+                            <strong>Pedido para: </strong> <%= group_order.customer_name %>
+                          </li>
+                          <li><strong>Teléfono:</strong> <%= group_order.telephone if group_order.telephone.present? %></li>
+                          <li><strong>Notas:</strong> <%= group_order.notes %></li>
+                          <li><strong>Producto: </strong> <%= group_order.product.meal_name %></li>
+                        </ul>
+                      </div>
+                      <% end %>
+                    </div>
+                    <div class="modal-footer">
+                    <% if order.orders.any? { |o| o.customer_email.present? } %>
+                      <%= simple_form_for([@delivery_category, order]) do |f| %>
+                        <%= f.error_notification %>
+                        <%= f.input :delivered,
+                        required: true,
+                        label: false,
+                        :as => :hidden,
+                        input_html: {value: true},
+                        autofocus: true %>
+                        <%= f.button :submit, "Entregar", class: "button-primary", data: { confirm: "Confirmar entrega" } %>
+                      <% end %>
+                     <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
             <% end %>
           <% else %>
             <% if order.class == Order %>
@@ -123,12 +176,16 @@
                     </div>
                     <div class="modal-body">
                       <% order.orders.each do |group_order| %>
-                      <ul>
-                        <li>
-                          <strong>Pedido para: </strong> <%= group_order.customer_name %>
-                        </li>
-                        <li><strong>Producto: </strong> <%= group_order.product.meal_name %></li>
-                      </ul>
+                      <div class="background-group-list">
+                        <ul>
+                          <li>
+                            <strong>Pedido para: </strong> <%= group_order.customer_name %>
+                          </li>
+                          <li><strong>Teléfono:</strong> <%= group_order.telephone if group_order.telephone.present? %></li>
+                          <li><strong>Notas:</strong> <%= group_order.notes %></li>
+                          <li><strong>Producto: </strong> <%= group_order.product.meal_name %></li>
+                        </ul>
+                      </div>
                       <% end %>
                     </div>
                     <div class="modal-footer">
@@ -156,7 +213,9 @@
 </div>
 
 <!-- end table test -->
+<% if current_user.role != "rider" %>
 <div class="buttons-wrapper">
   <%= link_to "Editar Reparto", edit_delivery_category_path(@delivery_category), class: "button-primary"  %>
   <%= link_to "Eliminar Reparto", delivery_category_path(@delivery_category), method: :delete, class: "button-primary", data: {confirm: "Confirmar?"} %>
 </div>
+<% end %>

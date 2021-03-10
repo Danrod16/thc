@@ -91,7 +91,7 @@ export default class extends Controller {
     this.updatedAtTarget.innerHTML = `Actualizado: <strong>${data.updated_at}</strong>`
 
     // Total orders
-    this.totalOrdersTarget.innerHTML = `<strong>Total pedidos de hoy: ${data.total_orders}</strong>`
+    this.totalOrdersTarget.innerHTML = `<strong>Total bowls: ${data.total_orders}</strong>`
 
     });
  }
