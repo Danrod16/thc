@@ -21,7 +21,7 @@
             <% else %>
             <th class="custom">Dirección</th>
             <th style="text-align: center;" class="icon">Ver</th>
-            <th class="icon"></th>
+            <th class="icon">Producto</th>
             <% end %>
           </tr>
         </thead>
@@ -56,6 +56,15 @@
                     <% end %>
                   <% end %>
                 </td>
+                <td class="modal-button-group">
+                  <% if order.category == "Meals" %>
+                    <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/6_y5smpg.png') %>
+                  <% elsif order.category == "Snacks" %>
+                    <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/8_sewz9h.png') %>
+                  <% else %>
+                    <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/7_qe6vau.png') %>
+                  <% end %>
+                </td>
               <% else %>
                 <td>Creado el: <%= order.created_at.strftime('%d-%m-%y') %></td>
                 <td><strong>nº pedidos:</strong> <%= order.orders.count %></td>
@@ -87,7 +96,18 @@
                             </li>
                             <li><strong>Teléfono:</strong> <%= group_order.telephone if group_order.telephone.present? %></li>
                             <li><strong>Notas:</strong> <%= group_order.notes %></li>
-                            <li><strong>Producto: </strong> <%= group_order.product.meal_name %></li>
+                            <li>
+                              <strong>Producto: </strong> <%= group_order.product.meal_name %>
+                              <div class="modal-button-group">
+                                <% if group_order.category == "Meals" %>
+                                  <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/6_y5smpg.png') %>
+                                <% elsif group_order.category == "Snacks" %>
+                                  <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/8_sewz9h.png') %>
+                                <% else %>
+                                  <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/7_qe6vau.png') %>
+                                <% end %>
+                              </div>
+                            </li>
                           </ul>
                         </div>
                         <% end %>
@@ -120,9 +140,6 @@
                     <span class="far fa-list-alt icon" style="font-size: 25px;"></span>
                   </div>
                 </td>
-                <% if order.delivered == true %>
-                  <td class="icon"><i class="fas fa-check"></i></td>
-                <% end %>
                 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id=<%="order-#{order.id}"%>>
                   <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -188,14 +205,25 @@
                             </li>
                             <li><strong>Teléfono:</strong> <%= group_order.telephone if group_order.telephone.present? %></li>
                             <li><strong>Notas:</strong> <%= group_order.notes %></li>
-                            <li><strong>Producto: </strong> <%= group_order.product.meal_name %></li>
+                            <li>
+                              <strong>Producto: </strong><%= group_order.product.meal_name %>
+                              <div class="modal-buttons-group">
+                                <% if group_order.category == "Meals" %>
+                                  <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/6_y5smpg.png') %>
+                                <% elsif group_order.category == "Snacks" %>
+                                  <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/8_sewz9h.png') %>
+                                <% else %>
+                                  <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/7_qe6vau.png') %>
+                                <% end %>
+                              </div>
+                            </li>
                           </ul>
                         </div>
                         <% end %>
                       </div>
                       <div class="modal-footer">
                       <% if order.orders.any? { |o| o.customer_email.present? } %>
-                        <%= simple_form_for(order, url: update_path) do |f| %>
+                        <%= simple_form_for([@delivery_category,order]) do |f| %>
                           <%= f.error_notification %>
                           <%= f.input :delivered,
                           required: true,
@@ -206,7 +234,7 @@
                           <%= f.button :submit, "Entregar", class: "button-primary", data: { confirm: "Confirmar entrega" } %>
                         <% end %>
                        <% end %>
-                      <%= link_to "editar grupo", edit_delivery_category_delivery_path(order), class: "button-secondary" %>
+                      <%= link_to "editar grupo", edit_delivery_category_delivery_path(@delivery_category, order), class: "button-secondary" %>
                       </div>
                     </div>
                   </div>

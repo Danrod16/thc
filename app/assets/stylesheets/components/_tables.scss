@@ -15,7 +15,9 @@
   height: 40vh;
   margin-bottom: 20px;
   box-shadow: none;
-    .icon { width: 50px;}
+    .icon {
+      width: 50px;
+    }
 }
 
 .table-responsive-raw {
@@ -67,7 +69,7 @@
 
 table th, .table td {
     padding: 0.75rem;
-    vertical-align: top;
+    vertical-align: center;
     border-top: none !important;
 }
 
