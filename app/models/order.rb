@@ -135,8 +135,13 @@ class Order < ApplicationRecord
       if day.wday == 6 || day.wday == 0
         day = day.next_day
       else
-        array << { name: day.strftime("%A"), date: day.strftime("%d-%m-%Y")}
-        day = day.next_day
+        if Time.zone.now.strftime("%H").to_i >= "14".to_i
+          array << { name: day.strftime("%A"), date: day.strftime("%d-%m-%Y")}
+          day = day.next_day
+        else
+          array << { name: day.strftime("%A"), date: day.strftime("%d-%m-%Y")}
+          day
+        end
       end
     end
     array

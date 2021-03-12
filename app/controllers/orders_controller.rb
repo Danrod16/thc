@@ -1,6 +1,6 @@
   class OrdersController < ApplicationController
   after_action :create_combos, only: [:create]
-  
+
   def weekly
     @orders = Order.paginate(page: params[:page], per_page: 40)
   end
