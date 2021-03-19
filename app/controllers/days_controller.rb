@@ -13,7 +13,7 @@ class DaysController < ApplicationController
     @snacks_summary = snacks_summary(monday)
     @desserts_summary = desserts_summary(monday)
     @meal_name = @meals.first.product.meal_name
-    @total_orders = Order.where(meal_date: monday).count
+    set_total_orders
     generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, monday)
     set_json
   end
@@ -27,8 +27,8 @@ class DaysController < ApplicationController
     @meals_summary = day_summary(tuesday)
     @snacks_summary = snacks_summary(tuesday)
     @desserts_summary = desserts_summary(tuesday)
-    @total_orders = Order.where(meal_date: tuesday).count
     @meal_name = @meals.first.product.meal_name
+    set_total_orders
     generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, tuesday)
     set_json
   end
@@ -42,7 +42,7 @@ class DaysController < ApplicationController
     @meals_summary = day_summary(wednesday)
     @snacks_summary = snacks_summary(wednesday)
     @desserts_summary = desserts_summary(wednesday)
-    @total_orders = Order.where(meal_date: wednesday).count
+    set_total_orders
     @meal_name = @meals.first.product.meal_name
     generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, wednesday)
     set_json
@@ -57,7 +57,7 @@ class DaysController < ApplicationController
     @meals_summary = day_summary(thursday)
     @snacks_summary = snacks_summary(thursday)
     @desserts_summary = desserts_summary(thursday)
-    @total_orders = Order.where(meal_date: thursday).count
+    set_total_orders
     @meal_name = @meals.first.product.meal_name
     generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, thursday)
     set_json
@@ -72,7 +72,7 @@ class DaysController < ApplicationController
     @meals_summary = day_summary(friday)
     @snacks_summary = snacks_summary(friday)
     @desserts_summary = desserts_summary(friday)
-    @total_orders = Order.where(meal_date: friday).count
+    set_total_orders
     @meal_name = @meals.first.product.meal_name
     generate_pdf(@meals_summary, @snacks_summary, @desserts_summary, friday)
     set_json
@@ -176,6 +176,10 @@ class DaysController < ApplicationController
       summary << dessert
     end
     summary
+  end
+
+  def set_total_orders
+    @total_orders = @meals.count
   end
 
   def updated_at
