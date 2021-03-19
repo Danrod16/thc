@@ -1,15 +1,21 @@
-<%= link_to "< Atrás", delivery_category_deliveries_path %>
+<%= link_to "< Atrás", delivery_categories_path %>
 <div class="form-inputs">
     <div class="row">
       <div class="col-12">
-        <%= simple_form_for([@delivery_category, @delivery_group]) do |f| %>
+        <%= simple_form_for(@delivery_category) do |f| %>
           <%= f.error_notification %>
             <div class="row">
-              <div class="col-12">
+              <div class="col-6">
                 <%= f.input :name,
                             required: true,
-                            label: "Nombre del grupo",
+                            label: "Nombre de la categoria de reparto",
                             autofocus: true %>
+              </div>
+              <div class="col-6">
+                <%= f.association :rider,
+                                required: true,
+                                label: "Rider",
+                                autofocus: true %>
               </div>
             </div>
             <div class="table-responsive-raw">
@@ -46,4 +52,3 @@
       <% end %>
     </div>
 </div>
-

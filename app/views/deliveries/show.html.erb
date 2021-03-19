@@ -1,7 +1,7 @@
 <% if current_user && current_user.rider? %>
   <%= link_to "< Atrás", rider_path(current_user.riders.first) %>
 <% else %>
-  <%= link_to "< Atrás", deliveries_path %>
+  <%= link_to "< Atrás", delivery_category_deliveries_path %>
 <% end %>
 
 <div class="header">
@@ -11,7 +11,7 @@
     <p>Rider: <%= @delivery_group.rider.name %></p>
   <% end %>
   <% if @delivery_group.orders.any?  && !current_user.rider? %>
-    <%= link_to delivery_path(@delivery_group, format: :pdf), target: "_blank", class: "button-primary" do %>
+    <%= link_to delivery_category_delivery_path(@delivery_category.id, @delivery_group, format: :pdf), target: "_blank", class: "button-primary" do %>
     <i class="fas fa-file-download"></i>
     Descargar
     <% end %>
@@ -117,8 +117,8 @@
 </div>
 <% if policy(Delivery).edit? %>
   <div class="buttons-wrapper">
-    <%= link_to "Editar", edit_delivery_path(@delivery_group), class: "button-primary"  %>
-    <%= link_to "Eliminar", delivery_path(@delivery_group), method: :delete, class: "button-primary", data: {confirm: "Confirmar?"} %>
+    <%= link_to "Editar", edit_delivery_category_delivery_path(@delivery_category, @delivery_group), class: "button-primary"  %>
+    <%= link_to "Eliminar", delivery_category_delivery_path(@delivery_category, @delivery_group), method: :delete, class: "button-primary", data: {confirm: "Confirmar?"} %>
   </div>
 <% end %>
 

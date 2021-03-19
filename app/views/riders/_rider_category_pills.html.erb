@@ -1,10 +1,10 @@
 <div class="riders-pills">
   <% if current_user.role != "rider" %>
-    <%= link_to "Nuevo grupo", new_delivery_category_delivery_path(@delivery_category), class: "button-secondary" %>
+    <%= link_to "Nuevo reparto", new_delivery_category_path, class: "button-secondary" %>
   <% else %>
-    <%= link_to "Desconectar", destroy_session_path(current_user), method: :delete, class: "button-secondary" %>
+    <%= link_to "Desconectar", destroy_session_path(current_user), class: "button-secondary" %>
   <% end %>
-      <%= link_to "Pedidos", delivery_category_deliveries_path, class: "button-secondary", style: "margin-left: 5px;" %>
+      <%= link_to "Pedidos", delivery_categories_path, class: "button-secondary", style: "margin-left: 5px;" %>
   <div class="dropdown">
     <button class="button-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Riders

@@ -15,7 +15,9 @@
   height: 40vh;
   margin-bottom: 20px;
   box-shadow: none;
-    .icon { width: 50px;}
+    .icon {
+      width: 50px;
+    }
 }
 
 .table-responsive-raw {
@@ -26,6 +28,18 @@
   height: 75vh;
   margin-bottom: 10px;
   box-shadow: $box-shadow;
+}
+
+.modal-button-group {
+  img {
+    height:35px;
+    width:35px;
+  }
+}
+
+.background-group-list {
+  background-color: #fffaf1;
+  border-radius: 10px;
 }
 
 .form-check {
@@ -55,7 +69,7 @@
 
 table th, .table td {
     padding: 0.75rem;
-    vertical-align: top;
+    vertical-align: center;
     border-top: none !important;
 }
 

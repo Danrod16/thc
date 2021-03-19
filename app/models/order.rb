@@ -2,6 +2,7 @@ class Order < ApplicationRecord
   require 'date'
   include PgSearch::Model
   belongs_to :product
+  belongs_to :delivery_category, optional: true
   belongs_to :delivery, optional: true
   belongs_to :sticker, optional: true
   validates :meal_date, presence: true, format: { with: /\d{2}-\d{2}-\d{4}/,
