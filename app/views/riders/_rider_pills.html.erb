@@ -4,7 +4,7 @@
   <% else %>
     <%= link_to "Desconectar", destroy_session_path(current_user), method: :delete, class: "button-secondary" %>
   <% end %>
-      <%= link_to "Pedidos", delivery_category_deliveries_path, class: "button-secondary", style: "margin-left: 5px;" %>
+      <%= link_to "Refrescar", delivery_category_deliveries_path, class: "button-secondary", style: "margin-left: 5px;" %>
   <div class="dropdown">
     <button class="button-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Riders
