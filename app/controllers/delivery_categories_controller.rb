@@ -24,6 +24,9 @@ class DeliveryCategoriesController < ApplicationController
     @delivery_category = DeliveryCategory.new(delivery_category_params)
     if @delivery_category.save
       redirect_to new_delivery_category_delivery_path(@delivery_category.id)
+    else
+      flash[:alert] = "Información faltante"
+      render :new
     end
     authorize @delivery_category
   end
