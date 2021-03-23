@@ -29,8 +29,8 @@
       <% if @rider_orders.count < 0 %>
         <p>Ningun pedido seleccionado para el proximo reparto, editar esta categoria para actualizar los pedidos o crear una nueva categoria.</p>
       <% else %>
-        <% @rider_orders.each do |order| %>
-          <tr data-id = <%= "#{order.id}" %>>
+        <% @rider_orders.sort_by {|order| order.sequence.nil? ? 0 : order.sequence }.each do |order| %>
+          <tr data-id = <%= "#{order.id}-#{order.class == Order ? 'Order' : 'OrderGroup'}" %>>
             <% if !current_user.rider? %>
               <% if order.class == Order  %>
                 <td><%= order.meal_date %></td>

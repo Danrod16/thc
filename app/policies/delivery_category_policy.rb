@@ -32,4 +32,8 @@ class DeliveryCategoryPolicy < ApplicationPolicy
   def destroy?
     true
   end
+
+  def reorganize?
+    true
+  end
 end

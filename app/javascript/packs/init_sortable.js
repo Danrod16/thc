@@ -24,9 +24,10 @@ const initSortable = () => {
        */
     set: function (sortable) {
         var order = sortable.toArray();
-        const deliveryId = list.dataset.id;
-        console.log(order)
-        fetch(`/deliveries/${deliveryId}/reorganize`, {
+        const deliveryCategoryId = list.dataset.id;
+        const url = `/delivery_categories/${deliveryCategoryId}/reorganize`
+
+        fetch(url, {
           method: "POST",
           headers: {
             "content-type": "application/json",

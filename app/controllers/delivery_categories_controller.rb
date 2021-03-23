@@ -17,6 +17,7 @@ class DeliveryCategoriesController < ApplicationController
     else
       @remaining_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil).count
     end
+
     authorize @delivery_categories
   end
 
@@ -62,6 +63,27 @@ class DeliveryCategoriesController < ApplicationController
     @delivery_category = DeliveryCategory.find(params[:id])
     if @delivery_category.destroy
       redirect_to delivery_categories_path
+    end
+    authorize @delivery_category
+  end
+
+    def reorganize
+    @delivery_category = DeliveryCategory.find(params[:delivery_category_id])
+    @orders = @delivery_category.orders
+    @delivery_groups = policy_scope(Delivery).where(delivery_category_id: @delivery_category)
+
+    params[:order_ids].each_with_index do |id, index|
+      data = id.split('-')
+      objectId = data[0]
+      objectType = data[1]
+
+      if objectType == 'OrderGroup'
+        group = @delivery_groups.find(objectId)
+        group.update(sequence: index + 1)
+      elsif objectType == 'Order'
+        order = @orders.find(objectId)
+        order.update(sequence: index + 1)
+      end
     end
     authorize @delivery_category
   end

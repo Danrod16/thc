@@ -1,5 +1,6 @@
 class DeliveriesController < ApplicationController
   before_action :set_delivery_category, only: [:index, :show, :edit, :new, :create, :update]
+
   def index
     @delivery_groups = policy_scope(Delivery).where(delivery_category_id: @delivery_category.id)
     @riders = Rider.all
@@ -12,6 +13,7 @@ class DeliveriesController < ApplicationController
       @total_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: @delivery_category.id)
     end
     set_orders_array
+
     authorize @delivery_groups
   end
 
@@ -79,16 +81,6 @@ class DeliveriesController < ApplicationController
     @delivery_group = Delivery.find(params[:id])
     @delivery_group.destroy
     redirect_to delivery_categroy_deliveries_path()
-    authorize @delivery_group
-  end
-
-  def reorganize
-    @delivery_group = Delivery.find(params[:delivery_id])
-    @orders = @delivery_group.orders
-    params[:order_ids].each_with_index do |id, index|
-      order = @orders.find(id)
-      order.update(sequence: index + 1)
-    end
     authorize @delivery_group
   end
 
