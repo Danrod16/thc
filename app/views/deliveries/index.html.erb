@@ -140,6 +140,17 @@
                     <span class="far fa-list-alt icon" style="font-size: 25px;"></span>
                   </div>
                 </td>
+                <td>
+                  <div class="modal-button-group">
+                    <% if order.category == "Meals" %>
+                      <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/6_y5smpg.png') %>
+                    <% elsif order.category == "Snacks" %>
+                      <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/8_sewz9h.png') %>
+                    <% else %>
+                      <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/7_qe6vau.png') %>
+                    <% end %>
+                  </div>
+                </td>
                 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id=<%="order-#{order.id}"%>>
                   <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -207,7 +218,7 @@
                             <li><strong>Notas:</strong> <%= group_order.notes %></li>
                             <li>
                               <strong>Producto: </strong><%= group_order.product.meal_name %>
-                              <div class="modal-buttons-group">
+                              <div class="modal-button-group">
                                 <% if group_order.category == "Meals" %>
                                   <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/6_y5smpg.png') %>
                                 <% elsif group_order.category == "Snacks" %>
@@ -231,7 +242,7 @@
                           :as => :hidden,
                           input_html: {value: true},
                           autofocus: true %>
-                          <%= f.button :submit, "Entregar", class: "button-primary", data: { confirm: "Confirmar entrega" } %>
+                          <%= f.button :submit, "Entregar", class: "button-primary mr-3", data: { confirm: "Confirmar entrega" } %>
                         <% end %>
                        <% end %>
                       <%= link_to "editar grupo", edit_delivery_category_delivery_path(@delivery_category, order), class: "button-secondary" %>
@@ -239,6 +250,9 @@
                     </div>
                   </div>
                 </div>
+                <td>
+                  -
+                </td>
               <% end %>
           <% end %>
         <% end %>
