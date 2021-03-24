@@ -17,9 +17,8 @@ Rails.application.routes.draw do
   resources :orders
   resources :riders, only: [:index, :show]
   resources :delivery_categories do
-    resources :deliveries do
-      post '/reorganize', to: "deliveries#reorganize"
-    end
+    post '/reorganize', to: "delivery_categories#reorganize"
+    resources :deliveries
   end
   resources :stickers
   get 'riders-deliveries', to: 'riders#deliveries', as: "riders_deliveries"
