@@ -49,9 +49,9 @@
                       input_html: {value: true},
                       autofocus: true %>
                       <% if order.delivered == true %>
-                        <%= f.button :submit, "Entregado", class: "btn", data: { confirm: "Confirmar entrega" } %>
+                        <%= f.button :submit, "Entregado", class: "button-secondary w-100", disabled: true%>
                       <% else %>
-                        <%= f.button :submit, "Entregar", class: "button-primary", data: { confirm: "Confirmar entrega" } %>
+                        <%= f.button :submit, "Entregar", class: "button-primary w-100", data: { confirm: "Confirmar entrega" } %>
                       <% end %>
                     <% end %>
                   <% end %>
