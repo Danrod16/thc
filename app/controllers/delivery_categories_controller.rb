@@ -13,9 +13,9 @@ class DeliveryCategoriesController < ApplicationController
     @delivery_categories = policy_scope(DeliveryCategory).all
     @riders = Rider.all
     if Time.zone.now.strftime("%H").to_i >= "15".to_i
-      @remaining_orders = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_id: nil).count
+      @remaining_orders = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: nil).count
     else
-      @remaining_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil).count
+      @remaining_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: nil).count
     end
 
     authorize @delivery_categories
