@@ -2,9 +2,9 @@ class DeliveryCategoriesController < ApplicationController
   def new
     @delivery_category = DeliveryCategory.new
      if Time.zone.now.strftime("%H").to_i >= "15".to_i
-      @today_orders = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_id: nil).order(created_at: :asc)
+      @today_orders = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: nil).order(created_at: :asc)
     else
-      @today_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil).order(created_at: :asc)
+      @today_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: nil).order(created_at: :asc)
     end
     authorize @delivery_category
   end
