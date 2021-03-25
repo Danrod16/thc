@@ -24,12 +24,14 @@ class DeliveryCategoriesController < ApplicationController
   def create
     @delivery_category = DeliveryCategory.new(delivery_category_params)
     if @delivery_category.save
-      redirect_to new_delivery_category_delivery_path(@delivery_category.id)
+      # redirect_to new_delivery_category_delivery_path(@delivery_category.id)
+      render json: @delivery_category
     else
       flash[:alert] = "Información faltante"
       render :new
     end
     authorize @delivery_category
+
   end
 
   def edit
@@ -67,7 +69,7 @@ class DeliveryCategoriesController < ApplicationController
     authorize @delivery_category
   end
 
-    def reorganize
+  def reorganize
     @delivery_category = DeliveryCategory.find(params[:delivery_category_id])
     @orders = @delivery_category.orders
     @delivery_groups = policy_scope(Delivery).where(delivery_category_id: @delivery_category)
@@ -86,6 +88,11 @@ class DeliveryCategoriesController < ApplicationController
       end
     end
     authorize @delivery_category
+
+    render json: {
+      id: params[:delivery_category_id],
+      orders: @orders
+    }
   end
 
   private
@@ -93,4 +100,13 @@ class DeliveryCategoriesController < ApplicationController
   def delivery_category_params
     params.require(:delivery_category).permit(:name, :rider_id, :order_ids => [])
   end
+
+  # def delivery_category_fetch_params
+  #   # Created this method because I can not send from fetch an object that has
+  #   # another object inside and get's parsed well by params.requies
+  #   # Ex.: Should be 'delivery_category'=>{'name'=>'DeliveryCat2', 'rider_id'=>'2', 'order_ids'=>['', '88', '', '95', '', '101', '', '106', '', '', '', '', '', '', '']}
+  #   #  But instead fetch sends this: 'deliveryCategory'=>'{\'name\':\'DeliveryCat4\',\'riderId\':\'2\',\'ordersIds\':[\'111\',\'136\',\'156\',\'116\']}'
+
+  #   data = params.require(:delivery_category)
+  # end
 end

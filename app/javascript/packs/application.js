@@ -26,7 +26,7 @@ require("channels")
 import "bootstrap";
 
 // Internal imports, e.g:
-
+import './delivery_category_helper.js'
 
 
 // document.addEventListener('turbolinks:load', () => {
