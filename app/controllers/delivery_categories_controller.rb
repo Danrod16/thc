@@ -1,4 +1,6 @@
 class DeliveryCategoriesController < ApplicationController
+  after_action :check_orders, only: [:update]
+
   def new
     @delivery_category = DeliveryCategory.new
      if Time.zone.now.strftime("%H").to_i >= "15".to_i
@@ -101,12 +103,9 @@ class DeliveryCategoriesController < ApplicationController
     params.require(:delivery_category).permit(:name, :rider_id, :order_ids => [])
   end
 
-  # def delivery_category_fetch_params
-  #   # Created this method because I can not send from fetch an object that has
-  #   # another object inside and get's parsed well by params.requies
-  #   # Ex.: Should be 'delivery_category'=>{'name'=>'DeliveryCat2', 'rider_id'=>'2', 'order_ids'=>['', '88', '', '95', '', '101', '', '106', '', '', '', '', '', '', '']}
-  #   #  But instead fetch sends this: 'deliveryCategory'=>'{\'name\':\'DeliveryCat4\',\'riderId\':\'2\',\'ordersIds\':[\'111\',\'136\',\'156\',\'116\']}'
-
-  #   data = params.require(:delivery_category)
-  # end
+  def check_orders
+    Order.where.not(sequence: nil).where(delivery_category: nil).each do |order|
+      order.update(sequence: nil)
+    end
+  end
 end

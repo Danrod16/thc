@@ -18,33 +18,43 @@
                               autofocus: true %>
           </div>
         </div>
-          <div class="table-responsive-raw">
-          <table class="table table-striped">
-            <thead class="thead">
-              <tr>
-                <th></th>
-                <th class="date">Fecha</th>
-                <th class="name">Nombre</th>
-                <th class="custom">Dirección</th>
-                <th class="notes">Notas</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @today_orders.each do |order| %>
-                <tr>
-                  <td>
-                    <%= f.association :orders,
-                                      collection: [order],
-                                      as: :check_boxes,
-                                      label_method: :grouped_orders,
-                                      value_method: :id,
-                                      include_blank: false %>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
+         <div class="row">
+          <div class="col-12">
+            <div id="react-container"></div>
           </div>
+        </div>
+        <div class="table-responsive-raw">
+        <table class="table table-striped">
+          <thead class="thead">
+            <tr>
+              <th></th>
+              <th class="date">Fecha</th>
+              <th class="name">Nombre</th>
+              <th class="custom">Dirección</th>
+              <th class="notes">Notas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @today_orders.each do |order| %>
+              <tr>
+                <td>
+                  <%= f.association :orders,
+                                    collection: [order],
+                                    as: :check_boxes,
+                                    label_method: :grouped_orders,
+                                    value_method: :id,
+                                    include_blank: false,
+                                    input_html: {
+                                      data: {
+                                        sequence: order.sequence || 'none'
+                                      }
+                                    } %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        </div>
         <div class="form-actions">
           <%= f.button :submit, "Actualizar reparto", class: "nav-pills-current" %>
           <small>* Esta lista no incluye los pedidos en <strong>Grupos</strong>, solo los pedidos sueltos. Por favor, editar cada grupo individualmente.</small>

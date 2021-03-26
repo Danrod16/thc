@@ -2,38 +2,47 @@ import React from "react"
 import PropTypes from "prop-types"
 
 class DeliveryCategoryNew extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       counter: 0,
       orderArray: []
     }
     // check for already checked boxes for edit view and for the case when user
     // uses go back arrow from browser
-
-    this.addEventListeners()
+    console.log('constructor of DeliveryCategoryNew')
+    this.prepareElements()
   }
 
-  addEventListeners = () => {
+  prepareElements = () => {
     // CategoryName
+    console.log('********************************************')
+    console.log('categoryNameInput')
     document.getElementById('delivery_category_name').addEventListener('change', (e) => {
       this.handleNameChange(e)
     })
 
     // RiderId
+    console.log('********************************************')
+    console.log('categoryRiderIdInput')
     document.getElementById('delivery_category_rider_id').addEventListener('change', (e) => {
       this.handleRiderChange(e)
     })
 
     // Meals checkboxes
+    console.log('********************************************')
+    console.log('categoryCheckboxInputs')
     document.querySelectorAll('input[type=checkbox]').forEach((checkbox) => {
-      // add react-container to edit page and check how many are selected on mount
+      console.log(checkbox, checkbox.dataset)
+      console.log(checkbox, checkbox.dataset.sequence)
       checkbox.addEventListener('change', (e) => {
         this.handleCheckBoxChange(e)
       })
     })
 
     // Form submit button
+    console.log('********************************************')
+    console.log('categorySubmitButton')
     document.getElementById('new_delivery_category').addEventListener('submit', (e) => {
       this.handleSubmit(e)
     })
