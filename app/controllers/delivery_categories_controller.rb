@@ -1,5 +1,5 @@
 class DeliveryCategoriesController < ApplicationController
-  after_action :check_orders, only: [:update]
+  after_action :check_orders, only: [:update, :destroy]
 
   def new
     @delivery_category = DeliveryCategory.new

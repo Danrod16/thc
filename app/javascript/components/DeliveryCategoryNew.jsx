@@ -8,30 +8,22 @@ class DeliveryCategoryNew extends React.Component {
       counter: 0,
       orderArray: []
     }
-    // check for already checked boxes for edit view and for the case when user
-    // uses go back arrow from browser
-    console.log('constructor of DeliveryCategoryNew')
+
     this.prepareElements()
   }
 
   prepareElements = () => {
     // CategoryName
-    console.log('********************************************')
-    console.log('categoryNameInput')
     document.getElementById('delivery_category_name').addEventListener('change', (e) => {
       this.handleNameChange(e)
     })
 
     // RiderId
-    console.log('********************************************')
-    console.log('categoryRiderIdInput')
     document.getElementById('delivery_category_rider_id').addEventListener('change', (e) => {
       this.handleRiderChange(e)
     })
 
     // Meals checkboxes
-    console.log('********************************************')
-    console.log('categoryCheckboxInputs')
     document.querySelectorAll('input[type=checkbox]').forEach((checkbox) => {
       console.log(checkbox, checkbox.dataset)
       console.log(checkbox, checkbox.dataset.sequence)
@@ -41,8 +33,6 @@ class DeliveryCategoryNew extends React.Component {
     })
 
     // Form submit button
-    console.log('********************************************')
-    console.log('categorySubmitButton')
     document.getElementById('new_delivery_category').addEventListener('submit', (e) => {
       this.handleSubmit(e)
     })
@@ -68,23 +58,15 @@ class DeliveryCategoryNew extends React.Component {
     const checkbox = e.target
     const id = checkbox.value
     let copyArray = [...this.state.orderArray]
-    let change = null
 
-    if (checkbox.checked) {
-      copyArray.push(id)
-      change = 1
-    } else {
+    checkbox.checked ?
+      copyArray.push(id) :
       copyArray = copyArray.filter((value, index) => value !== id )
-      change = -1
-    }
-
 
     this.setState({
       orderArray: copyArray,
-      counter: this.state.counter + change
+      counter: copyArray.length
     })
-
-    console.log(this.state)
   }
 
   deliveryCategoryData = () => {
@@ -102,9 +84,7 @@ class DeliveryCategoryNew extends React.Component {
     let createDeliveryBody = JSON.stringify({
       delivery_category: this.deliveryCategoryData()
     })
-    // let deliveryCategoryId = null
 
-    // Fetch POST to create the new delivery category and store it's ID
     fetch(createDeliveryCategoryUrl, {
       method: "POST",
       headers: {
@@ -120,9 +100,6 @@ class DeliveryCategoryNew extends React.Component {
         order_ids: this.ArrayForReorganizeFetch(),
         delivery_category: data.id
       })
-      console.log(reorderBody)
-      // const orderArray = this.ArrayForReorganizeFetch
-
 
       fetch(reorderDeliveryCategoryUrl, {
         method: 'POST',
@@ -134,10 +111,6 @@ class DeliveryCategoryNew extends React.Component {
       })
       .then(response => response.json())
       .then(data => {
-        // Simulate a mouse click on a link
-        // window.location.href = `delivery_categories/${data.id}/deliveries`
-        console.log("fetch #reorganize (last .then) data", data)
-        // Replace the URL of the current document (user won't be able to go back to previous page)
         window.location.href = `${data.id}/deliveries`
       })
     })
@@ -146,7 +119,7 @@ class DeliveryCategoryNew extends React.Component {
   render () {
     return (
       <React.Fragment>
-        Pedidos selectados: {this.state.counter}
+        Pedidos seleccionados: {this.state.counter}
       </React.Fragment>
     );
   }

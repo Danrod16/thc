@@ -10,8 +10,6 @@ class DeliveryCategoryEdit extends React.Component {
       deliveryCategoryName: '',
       deliveryCategoryRiderId: '',
     }
-
-    // console.log('constructor of DeliveryCategoryEdit?')
   }
 
   componentDidMount() {
@@ -20,7 +18,7 @@ class DeliveryCategoryEdit extends React.Component {
 
 
   prepareElements = () => {
-    // CategoryName
+    // CategoryName ------------------------------------------------------------
     const nameInput = document.getElementById('delivery_category_name')
     this.setState({
       deliveryCategoryName: nameInput.value
@@ -29,7 +27,7 @@ class DeliveryCategoryEdit extends React.Component {
       this.handleNameChange(e)
     })
 
-    // RiderId
+    // RiderId -----------------------------------------------------------------
     const riderInput = document.getElementById('delivery_category_rider_id')
     this.setState({
       deliveryCategoryRiderId: riderInput.value
@@ -38,12 +36,10 @@ class DeliveryCategoryEdit extends React.Component {
       this.handleRiderChange(e)
     })
 
-    // Meals checkboxes
+    // Meals checkboxes --------------------------------------------------------
     let presentSequences = []
     document.querySelectorAll('input[type=checkbox]').forEach((checkbox) => {
       if (checkbox.dataset.sequence !== 'none') {
-        console.log('id', checkbox.value)
-        console.log('sequence', checkbox.dataset.sequence)
         presentSequences.push({
           id: checkbox.value,
           sequence: parseInt(checkbox.dataset.sequence)
@@ -54,25 +50,20 @@ class DeliveryCategoryEdit extends React.Component {
         this.handleCheckBoxChange(e)
       })
     })
-
     this.setPresentData(presentSequences)
 
-    // Form submit button
+    // Form --------------------------------------------------------------------
     const formId = `edit_delivery_category_${this.props.match.params.id}`
     document.getElementById(formId).addEventListener('submit', (e) => {
       this.handleSubmit(e)
     })
   }
-
+  // Set Previous Data in State ------------------------------------------------
   setPresentData = (presentSequences) => {
-    console.log('#setPresentData, presentSequences:', presentSequences)
     const presentOrderArray = new Array(presentSequences.length)
     presentSequences.forEach(el => {
       presentOrderArray[el.sequence - 1] = el.id
     })
-    // console.log('presentOrderArray', presentOrderArray)
-
-    // console.log('Before #setPresentData setState() state: ', this.state)
 
     this.setState({
       counter: presentOrderArray.length,
@@ -80,107 +71,66 @@ class DeliveryCategoryEdit extends React.Component {
     })
   }
 
+  // Arrat as expected by DeliveryCategory#Reorganize --------------------------
   ArrayForReorganizeFetch = () => {
     return this.state.orderArray.map(id => `${id}-Order`)
   }
 
+  // Name Handler --------------------------------------------------------------
   handleNameChange = (e) => {
     this.setState({
       deliveryCategoryName: e.target.value
     })
   }
 
+  // Rider Handler -------------------------------------------------------------
   handleRiderChange = (e) => {
     this.setState({
       deliveryCategoryRiderId: e.target.value
     })
   }
 
+  // Checkbox Handler ----------------------------------------------------------
   handleCheckBoxChange = (e) => {
     const checkbox = e.target
     const id = checkbox.value
     let copyArray = [...this.state.orderArray]
     let change = null
 
-    if (checkbox.checked) {
-      copyArray.push(id)
-      change = 1
-    } else {
+    checkbox.checked ?
+      copyArray.push(id) :
       copyArray = copyArray.filter((value, index) => value !== id )
-      change = -1
-    }
 
     this.setState({
       orderArray: copyArray,
-      counter: this.state.counter + change
+      counter: copyArray.length
     })
-
-    console.log(this.state.orderArray)
   }
 
-  // deliveryCategoryData = () => {
-  //   return {
-  //     name: this.state.deliveryCategoryName,
-  //     rider_id: this.state.deliveryCategoryRiderId,
-  //     order_ids: this.state.orderArray
-  //   }
-  // }
-
   handleSubmit = (e) => {
-    // e.preventDefault()
     const authToken = document.querySelector("meta[name='csrf-token']").getAttribute('content')
     const deliveryId = this.props.match.params.id
-    // console.log('deliveryId', deliveryId)
-    // console.log(this.state.orderArray)
-    // // const createDeliveryCategoryUrl = `/delivery_categories/${deliveryId}`
-    // // let createDeliveryBody = JSON.stringify({
-    // //   delivery_category: this.deliveryCategoryData()
-    // // })
-    // // // let deliveryCategoryId = null
-    // // console.log('before_fetch', createDeliveryCategoryUrl)
-    // // // Fetch POST to create the new delivery category and store it's ID
-    // // fetch(`/delivery_categories/${deliveryId}`, {
-    // //   method: "PATCH",
-    // //   headers: {
-    // //     'content-type': 'application/json',
-    // //     'X-CSRF-TOKEN': authToken
-    // //   },
-    // //   body: createDeliveryBody
-    // // })
-    // // .then(response => response.json())
-    // // .then(data => {
-      const reorderDeliveryCategoryUrl = `/delivery_categories/${deliveryId}/reorganize`
-      const reorderBody = JSON.stringify({
-        order_ids: this.ArrayForReorganizeFetch()
-      })
-      // console.log(reorderBody)
-      // const orderArray = this.ArrayForReorganizeFetch
+    const reorderDeliveryCategoryUrl = `/delivery_categories/${deliveryId}/reorganize`
+    const reorderBody = JSON.stringify({
+      order_ids: this.ArrayForReorganizeFetch()
+    })
 
-
-      fetch(reorderDeliveryCategoryUrl, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          'X-CSRF-TOKEN': authToken
-        },
-        body: reorderBody
-      })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     // window.location.href = `/deliveries`
-    //   })
-
-    //   // window.location.href = `/deliveries`
-    // // })
+    fetch(reorderDeliveryCategoryUrl, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'X-CSRF-TOKEN': authToken
+      },
+      body: reorderBody
+    })
   }
 
   render () {
-    // console.log(this.state)
     return (
       <React.Fragment>
-        Pedidos selectados: {this.state.counter}
+        Pedidos seleccionados: {this.state.counter}
       </React.Fragment>
-    );
+    )
   }
 }
 
