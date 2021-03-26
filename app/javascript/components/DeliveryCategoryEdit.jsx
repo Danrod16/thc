@@ -70,9 +70,9 @@ class DeliveryCategoryEdit extends React.Component {
     presentSequences.forEach(el => {
       presentOrderArray[el.sequence - 1] = el.id
     })
-    console.log('presentOrderArray', presentOrderArray)
+    // console.log('presentOrderArray', presentOrderArray)
 
-    console.log('Before #setPresentData setState() state: ', this.state)
+    // console.log('Before #setPresentData setState() state: ', this.state)
 
     this.setState({
       counter: presentOrderArray.length,
@@ -114,6 +114,8 @@ class DeliveryCategoryEdit extends React.Component {
       orderArray: copyArray,
       counter: this.state.counter + change
     })
+
+    console.log(this.state.orderArray)
   }
 
   // deliveryCategoryData = () => {

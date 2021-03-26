@@ -73,7 +73,8 @@ class DeliveryCategoriesController < ApplicationController
 
   def reorganize
     @delivery_category = DeliveryCategory.find(params[:delivery_category_id])
-    @orders = @delivery_category.orders
+    # @orders = @delivery_category.orders
+    @orders = Order.all
     @delivery_groups = policy_scope(Delivery).where(delivery_category_id: @delivery_category)
 
     params[:order_ids].each_with_index do |id, index|
@@ -107,5 +108,9 @@ class DeliveryCategoriesController < ApplicationController
     Order.where.not(sequence: nil).where(delivery_category: nil).each do |order|
       order.update(sequence: nil)
     end
+
+    # @delivery_category.orders.where.not(delivery_category_id: nil).where(sequence: nil).each do |order|
+    #   order.update(sequence: )
+    # end
   end
 end
