@@ -19,10 +19,3 @@ if (container) {
    ,container
   )
 }
-
-// if (container) {
-//   ReactDOM.render(
-//    <DeliveryCategoryNew />,
-//    container
-//   )
-// }

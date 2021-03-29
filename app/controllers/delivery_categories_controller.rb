@@ -87,10 +87,10 @@ class DeliveryCategoriesController < ApplicationController
 
       if objectType == 'OrderGroup'
         group = @delivery_groups.find(objectId)
-        group.update!(sequence: index + 1)
+        group.update(sequence: index + 1)
       elsif objectType == 'Order'
         order = @orders.find(objectId)
-        order.update!(sequence: index + 1)
+        order.update(sequence: index + 1)
       end
     end
     authorize @delivery_category
