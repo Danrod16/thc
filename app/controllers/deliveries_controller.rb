@@ -39,12 +39,6 @@ class DeliveriesController < ApplicationController
     @delivery_group = Delivery.new(delivery_params)
     @delivery_group.delivery_category_id = @delivery_category.id
     @delivery_group.rider = @delivery_category.rider
-
-    # Search from orders with the ids inside params
-    # @today_orders = delivery_params[:order_ids].filter{|id| id != ""}
-    # @today_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil)
-    # require 'pry-byebug'
-    # binding.pry
     @delivery_group.sequence = @delivery_group.orders.sort_by {|order| order.sequence}.first.sequence
     if @delivery_group.save
       flash[:alert] = "Grupo creado!"

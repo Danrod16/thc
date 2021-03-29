@@ -26,7 +26,6 @@ class DeliveryCategoriesController < ApplicationController
   def create
     @delivery_category = DeliveryCategory.new(delivery_category_params)
     if @delivery_category.save
-      # redirect_to new_delivery_category_delivery_path(@delivery_category.id)
       reorganize(@delivery_category.id, params[:sequence_array])
       render json: @delivery_category
     else
@@ -61,7 +60,7 @@ class DeliveryCategoriesController < ApplicationController
       render json: { succesful: true, id: params[:id]}
       flash[:alert] = "Reparto modificado, Gracias #{current_user.first_name}!"
     else
-      # render :edit
+      render json: { succesful: false }
       flash[:alert] = "Error al modificar reparto!"
     end
     authorize @delivery_category
@@ -76,10 +75,8 @@ class DeliveryCategoriesController < ApplicationController
   end
 
   def reorganize(id = nil, sequence_array = nil)
-    require 'pry-byebug'
     @delivery_category = DeliveryCategory.find(id || params[:delivery_category_id])
     @orders = @delivery_category.orders
-    # @orders = Order.all
     @delivery_groups = policy_scope(Delivery).where(delivery_category_id: @delivery_category)
 
     orderArray = sequence_array || params[:order_ids]
@@ -109,9 +106,5 @@ class DeliveryCategoriesController < ApplicationController
     Order.where.not(sequence: nil).where(delivery_category: nil).each do |order|
       order.update(sequence: nil)
     end
-
-    # @delivery_category.orders.where.not(delivery_category_id: nil).where(sequence: nil).each do |order|
-    #   order.update(sequence: )
-    # end
   end
 end
