@@ -8,72 +8,41 @@ class DeliveryCategoryEdit extends React.Component {
       counter: 0,
       orderArray: [],
       deliveryCategoryName: '',
-      deliveryCategoryRiderId: '',
+      deliveryCategoryRiderId: ''
     }
   }
 
   componentDidMount() {
-    this.prepareElements()
+    this.addEventListenersToForm()
   }
 
+  addEventListenersToForm = () => {
+    // Name
+    const deliveryCategoryName = document.getElementById('delivery_category_name')
+    deliveryCategoryName.addEventListener('change', (e) => this.handleNameChange(e))
 
-  prepareElements = () => {
-    // CategoryName ------------------------------------------------------------
-    const nameInput = document.getElementById('delivery_category_name')
+    // Rider
+    const deliveryCategoryRiderId = document.getElementById('delivery_category_rider_id')
+    deliveryCategoryRiderId.addEventListener('change', (e) => this.handleRiderChange(e))
+
+    // Checkboxes
+    const deliveryCheckboxes = document.querySelectorAll('input[type=checkbox]')
+    deliveryCheckboxes.forEach((checkbox) => {
+      checkbox.addEventListener('change', (e) => this.handleCheckBoxChange(e))
+    })
+
+    // Form
+    const form = document.getElementById(`edit_delivery_category_${this.props.match.params.id}`)
+    form.addEventListener('submit', (e) => this.handleSubmit(e))
+
+    // Current orderArray
+    const currentOrderArray = getCurrentCheckboxesData(deliveryCheckboxes)
     this.setState({
-      deliveryCategoryName: nameInput.value
+      counter: currentOrderArray.length,
+      orderArray: currentOrderArray,
+      deliveryCategoryName: deliveryCategoryName.value,
+      deliveryCategoryRiderId: deliveryCategoryRiderId.value
     })
-    nameInput.addEventListener('change', (e) => {
-      this.handleNameChange(e)
-    })
-
-    // RiderId -----------------------------------------------------------------
-    const riderInput = document.getElementById('delivery_category_rider_id')
-    this.setState({
-      deliveryCategoryRiderId: riderInput.value
-    })
-    riderInput.addEventListener('change', (e) => {
-      this.handleRiderChange(e)
-    })
-
-    // Meals checkboxes --------------------------------------------------------
-    let presentSequences = []
-    document.querySelectorAll('input[type=checkbox]').forEach((checkbox) => {
-      if (checkbox.dataset.sequence !== 'none') {
-        presentSequences.push({
-          id: checkbox.value,
-          sequence: parseInt(checkbox.dataset.sequence)
-        })
-      }
-
-      checkbox.addEventListener('change', (e) => {
-        this.handleCheckBoxChange(e)
-      })
-    })
-    this.setPresentData(presentSequences)
-
-    // Form --------------------------------------------------------------------
-    const formId = `edit_delivery_category_${this.props.match.params.id}`
-    document.getElementById(formId).addEventListener('submit', (e) => {
-      this.handleSubmit(e)
-    })
-  }
-  // Set Previous Data in State ------------------------------------------------
-  setPresentData = (presentSequences) => {
-    const presentOrderArray = new Array(presentSequences.length)
-    presentSequences.forEach(el => {
-      presentOrderArray[el.sequence - 1] = el.id
-    })
-
-    this.setState({
-      counter: presentOrderArray.length,
-      orderArray: presentOrderArray
-    })
-  }
-
-  // Arrat as expected by DeliveryCategory#Reorganize --------------------------
-  ArrayForReorganizeFetch = () => {
-    return this.state.orderArray.map(id => `${id}-Order`)
   }
 
   // Name Handler --------------------------------------------------------------
@@ -105,33 +74,76 @@ class DeliveryCategoryEdit extends React.Component {
       orderArray: copyArray,
       counter: copyArray.length
     })
+    console.log(this.state.orderArray)
+  }
+
+  ArrayForReorganizeFetch = () => {
+    return this.state.orderArray.map(id => `${id}-Order`)
+  }
+
+  deliveryDataObject = () => {
+    return JSON.stringify({
+      delivery_category: {
+        name: this.state.deliveryCategoryName,
+        rider_id: this.state.deliveryCategoryRiderId,
+        order_ids: this.state.orderArray
+      },
+      sequence_array: this.ArrayForReorganizeFetch()
+    })
   }
 
   handleSubmit = (e) => {
+    e.preventDefault()
     const authToken = document.querySelector("meta[name='csrf-token']").getAttribute('content')
     const deliveryId = this.props.match.params.id
-    const reorderDeliveryCategoryUrl = `/delivery_categories/${deliveryId}/reorganize`
-    const reorderBody = JSON.stringify({
-      order_ids: this.ArrayForReorganizeFetch()
-    })
+    const orderUpdatePath = `/delivery_categories/${deliveryId}`
+    const reorderDeliveryCategoryPath = `/delivery_categories/${deliveryId}/reorganize`
 
-    fetch(reorderDeliveryCategoryUrl, {
-      method: 'POST',
+    console.log(this.deliveryDataObject())
+    fetch(orderUpdatePath, {
+      method: 'PATCH',
       headers: {
         'content-type': 'application/json',
         'X-CSRF-TOKEN': authToken
       },
-      body: reorderBody
+      body: this.deliveryDataObject()
     })
+    .then(response => console.log(response))
+    .then(data => window.location.href = `/delivery_categories/${deliveryId}/deliveries`)
   }
 
+
   render () {
+    console.log(this.state.orderArray)
     return (
       <React.Fragment>
         Pedidos seleccionados: {this.state.counter}
       </React.Fragment>
     )
   }
+}
+
+function getCurrentCheckboxesData(checkboxes) {
+  let presentSequences = []
+  checkboxes.forEach((checkbox) => {
+    if (checkbox.dataset.sequence !== 'none') {
+      presentSequences.push({
+        id: checkbox.value,
+        sequence: parseInt(checkbox.dataset.sequence)
+      })
+    }
+  })
+
+  const presentOrderArray = new Array(presentSequences.length)
+  presentSequences.forEach(el => {
+    presentOrderArray[el.sequence - 1] = el.id
+  })
+
+  return presentOrderArray
+}
+
+function fetchDeliveryEdit() {
+
 }
 
 export default DeliveryCategoryEdit

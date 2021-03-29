@@ -53,11 +53,14 @@ class DeliveryCategoriesController < ApplicationController
   def update
     @delivery_category = DeliveryCategory.find(params[:id])
     @delivery_category.update(delivery_category_params)
-    if @delivery_category.save
-      redirect_to delivery_category_deliveries_path(@delivery_category.id)
+    if @delivery_category.save!
+      if (params[:sequence_array])
+        reorganize(params[:id], params[:sequence_array])
+      end
+      render json: { succesful: true, id: params[:id]}
       flash[:alert] = "Reparto modificado, Gracias #{current_user.first_name}!"
     else
-      render :edit
+      # render :edit
       flash[:alert] = "Error al modificar reparto!"
     end
     authorize @delivery_category
@@ -71,23 +74,25 @@ class DeliveryCategoriesController < ApplicationController
     authorize @delivery_category
   end
 
-  def reorganize
-    @delivery_category = DeliveryCategory.find(params[:delivery_category_id])
-    # @orders = @delivery_category.orders
-    @orders = Order.all
+  def reorganize(id = nil, sequence_array = nil)
+    require 'pry-byebug'
+    @delivery_category = DeliveryCategory.find(id || params[:delivery_category_id])
+    @orders = @delivery_category.orders
+    # @orders = Order.all
     @delivery_groups = policy_scope(Delivery).where(delivery_category_id: @delivery_category)
 
-    params[:order_ids].each_with_index do |id, index|
+    orderArray = sequence_array || params[:order_ids]
+    orderArray.each_with_index do |id, index|
       data = id.split('-')
       objectId = data[0]
       objectType = data[1]
 
       if objectType == 'OrderGroup'
         group = @delivery_groups.find(objectId)
-        group.update(sequence: index + 1)
+        group.update!(sequence: index + 1)
       elsif objectType == 'Order'
         order = @orders.find(objectId)
-        order.update(sequence: index + 1)
+        order.update!(sequence: index + 1)
       end
     end
     authorize @delivery_category
@@ -101,7 +106,7 @@ class DeliveryCategoriesController < ApplicationController
   private
 
   def delivery_category_params
-    params.require(:delivery_category).permit(:name, :rider_id, :order_ids => [])
+    params.require(:delivery_category).permit(:name, :rider_id, :sequence_array, :order_ids => [])
   end
 
   def check_orders
