@@ -27,6 +27,7 @@ class DeliveryCategoriesController < ApplicationController
     @delivery_category = DeliveryCategory.new(delivery_category_params)
     if @delivery_category.save
       # redirect_to new_delivery_category_delivery_path(@delivery_category.id)
+      reorganize(@delivery_category.id, params[:sequence_array])
       render json: @delivery_category
     else
       flash[:alert] = "Información faltante"
@@ -96,11 +97,6 @@ class DeliveryCategoriesController < ApplicationController
       end
     end
     authorize @delivery_category
-
-    render json: {
-      id: params[:delivery_category_id],
-      orders: @orders
-    }
   end
 
   private

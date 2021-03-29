@@ -10,42 +10,36 @@ class DeliveryCategoryNew extends React.Component {
       deliveryCategoryName: '',
       deliveryCategoryRiderId: '',
       missingInputs: ['un nombre', 'un rider', 'un pedido']
-
     }
-
-    this.prepareElements()
   }
 
-  prepareElements = () => {
-    // CategoryName
-    document.getElementById('delivery_category_name').addEventListener('change', (e) => {
-      this.handleNameChange(e)
-    })
-
-    // RiderId
-    document.getElementById('delivery_category_rider_id').addEventListener('change', (e) => {
-      this.handleRiderChange(e)
-    })
-
-    // Meals checkboxes
-    document.querySelectorAll('input[type=checkbox]').forEach((checkbox) => {
-      console.log(checkbox, checkbox.dataset)
-      console.log(checkbox, checkbox.dataset.sequence)
-      checkbox.addEventListener('change', (e) => {
-        this.handleCheckBoxChange(e)
-      })
-    })
-
-    // Form submit button
-    document.getElementById('new_delivery_category').addEventListener('submit', (e) => {
-      this.handleSubmit(e)
-    })
+  componentDidMount() {
+    this.addEventListenersToForm()
   }
 
-  ArrayForReorganizeFetch = () => {
-    return this.state.orderArray.map(id => `${id}-Order`)
+  addEventListenersToForm = () => {
+    const formId = 'new_delivery_category'
+
+    // Name
+    const deliveryCategoryName = document.getElementById('delivery_category_name')
+    deliveryCategoryName.addEventListener('change', (e) => this.handleNameChange(e))
+
+    // Rider
+    const deliveryCategoryRiderId = document.getElementById('delivery_category_rider_id')
+    deliveryCategoryRiderId.addEventListener('change', (e) => this.handleRiderChange(e))
+
+    // Checkboxes
+    const deliveryCheckboxes = document.querySelectorAll('input[type=checkbox]')
+    deliveryCheckboxes.forEach((checkbox) => {
+      checkbox.addEventListener('change', (e) => this.handleCheckBoxChange(e))
+    })
+
+    // Form
+    const form = document.getElementById(formId)
+    form.addEventListener('submit', (e) => this.handleSubmit(e))
   }
 
+  // Name Handler --------------------------------------------------------------
   handleNameChange = (e) => {
     this.setState({
       deliveryCategoryName: e.target.value
@@ -53,6 +47,7 @@ class DeliveryCategoryNew extends React.Component {
     this.checkErrors()
   }
 
+  // Rider Handler -------------------------------------------------------------
   handleRiderChange = (e) => {
     this.setState({
       deliveryCategoryRiderId: e.target.value
@@ -60,6 +55,7 @@ class DeliveryCategoryNew extends React.Component {
     this.checkErrors()
   }
 
+  // Checkbox Handler ----------------------------------------------------------
   handleCheckBoxChange = (e) => {
     const checkbox = e.target
     const id = checkbox.value
@@ -76,12 +72,8 @@ class DeliveryCategoryNew extends React.Component {
     this.checkErrors()
   }
 
-  deliveryCategoryData = () => {
-    return {
-      name: this.state.deliveryCategoryName,
-      rider_id: this.state.deliveryCategoryRiderId,
-      order_ids: this.state.orderArray
-    }
+  arrayForReorganizeFetch = () => {
+    return this.state.orderArray.map(id => `${id}-Order`)
   }
 
   checkErrors = () => {
@@ -98,6 +90,7 @@ class DeliveryCategoryNew extends React.Component {
       missingInputs.push('una pedida')
     }
 
+    // check if this works when removing an input in edit
     if (missingInputs){
       this.setState({
         missingInputs: missingInputs
@@ -107,14 +100,22 @@ class DeliveryCategoryNew extends React.Component {
     }
   }
 
+  deliveryDataObject = () => {
+    return JSON.stringify({
+      delivery_category: {
+        name: this.state.deliveryCategoryName,
+        rider_id: this.state.deliveryCategoryRiderId,
+        order_ids: this.state.orderArray
+      },
+      sequence_array: this.arrayForReorganizeFetch()
+    })
+  }
+
   handleSubmit = (e) => {
     e.preventDefault()
 
     const authToken = document.querySelector("meta[name='csrf-token']").getAttribute('content')
     const createDeliveryCategoryUrl = '/delivery_categories'
-    let createDeliveryBody = JSON.stringify({
-      delivery_category: this.deliveryCategoryData()
-    })
 
     fetch(createDeliveryCategoryUrl, {
       method: "POST",
@@ -122,29 +123,29 @@ class DeliveryCategoryNew extends React.Component {
         'content-type': 'application/json',
         'X-CSRF-TOKEN': authToken
       },
-      body: createDeliveryBody
+      body: this.deliveryDataObject()
     })
     .then(response => response.json())
     .then(data => {
-      const reorderDeliveryCategoryUrl = `/delivery_categories/${data.id}/reorganize`
-      const reorderBody = JSON.stringify({
-        order_ids: this.ArrayForReorganizeFetch(),
-        delivery_category: data.id
-      })
+      // const reorderDeliveryCategoryUrl = `/delivery_categories/${data.id}/reorganize`
+      // const reorderBody = JSON.stringify({
+      //   order_ids: this.arrayForReorganizeFetch(),
+      //   delivery_category: data.id
+      // })
 
-      fetch(reorderDeliveryCategoryUrl, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          'X-CSRF-TOKEN': authToken
-        },
-        body: reorderBody
-      })
-      .then(response => response.json())
-      .then(data => {
+      // fetch(reorderDeliveryCategoryUrl, {
+      //   method: 'POST',
+      //   headers: {
+      //     'content-type': 'application/json',
+      //     'X-CSRF-TOKEN': authToken
+      //   },
+      //   body: reorderBody
+      // })
+      // .then(response => response.json())
+      // .then(data => {
         window.location.href = `${data.id}/deliveries`
       })
-    })
+    // })
   }
 
   render () {

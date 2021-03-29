@@ -8,7 +8,8 @@ class DeliveryCategoryEdit extends React.Component {
       counter: 0,
       orderArray: [],
       deliveryCategoryName: '',
-      deliveryCategoryRiderId: ''
+      deliveryCategoryRiderId: '',
+      missingInputs: ['un nombre', 'un rider', 'un pedido']
     }
   }
 
@@ -17,6 +18,8 @@ class DeliveryCategoryEdit extends React.Component {
   }
 
   addEventListenersToForm = () => {
+    const formId = `edit_delivery_category_${this.props.match.params.id}`
+
     // Name
     const deliveryCategoryName = document.getElementById('delivery_category_name')
     deliveryCategoryName.addEventListener('change', (e) => this.handleNameChange(e))
@@ -32,10 +35,10 @@ class DeliveryCategoryEdit extends React.Component {
     })
 
     // Form
-    const form = document.getElementById(`edit_delivery_category_${this.props.match.params.id}`)
+    const form = document.getElementById(formId)
     form.addEventListener('submit', (e) => this.handleSubmit(e))
 
-    // Current orderArray
+    // Current data
     const currentOrderArray = getCurrentCheckboxesData(deliveryCheckboxes)
     this.setState({
       counter: currentOrderArray.length,
@@ -77,7 +80,7 @@ class DeliveryCategoryEdit extends React.Component {
     console.log(this.state.orderArray)
   }
 
-  ArrayForReorganizeFetch = () => {
+  arrayForReorganizeFetch = () => {
     return this.state.orderArray.map(id => `${id}-Order`)
   }
 
@@ -88,7 +91,7 @@ class DeliveryCategoryEdit extends React.Component {
         rider_id: this.state.deliveryCategoryRiderId,
         order_ids: this.state.orderArray
       },
-      sequence_array: this.ArrayForReorganizeFetch()
+      sequence_array: this.arrayForReorganizeFetch()
     })
   }
 
