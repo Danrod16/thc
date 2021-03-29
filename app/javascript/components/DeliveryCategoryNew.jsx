@@ -6,7 +6,11 @@ class DeliveryCategoryNew extends React.Component {
     super(props)
     this.state = {
       counter: 0,
-      orderArray: []
+      orderArray: [],
+      deliveryCategoryName: '',
+      deliveryCategoryRiderId: '',
+      missingInputs: ['un nombre', 'un rider', 'un pedido']
+
     }
 
     this.prepareElements()
@@ -46,12 +50,14 @@ class DeliveryCategoryNew extends React.Component {
     this.setState({
       deliveryCategoryName: e.target.value
     })
+    this.checkErrors()
   }
 
   handleRiderChange = (e) => {
     this.setState({
       deliveryCategoryRiderId: e.target.value
     })
+    this.checkErrors()
   }
 
   handleCheckBoxChange = (e) => {
@@ -67,6 +73,7 @@ class DeliveryCategoryNew extends React.Component {
       orderArray: copyArray,
       counter: copyArray.length
     })
+    this.checkErrors()
   }
 
   deliveryCategoryData = () => {
@@ -77,8 +84,32 @@ class DeliveryCategoryNew extends React.Component {
     }
   }
 
+  checkErrors = () => {
+    let missingInputs = []
+    if (this.state.deliveryCategoryName === '') {
+      missingInputs.push('un nombre')
+    }
+
+    if (this.state.deliveryCategoryRiderId === '') {
+      missingInputs.push('un rider')
+    }
+
+    if (this.state.orderArray.length < 1) {
+      missingInputs.push('una pedida')
+    }
+
+    if (missingInputs){
+      this.setState({
+        missingInputs: missingInputs
+      })
+
+      return true
+    }
+  }
+
   handleSubmit = (e) => {
     e.preventDefault()
+
     const authToken = document.querySelector("meta[name='csrf-token']").getAttribute('content')
     const createDeliveryCategoryUrl = '/delivery_categories'
     let createDeliveryBody = JSON.stringify({
@@ -117,9 +148,21 @@ class DeliveryCategoryNew extends React.Component {
   }
 
   render () {
+    const submitButton = document.querySelector('input[type=submit]')
+    if (this.state.missingInputs.length > 0) {
+      submitButton.disabled = true
+      return (
+        <React.Fragment>
+          <p className='text-warning'>Selecciona {this.state.missingInputs.join(', ')}</p>
+          <p>Pedidos seleccionados: {this.state.counter}</p>
+        </React.Fragment>
+      )
+    }
+
+    submitButton.disabled = false
     return (
       <React.Fragment>
-        Pedidos seleccionados: {this.state.counter}
+        <p>Pedidos seleccionados: {this.state.counter}</p>
       </React.Fragment>
     );
   }
