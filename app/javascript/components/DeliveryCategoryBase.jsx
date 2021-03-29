@@ -1,169 +1,179 @@
-// import React from "react"
+import React from 'react'
 
-// class DeliveryCategoryNew extends React.Component {
-//   constructor(props) {
-//     super(props)
-//     this.state = {
-//       counter: 0,
-//       orderArray: []
-//     }
-//     // check for already checked boxes for edit view and for the case when user
-//     // uses go back arrow from browser
-//     console.log('constructor of DeliveryCategoryBase')
-//   }
+class DeliveryCategoryBase extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      counter: 0,
+      orderArray: [],
+      deliveryCategoryName: '',
+      deliveryCategoryRiderId: '',
+      missingInputs: []
+    }
+  }
 
-//   componentDidMount() {
-//     this.setInputsToState()
-//     this.setEventListenerToInputs()
-//   }
+  componentDidMount() {
+    if (this.props.formId){
+      this.addEventListenersAndData()
+    }
+  }
 
-//   setInputsToState = () => {
-//     this.setState({
-//       nameInput = document.getElementById('delivery_category_name'),
-//       riderIdInput = document.getElementById('delivery_category_rider_id'),
-//       orderCheckboxInputs = document.querySelectorAll('input[type=checkbox]'),
-//       deliveryCategoryForm = document.getElementById('new_delivery_category')
-//     })
+  addEventListenersAndData = () => {
+    // Name
+    const deliveryCategoryName = document.getElementById('delivery_category_name')
+    deliveryCategoryName.addEventListener('change', (e) => this.handleNameChange(e))
 
-//   }
+    // Rider
+    const deliveryCategoryRiderId = document.getElementById('delivery_category_rider_id')
+    deliveryCategoryRiderId.addEventListener('change', (e) => this.handleRiderChange(e))
 
-//   setEventListenerToInputs = () => {
-//     this.state.nameInput.addEventListener('change', (e) => this.handleNameChange(e))
-//     this.state.riderIdInput.addEventListener('change', (e) => this.handleRiderIdChange(e))
-//     this.state.orderCheckboxInputs.forEach((checkbox) => {
-//       checkbox.addEventListener('change', (e) => this.handleCheckBoxChange(e))
-//     })
-//     this.state.deliveryCategoryForm.addEventListener('submit', (e) => this.handleSubmit(e))
-//   }
+    // Checkboxes
+    const deliveryCheckboxes = document.querySelectorAll('input[type=checkbox]')
+    deliveryCheckboxes.forEach((checkbox) => {
+      checkbox.addEventListener('change', (e) => this.handleCheckBoxChange(e))
+    })
 
-//   // prepareElements = () => {
-//   //   // CategoryName
-//   //   console.log('********************************************')
-//   //   console.log('categoryNameInput')
-//   //   document.getElementById('delivery_category_name').addEventListener('change', (e) => {
-//   //     this.handleNameChange(e)
-//   //   })
+    // Form
+    const form = document.getElementById(this.props.formId)
+    form.addEventListener('submit', (e) => this.handleSubmit(e))
 
-//   //   // RiderId
-//   //   console.log('********************************************')
-//   //   console.log('categoryRiderIdInput')
-//   //   document.getElementById('delivery_category_rider_id').addEventListener('change', (e) => {
-//   //     this.handleRiderChange(e)
-//   //   })
+    // Current data
+    const currentOrderArray = getCurrentCheckboxesData(deliveryCheckboxes)
+    this.setState({
+      counter: currentOrderArray.length,
+      orderArray: currentOrderArray,
+      deliveryCategoryName: deliveryCategoryName.value,
+      deliveryCategoryRiderId: deliveryCategoryRiderId.value
+    }, this.checkErrors)
+  }
 
-//   //   // Meals checkboxes
-//   //   console.log('********************************************')
-//   //   console.log('categoryCheckboxInputs')
-//   //   document.querySelectorAll('input[type=checkbox]').forEach((checkbox) => {
-//   //     console.log(checkbox, checkbox.dataset)
-//   //     console.log(checkbox, checkbox.dataset.sequence)
-//   //     checkbox.addEventListener('change', (e) => {
-//   //       this.handleCheckBoxChange(e)
-//   //     })
-//   //   })
+  // Name Handler --------------------------------------------------------------
+  handleNameChange = (e) => {
+    this.setState({
+      deliveryCategoryName: e.target.value
+    })
+    this.checkErrors()
+  }
 
-//   //   // Form submit button
-//   //   console.log('********************************************')
-//   //   console.log('categorySubmitButton')
-//   //   document.getElementById('new_delivery_category').addEventListener('submit', (e) => {
-//   //     this.handleSubmit(e)
-//   //   })
-//   // }
+  // Rider Handler -------------------------------------------------------------
+  handleRiderChange = (e) => {
+    this.setState({
+      deliveryCategoryRiderId: e.target.value
+    })
+    this.checkErrors()
+  }
 
-//   // arrayForReorganizeFetch = () => {
-//   //   return this.state.orderArray.map(id => `${id}-Order`)
-//   // }
+  // Checkbox Handler ----------------------------------------------------------
+  handleCheckBoxChange = (e) => {
+    const checkbox = e.target
+    const id = checkbox.value
+    let copyArray = [...this.state.orderArray]
 
-//   handleNameChange = (e) => {
-//     this.setState({
-//       deliveryCategoryName: e.target.value
-//     })
-//   }
+    checkbox.checked ?
+      copyArray.push(id) :
+      copyArray = copyArray.filter((value, index) => value !== id )
 
-//   handleRiderIdChange = (e) => {
-//     this.setState({
-//       deliveryCategoryRiderId: e.target.value
-//     })
-//   }
+    this.setState({
+      orderArray: copyArray,
+      counter: copyArray.length
+    })
+    this.checkErrors()
+  }
 
-//   handleCheckBoxChange = (e) => {
-//     const checkbox = e.target
-//     const id = checkbox.value
-//     let copyArray = [...this.state.orderArray]
+  checkErrors = () => {
+    let missingInputs = []
+    if (this.state.deliveryCategoryName === '') {
+      missingInputs.push('un nombre')
+    }
 
-//    checkbox.checked ?
-//       copyArray.push(id) :
-//       copyArray = copyArray.filter((value, index) => value !== id )
+    if (this.state.deliveryCategoryRiderId === '') {
+      missingInputs.push('un rider')
+    }
 
-//     this.setState({
-//       orderArray: copyArray,
-//       counter: copyArray.length()
-//     })
-//   }
+    if (this.state.orderArray.length < 1) {
+      missingInputs.push('una pedida')
+    }
 
+    // check if this works when removing an input in edit
+    if (missingInputs){
+      this.setState({
+        missingInputs: missingInputs
+      })
 
-//   handleSubmit = (e) => {
-//     e.preventDefault()
-//     const authToken = document.querySelector("meta[name='csrf-token']").getAttribute('content')
-//     const createDeliveryCategoryUrl = '/delivery_categories'
-//     let createDeliveryBody = JSON.stringify({
-//       delivery_category: this.deliveryCategoryData()
-//     })
+      return true
+    }
+  }
 
-//     // Fetch POST to create the new delivery category and store it's ID
-//     fetch(createDeliveryCategoryUrl, {
-//       method: "POST",
-//       headers: {
-//         'content-type': 'application/json',
-//         'X-CSRF-TOKEN': authToken
-//       },
-//       body: createDeliveryBody
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//       const reorderDeliveryCategoryUrl = `/delivery_categories/${data.id}/reorganize`
-//       const reorderBody = JSON.stringify({
-//         order_ids: this.arrayForReorganizeFetch(),
-//         delivery_category: data.id
-//       })
-//       console.log(reorderBody)
-//       // const orderArray = this.ArrayForReorganizeFetch
+  // Submit Handler ------------------------------------------------------------
+  handleSubmit = (e) => {
+    e.preventDefault()
+    const authToken = document.querySelector("meta[name='csrf-token']").getAttribute('content')
 
+    fetch(this.props.fetchUrl, {
+      method: this.props.submitMethod,
+      headers: {
+        'content-type': 'application/json',
+        'X-CSRF-TOKEN': authToken
+      },
+      body: this.deliveryDataObject()
+    })
+    .then(response => response.json())
+    .then(data => window.location.href = `/delivery_categories/${data.id}/deliveries`)
+  }
 
-//       fetch(reorderDeliveryCategoryUrl, {
-//         method: 'POST',
-//         headers: {
-//           'content-type': 'application/json',
-//           'X-CSRF-TOKEN': authToken
-//         },
-//         body: reorderBody
-//       })
-//       .then(response => response.json())
-//       .then(data => {
-//         // Simulate a mouse click on a link
-//         // window.location.href = `delivery_categories/${data.id}/deliveries`
-//         console.log("fetch #reorganize (last .then) data", data)
-//         // Replace the URL of the current document (user won't be able to go back to previous page)
-//         window.location.href = `${data.id}/deliveries`
-//       })
-//     })
-//   }
+  arrayForReorganizeFetch = () => {
+    return this.state.orderArray.map(id => `${id}-Order`)
+  }
 
-//   deliveryCategoryData = () => {
-//     return {
-//       name: this.state.deliveryCategoryName,
-//       rider_id: this.state.deliveryCategoryRiderId,
-//       order_ids: this.state.orderArray
-//     }
-//   }
+  deliveryDataObject = () => {
+    return JSON.stringify({
+      delivery_category: {
+        name: this.state.deliveryCategoryName,
+        rider_id: this.state.deliveryCategoryRiderId,
+        order_ids: this.state.orderArray
+      },
+      sequence_array: this.arrayForReorganizeFetch()
+    })
+  }
 
-//   render () {
-//     return (
-//       <React.Fragment>
-//         Pedidos selectados: {this.state.counter}
-//       </React.Fragment>
-//     );
-//   }
-// }
+  render () {
+    const submitButton = document.querySelector('input[type=submit]')
+    if (this.state.missingInputs.length > 0) {
+      submitButton.disabled = true
+      return (
+        <React.Fragment>
+          <p className='text-warning'>Selecciona {this.state.missingInputs.join(', ')}</p>
+          <p>Pedidos seleccionados: {this.state.counter}</p>
+        </React.Fragment>
+      )
+    }
 
-// export default DeliveryCategoryNew
+    submitButton.disabled = false
+    return (
+      <React.Fragment>
+        <p>Pedidos seleccionados: {this.state.counter}</p>
+      </React.Fragment>
+    );
+  }
+}
+
+function getCurrentCheckboxesData(checkboxes) {
+  let presentSequences = []
+  checkboxes.forEach((checkbox) => {
+    if (checkbox.dataset.sequence !== 'none') {
+      presentSequences.push({
+        id: checkbox.value,
+        sequence: parseInt(checkbox.dataset.sequence)
+      })
+    }
+  })
+
+  const presentOrderArray = new Array(presentSequences.length)
+  presentSequences.forEach(el => {
+    presentOrderArray[el.sequence - 1] = el.id
+  })
+
+  return presentOrderArray
+}
+
+export default DeliveryCategoryBase

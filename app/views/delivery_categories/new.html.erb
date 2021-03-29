@@ -43,7 +43,12 @@
                                         as: :check_boxes,
                                         label_method: :grouped_orders,
                                         value_method: :id,
-                                        include_blank: false %>
+                                        include_blank: false,
+                                        input_html: {
+                                          data: {
+                                            sequence: order.sequence || 'none'
+                                          }
+                                        } %>
                     </td>
                   </tr>
                 <% end %>
