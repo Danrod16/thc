@@ -1,7 +1,7 @@
 <%= render 'riders/rider_category_pills' %>
 <div class="header">
   <h1>Repartos</h1>
- <p> <strong>#Pedidos no asignados:</strong> <%= @remaining_orders %></p>
+ <p><strong><%= current_user.rider? ? '#Pedidos asignados:' : '#Pedidos no asignados:' %></strong> <%= @remaining_orders %></p>
 </div>
 <div class="cards">
   <% @delivery_categories.each do |delivery| %>
