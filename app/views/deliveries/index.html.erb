@@ -2,7 +2,7 @@
 <div class="header">
 <h1><%= @delivery_category.name %></h1>
 <%= render 'riders/rider_pills' %>
- <p> <strong><%= true ? '#Pedidos asignados:' : '#Pedidos no asignados:' %></strong> <%= @remaining_orders %></p>
+ <p> <strong><%= current_user.rider? ? '#Pedidos asignados:' : '#Pedidos no asignados:' %></strong> <%= @remaining_orders %></p>
 </div>
 
 
