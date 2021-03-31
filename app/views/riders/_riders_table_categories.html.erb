@@ -1,5 +1,6 @@
 <div class="header header-rider">
   <h1>Rider: <%= @rider.name %></h1>
+  <p><strong>#Bowls:</strong> <%= @total_bowls %></p>
 </div>
 <div class="cards">
   <% @rider.delivery_categories.each do |delivery| %>
