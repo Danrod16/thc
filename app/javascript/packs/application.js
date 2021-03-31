@@ -26,7 +26,7 @@ require("channels")
 import "bootstrap";
 
 // Internal imports, e.g:
-
+import './delivery_category_helper.js'
 
 
 // document.addEventListener('turbolinks:load', () => {
@@ -36,3 +36,7 @@ import "bootstrap";
 initSortable(); // <-- add this
 import { initSortable } from './init_sortable'; // <-- add this
 import "controllers"
+// Support component names relative to this directory:
+var componentRequireContext = require.context("components", true);
+var ReactRailsUJS = require("react_ujs");
+ReactRailsUJS.useContext(componentRequireContext);

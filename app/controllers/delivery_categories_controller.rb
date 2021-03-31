@@ -1,4 +1,6 @@
 class DeliveryCategoriesController < ApplicationController
+  after_action :check_orders, only: [:update, :destroy]
+
   def new
     @delivery_category = DeliveryCategory.new
      if Time.zone.now.strftime("%H").to_i >= "15".to_i
@@ -24,12 +26,14 @@ class DeliveryCategoriesController < ApplicationController
   def create
     @delivery_category = DeliveryCategory.new(delivery_category_params)
     if @delivery_category.save
-      redirect_to new_delivery_category_delivery_path(@delivery_category.id)
+      reorganize(@delivery_category.id, params[:sequence_array])
+      render json: @delivery_category
     else
       flash[:alert] = "Información faltante"
       render :new
     end
     authorize @delivery_category
+
   end
 
   def edit
@@ -49,11 +53,14 @@ class DeliveryCategoriesController < ApplicationController
   def update
     @delivery_category = DeliveryCategory.find(params[:id])
     @delivery_category.update(delivery_category_params)
-    if @delivery_category.save
-      redirect_to delivery_category_deliveries_path(@delivery_category.id)
+    if @delivery_category.save!
+      if (params[:sequence_array])
+        reorganize(params[:id], params[:sequence_array])
+      end
+      render json: { succesful: true, id: params[:id]}
       flash[:alert] = "Reparto modificado, Gracias #{current_user.first_name}!"
     else
-      render :edit
+      render json: { succesful: false }
       flash[:alert] = "Error al modificar reparto!"
     end
     authorize @delivery_category
@@ -67,12 +74,13 @@ class DeliveryCategoriesController < ApplicationController
     authorize @delivery_category
   end
 
-    def reorganize
-    @delivery_category = DeliveryCategory.find(params[:delivery_category_id])
+  def reorganize(id = nil, sequence_array = nil)
+    @delivery_category = DeliveryCategory.find(id || params[:delivery_category_id])
     @orders = @delivery_category.orders
     @delivery_groups = policy_scope(Delivery).where(delivery_category_id: @delivery_category)
 
-    params[:order_ids].each_with_index do |id, index|
+    orderArray = sequence_array || params[:order_ids]
+    orderArray.each_with_index do |id, index|
       data = id.split('-')
       objectId = data[0]
       objectType = data[1]
@@ -91,6 +99,12 @@ class DeliveryCategoriesController < ApplicationController
   private
 
   def delivery_category_params
-    params.require(:delivery_category).permit(:name, :rider_id, :order_ids => [])
+    params.require(:delivery_category).permit(:name, :rider_id, :sequence_array, :order_ids => [])
+  end
+
+  def check_orders
+    Order.where.not(sequence: nil).where(delivery_category: nil).each do |order|
+      order.update(sequence: nil)
+    end
   end
 end

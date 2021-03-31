@@ -43,7 +43,7 @@ class DeliveriesController < ApplicationController
     @delivery_group = Delivery.new(delivery_params)
     @delivery_group.delivery_category_id = @delivery_category.id
     @delivery_group.rider = @delivery_category.rider
-    @today_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil)
+    @delivery_group.sequence = @delivery_group.orders.sort_by {|order| order.sequence}.first.sequence
     if @delivery_group.save
       flash[:alert] = "Grupo creado!"
       redirect_to delivery_category_deliveries_path(@delivery_category.id)
