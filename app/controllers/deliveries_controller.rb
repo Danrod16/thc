@@ -129,7 +129,6 @@ class DeliveriesController < ApplicationController
        end
       end
     end
-
   end
 
   def set_orders_array
