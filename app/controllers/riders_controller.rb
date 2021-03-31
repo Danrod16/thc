@@ -6,7 +6,7 @@ class RidersController < ApplicationController
     @rider = Rider.find(params[:id])
     @delivery_groups = @rider.deliveries
     @delivery_categories = @rider.delivery_categories
-    # @orders = Order.where(meal_date: assign_date(@day), rider_id: @rider.id)
+    @orders = Order.where(meal_date: assign_date(@day), rider_id: @rider.id, category: "Meals")
     authorize @riders
   end
 
