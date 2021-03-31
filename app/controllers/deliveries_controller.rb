@@ -17,8 +17,8 @@ class DeliveriesController < ApplicationController
     end
     @total_bowls = @total_orders_count.where(category: "Meals").count
     remove_old_orders
-    generate_pdf(@delivery_category, @total_orders)
     set_orders_array
+    generate_pdf(@delivery_category, @rider_orders)
     authorize @delivery_groups
   end
 

@@ -35,8 +35,8 @@ class DeliveryPdf
   def delivery_rider
     text "#{@delivery_group.rider.user.first_name} #{@delivery_group.rider.user.last_name}", size: 14
     move_down 10
-    text "Total de pedidos: #{@total_delivery_orders}"
-    move_down 10
+    # text "Total de pedidos: #{@total_delivery_orders}"
+    # move_down 10
   end
 
   def delivery_data
