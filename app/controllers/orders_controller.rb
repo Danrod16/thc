@@ -73,7 +73,7 @@
   def send_mailer
     mail = OrderMailer.with(order: @order).delivered
     mail.deliver_now
-    redirect_to delivery_category_delivery_path(@order.delivery_category, @order.delivery)
+    redirect_to delivery_category_deliveries_path(@order.delivery_category.id)
   end
 
   def create_combos
