@@ -5,6 +5,7 @@ class DeliveriesController < ApplicationController
     @delivery_groups = policy_scope(Delivery).where(delivery_category_id: @delivery_category.id)
     @riders = Rider.all
     @rider_orders = []
+    @rider = @delivery_category.rider
     if Time.zone.now.strftime("%H").to_i >= "15".to_i
       @remaining_orders = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: @delivery_category.id).count
       @total_orders = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: @delivery_category.id)

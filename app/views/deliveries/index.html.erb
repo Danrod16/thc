@@ -1,147 +1,66 @@
-<%= link_to "< Atrás", :back %>
-<div class="header">
-<h1><%= @delivery_category.name %></h1>
-<%= render 'riders/rider_pills' %>
- <p> <strong>#Pedidos no asignados:</strong> <%= @remaining_orders %></p>
-</div>
+<% if current_user.role == "admin" || current_user.role == "cook" %>
+  <%= link_to "< Atrás", delivery_categories_path %>
+<% else %>
+  <%= link_to "< Atrás", rider_path(@rider) %>
+<% end %>
+  <div class="header">
+  <h1><%= @delivery_category.name %></h1>
+  <%= render 'riders/rider_pills' %>
+   <p> <strong>#Pedidos no asignados:</strong> <%= @remaining_orders %></p>
+  </div>
 
 
-<!-- Start table test -->
-<div class="table-responsive-raw">
-  <table class="table table-striped">
-    <thead>
-          <tr>
-            <% if !current_user.rider? %>
-            <th class="date">Fecha</th>
-            <th class="name">Nombre</th>
-            <th class="custom">Dirección</th>
-            <th>Telefono</th>
-            <th class="custom">Notas</th>
-            <th></th>
-            <% else %>
-            <th class="custom">Dirección</th>
-            <th style="text-align: center;" class="icon">Ver</th>
-            <th class="icon">Producto</th>
-            <% end %>
-          </tr>
-        </thead>
-    <tbody class="sortable" data-id="<%= @delivery_category.id %>">  <!-- sortable target -->
-      <% if @rider_orders.count < 0 %>
-        <p>Ningun pedido seleccionado para el proximo reparto, editar esta categoria para actualizar los pedidos o crear una nueva categoria.</p>
-      <% else %>
-        <% @rider_orders.sort_by {|order| order.sequence.nil? ? 0 : order.sequence }.each do |order| %>
-          <tr data-id = <%= "#{order.id}-#{order.class == Order ? 'Order' : 'OrderGroup'}" %>>
-            <% if !current_user.rider? %>
-              <% if order.class == Order  %>
-                <td><%= order.meal_date %></td>
-                <td><%= order.customer_name %></td>
-                <td><%= order.delivery_address %></td>
-                <td><%= order.telephone if order.telephone.present? %></td>
-                <td><%= order.notes %></td>
-                <td>
-                  <% if order.customer_email.present? %>
-                      <%= simple_form_for(order) do |f| %>
-                      <%= f.error_notification %>
-                      <%= f.input :delivered,
-                      required: true,
-                      label: false,
-                      :as => :hidden,
-                      input_html: {value: true},
-                      autofocus: true %>
-                      <% if order.delivered == true %>
-                        <%= f.button :submit, "Entregado", class: "button-secondary w-100", disabled: true%>
-                      <% else %>
-                        <%= f.button :submit, "Entregar", class: "button-primary w-100", data: { confirm: "Confirmar entrega" } %>
+  <!-- Start table test -->
+  <div class="table-responsive-raw">
+    <table class="table table-striped">
+      <thead>
+            <tr>
+              <% if !current_user.rider? %>
+              <th class="date">Fecha</th>
+              <th class="name">Nombre</th>
+              <th class="custom">Dirección</th>
+              <th>Telefono</th>
+              <th class="custom">Notas</th>
+              <th></th>
+              <% else %>
+              <th class="custom">Dirección</th>
+              <th style="text-align: center;" class="icon">Ver</th>
+              <th class="icon">Producto</th>
+              <% end %>
+            </tr>
+          </thead>
+      <tbody class="sortable" data-id="<%= @delivery_category.id %>">  <!-- sortable target -->
+        <% if @rider_orders.count < 0 %>
+          <p>Ningun pedido seleccionado para el proximo reparto, editar esta categoria para actualizar los pedidos o crear una nueva categoria.</p>
+        <% else %>
+          <% @rider_orders.sort_by {|order| order.sequence.nil? ? 0 : order.sequence }.each do |order| %>
+            <tr data-id = <%= "#{order.id}-#{order.class == Order ? 'Order' : 'OrderGroup'}" %>>
+              <% if !current_user.rider? %>
+                <% if order.class == Order  %>
+                  <td><%= order.meal_date %></td>
+                  <td><%= order.customer_name %></td>
+                  <td><%= order.delivery_address %></td>
+                  <td><%= order.telephone if order.telephone.present? %></td>
+                  <td><%= order.notes %></td>
+                  <td>
+                    <% if order.customer_email.present? %>
+                        <%= simple_form_for(order) do |f| %>
+                        <%= f.error_notification %>
+                        <%= f.input :delivered,
+                        required: true,
+                        label: false,
+                        :as => :hidden,
+                        input_html: {value: true},
+                        autofocus: true %>
+                        <% if order.delivered == true %>
+                          <%= f.button :submit, "Entregado", class: "button-secondary w-100", disabled: true%>
+                        <% else %>
+                          <%= f.button :submit, "Entregar", class: "button-primary w-100", data: { confirm: "Confirmar entrega" } %>
+                        <% end %>
                       <% end %>
                     <% end %>
-                  <% end %>
-                </td>
-                <td class="modal-button-group">
-                  <% if order.category == "Meals" %>
-                    <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/6_y5smpg.png') %>
-                  <% elsif order.category == "Snacks" %>
-                    <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/8_sewz9h.png') %>
-                  <% else %>
-                    <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/7_qe6vau.png') %>
-                  <% end %>
-                </td>
-              <% else %>
-                <td>Creado el: <%= order.created_at.strftime('%d-%m-%y') %></td>
-                <td><strong>nº pedidos:</strong> <%= order.orders.count %></td>
-                <td> <%= order.name %> </td>
-                <td>-</td>
-                <td>-</td>
-                <td>
-                  <div type="button" data-toggle="modal" style="text-align: center;" data-target=<%="#order-#{order.id}"%>>
-                    <div class="modal-button-group">
-                      <%= image_tag("https://res.cloudinary.com/therainycloud/image/upload/v1614859236/THC/thc_bag_roe4qi.png") %>
-                    </div>
-                  </div>
-                </td>
-                <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id=<%="order-#{order.id}"%>>
-                  <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle"><%= order.name %></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <% order.orders.each do |group_order| %>
-                        <div class="background-group-list">
-                          <ul>
-                            <li>
-                              <strong>Pedido para: </strong> <%= group_order.customer_name %>
-                            </li>
-                            <li><strong>Teléfono:</strong> <%= group_order.telephone if group_order.telephone.present? %></li>
-                            <li><strong>Notas:</strong> <%= group_order.notes %></li>
-                            <li>
-                              <strong>Producto: </strong> <%= group_order.product.meal_name %>
-                              <div class="modal-button-group">
-                                <% if group_order.category == "Meals" %>
-                                  <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/6_y5smpg.png') %>
-                                <% elsif group_order.category == "Snacks" %>
-                                  <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/8_sewz9h.png') %>
-                                <% else %>
-                                  <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/7_qe6vau.png') %>
-                                <% end %>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                        <% end %>
-                      </div>
-                      <div class="modal-footer">
-                      <%= link_to "editar grupo", edit_delivery_category_delivery_path(@delivery_category, order), class: "button-secondary" %>
-                      <% if order.orders.any? { |o| o.customer_email.present? } %>
-                        <%= simple_form_for([@delivery_category, order]) do |f| %>
-                          <%= f.error_notification %>
-                          <%= f.input :delivered,
-                          required: true,
-                          label: false,
-                          :as => :hidden,
-                          input_html: {value: true},
-                          autofocus: true %>
-                          <%= f.button :submit, "Entregar", class: "button-primary", data: { confirm: "Confirmar entrega" } %>
-                        <% end %>
-                       <% end %>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-              <% end %>
-            <% else %>
-              <% if order.class == Order %>
-                  <td><%= order.delivery_address %></td>
-                <td>
-                  <div type="button" data-toggle="modal" style="text-align: center;" data-target=<%="#order-#{order.id}"%>>
-                    <span class="far fa-list-alt icon" style="font-size: 25px;"></span>
-                  </div>
-                </td>
-                <td>
-                  <div class="modal-button-group">
+                  </td>
+                  <td class="modal-button-group">
                     <% if order.category == "Meals" %>
                       <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/6_y5smpg.png') %>
                     <% elsif order.category == "Snacks" %>
@@ -149,122 +68,207 @@
                     <% else %>
                       <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/7_qe6vau.png') %>
                     <% end %>
-                  </div>
-                </td>
-                <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id=<%="order-#{order.id}"%>>
-                  <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle"><%= order.customer_name %></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
+                  </td>
+                <% else %>
+                  <td>Creado el: <%= order.created_at.strftime('%d-%m-%y') %></td>
+                  <td><strong>nº pedidos:</strong> <%= order.orders.count %></td>
+                  <td> <%= order.name %> </td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>
+                    <div type="button" data-toggle="modal" style="text-align: center;" data-target=<%="#order-#{order.id}"%>>
+                      <div class="modal-button-group">
+                        <%= image_tag("https://res.cloudinary.com/therainycloud/image/upload/v1614859236/THC/thc_bag_roe4qi.png") %>
                       </div>
-                      <div class="modal-body">
-                        <ul>
-                          <li><strong>Fecha:</strong> <%= order.meal_date %></li>
-                          <li><strong>Teléfono:</strong> <%= order.telephone if order.telephone.present? %></li>
-                          <li><strong>Dirección:</strong> <%= order.delivery_address %></li>
-                          <li><strong>Notas:</strong> <%= order.notes %></li>
-                        </ul>
-                      </div>
-                      <div class="modal-footer">
-                        <% if order.customer_email.present? %>
-                            <%= simple_form_for(order) do |f| %>
-                              <%= f.error_notification %>
-                              <%= f.input :delivered,
-                              required: true,
-                              label: false,
-                              :as => :hidden,
-                              input_html: {value: true},
-                              autofocus: true %>
-                              <% if order.delivered == true %>
-                                <%= f.button :submit, "Entregado", class: "btn", data: { confirm: "Confirmar entrega" } %>
-                              <% else %>
-                                <%= f.button :submit, "Entregar", class: "button-primary", data: { confirm: "Confirmar entrega" } %>
-                              <% end %>
-                            <% end %>
-                        <% end %>
+                    </div>
+                  </td>
+                  <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id=<%="order-#{order.id}"%>>
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle"><%= order.name %></h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <% order.orders.each do |group_order| %>
+                          <div class="background-group-list">
+                            <ul>
+                              <li>
+                                <strong>Pedido para: </strong> <%= group_order.customer_name %>
+                              </li>
+                              <li><strong>Teléfono:</strong> <%= group_order.telephone if group_order.telephone.present? %></li>
+                              <li><strong>Notas:</strong> <%= group_order.notes %></li>
+                              <li>
+                                <strong>Producto: </strong> <%= group_order.product.meal_name %>
+                                <div class="modal-button-group">
+                                  <% if group_order.category == "Meals" %>
+                                    <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/6_y5smpg.png') %>
+                                  <% elsif group_order.category == "Snacks" %>
+                                    <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/8_sewz9h.png') %>
+                                  <% else %>
+                                    <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/7_qe6vau.png') %>
+                                  <% end %>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                          <% end %>
+                        </div>
+                        <div class="modal-footer">
+                        <%= link_to "editar grupo", edit_delivery_category_delivery_path(@delivery_category, order), class: "button-secondary" %>
+                        <% if order.orders.any? { |o| o.customer_email.present? } %>
+                          <%= simple_form_for([@delivery_category, order]) do |f| %>
+                            <%= f.error_notification %>
+                            <%= f.input :delivered,
+                            required: true,
+                            label: false,
+                            :as => :hidden,
+                            input_html: {value: true},
+                            autofocus: true %>
+                            <%= f.button :submit, "Entregar", class: "button-primary", data: { confirm: "Confirmar entrega" } %>
+                          <% end %>
+                         <% end %>
+                        </div>
+
                       </div>
                     </div>
                   </div>
-                </div>
+                <% end %>
               <% else %>
-                <td>Grupo: <%= order.name %> #pedidos: <%= order.orders.count %></td>
-                <td>
-                  <div type="button" data-toggle="modal" style="text-align: center;" data-target=<%="#order-#{order.id}"%>>
-                    <div class="modal-button-group">
-                      <%= image_tag("https://res.cloudinary.com/therainycloud/image/upload/v1614859236/THC/thc_bag_roe4qi.png") %>
+                <% if order.class == Order %>
+                    <td><%= order.delivery_address %></td>
+                  <td>
+                    <div type="button" data-toggle="modal" style="text-align: center;" data-target=<%="#order-#{order.id}"%>>
+                      <span class="far fa-list-alt icon" style="font-size: 25px;"></span>
                     </div>
-                  </div>
-                </td>
-                <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id=<%="order-#{order.id}"%>>
-                  <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle"><%= order.name %></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <% order.orders.each do |group_order| %>
-                        <div class="background-group-list">
+                  </td>
+                  <td>
+                    <div class="modal-button-group">
+                      <% if order.category == "Meals" %>
+                        <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/6_y5smpg.png') %>
+                      <% elsif order.category == "Snacks" %>
+                        <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/8_sewz9h.png') %>
+                      <% else %>
+                        <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/7_qe6vau.png') %>
+                      <% end %>
+                    </div>
+                  </td>
+                  <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id=<%="order-#{order.id}"%>>
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle"><%= order.customer_name %></h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
                           <ul>
-                            <li>
-                              <strong>Pedido para: </strong> <%= group_order.customer_name %>
-                            </li>
-                            <li><strong>Teléfono:</strong> <%= group_order.telephone if group_order.telephone.present? %></li>
-                            <li><strong>Notas:</strong> <%= group_order.notes %></li>
-                            <li>
-                              <strong>Producto: </strong><%= group_order.product.meal_name %>
-                              <div class="modal-button-group">
-                                <% if group_order.category == "Meals" %>
-                                  <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/6_y5smpg.png') %>
-                                <% elsif group_order.category == "Snacks" %>
-                                  <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/8_sewz9h.png') %>
-                                <% else %>
-                                  <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/7_qe6vau.png') %>
-                                <% end %>
-                              </div>
-                            </li>
+                            <li><strong>Fecha:</strong> <%= order.meal_date %></li>
+                            <li><strong>Teléfono:</strong> <%= order.telephone if order.telephone.present? %></li>
+                            <li><strong>Dirección:</strong> <%= order.delivery_address %></li>
+                            <li><strong>Notas:</strong> <%= order.notes %></li>
                           </ul>
                         </div>
-                        <% end %>
-                      </div>
-                      <div class="modal-footer">
-                      <% if order.orders.any? { |o| o.customer_email.present? } %>
-                        <%= simple_form_for([@delivery_category,order]) do |f| %>
-                          <%= f.error_notification %>
-                          <%= f.input :delivered,
-                          required: true,
-                          label: false,
-                          :as => :hidden,
-                          input_html: {value: true},
-                          autofocus: true %>
-                          <%= f.button :submit, "Entregar", class: "button-primary mr-3", data: { confirm: "Confirmar entrega" } %>
-                        <% end %>
-                       <% end %>
-                      <%= link_to "editar grupo", edit_delivery_category_delivery_path(@delivery_category, order), class: "button-secondary" %>
+                        <div class="modal-footer">
+                          <% if order.customer_email.present? %>
+                              <%= simple_form_for(order) do |f| %>
+                                <%= f.error_notification %>
+                                <%= f.input :delivered,
+                                required: true,
+                                label: false,
+                                :as => :hidden,
+                                input_html: {value: true},
+                                autofocus: true %>
+                                <% if order.delivered == true %>
+                                  <%= f.button :submit, "Entregado", class: "btn", data: { confirm: "Confirmar entrega" } %>
+                                <% else %>
+                                  <%= f.button :submit, "Entregar", class: "button-primary", data: { confirm: "Confirmar entrega" } %>
+                                <% end %>
+                              <% end %>
+                          <% end %>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <td>
-                  -
-                </td>
-              <% end %>
+                <% else %>
+                  <td>Grupo: <%= order.name %> #pedidos: <%= order.orders.count %></td>
+                  <td>
+                    <div type="button" data-toggle="modal" style="text-align: center;" data-target=<%="#order-#{order.id}"%>>
+                      <div class="modal-button-group">
+                        <%= image_tag("https://res.cloudinary.com/therainycloud/image/upload/v1614859236/THC/thc_bag_roe4qi.png") %>
+                      </div>
+                    </div>
+                  </td>
+                  <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id=<%="order-#{order.id}"%>>
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle"><%= order.name %></h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <% order.orders.each do |group_order| %>
+                          <div class="background-group-list">
+                            <ul>
+                              <li>
+                                <strong>Pedido para: </strong> <%= group_order.customer_name %>
+                              </li>
+                              <li><strong>Teléfono:</strong> <%= group_order.telephone if group_order.telephone.present? %></li>
+                              <li><strong>Notas:</strong> <%= group_order.notes %></li>
+                              <li>
+                                <strong>Producto: </strong><%= group_order.product.meal_name %>
+                                <div class="modal-button-group">
+                                  <% if group_order.category == "Meals" %>
+                                    <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/6_y5smpg.png') %>
+                                  <% elsif group_order.category == "Snacks" %>
+                                    <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/8_sewz9h.png') %>
+                                  <% else %>
+                                    <%= image_tag('https://res.cloudinary.com/therainycloud/image/upload/v1615385906/THC/7_qe6vau.png') %>
+                                  <% end %>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                          <% end %>
+                        </div>
+                        <div class="modal-footer">
+                        <% if order.orders.any? { |o| o.customer_email.present? } %>
+                          <%= simple_form_for([@delivery_category,order]) do |f| %>
+                            <%= f.error_notification %>
+                            <%= f.input :delivered,
+                            required: true,
+                            label: false,
+                            :as => :hidden,
+                            input_html: {value: true},
+                            autofocus: true %>
+                            <%= f.button :submit, "Entregar", class: "button-primary mr-3", data: { confirm: "Confirmar entrega" } %>
+                          <% end %>
+                         <% end %>
+                        <%= link_to "editar grupo", edit_delivery_category_delivery_path(@delivery_category, order), class: "button-secondary" %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <td>
+                    -
+                  </td>
+                <% end %>
+            <% end %>
           <% end %>
         <% end %>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-
-<!-- end table test -->
-<% if current_user.role != "rider" %>
-  <div class="buttons-wrapper">
-    <%= link_to "Editar Reparto", edit_delivery_category_path(@delivery_category), class: "button-primary"  %>
-    <%= link_to "Eliminar Reparto", delivery_category_path(@delivery_category), method: :delete, class: "button-primary", data: {confirm: "Confirmar?"} %>
+      </tbody>
+    </table>
   </div>
-<% end %>
+
+  <!-- end table test -->
+  <% if current_user.role != "rider" %>
+    <div class="buttons-wrapper">
+      <%= link_to "Editar Reparto", edit_delivery_category_path(@delivery_category), class: "button-primary"  %>
+      <%= link_to "Eliminar Reparto", delivery_category_path(@delivery_category), method: :delete, class: "button-primary", data: {confirm: "Confirmar?"} %>
+    </div>
+  <% end %>
