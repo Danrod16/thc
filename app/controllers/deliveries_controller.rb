@@ -6,23 +6,25 @@ class DeliveriesController < ApplicationController
     @riders = Rider.all
     @rider_orders = []
     @rider = @delivery_category.rider
-    if Time.zone.now.strftime("%H").to_i >= "15".to_i
-      @total_orders = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_category_id: @delivery_category.id)
-      @remaining_orders = @total_orders.count
-    else
-      @total_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_category_id: @delivery_category.id)
-      @remaining_orders = @total_orders.count
-    end
-    @total_bowls = @total_orders.where(category: "Meals").count
-    set_orders_array
 
+    if Time.zone.now.strftime("%H").to_i >= "15".to_i
+      @total_orders_count = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_category_id: @delivery_category.id)
+      @total_orders = @total_orders_count.where(delivery_id: nil)
+      @remaining_orders = @total_orders_count.count
+    else
+      @total_orders_count = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_category_id: @delivery_category.id)
+      @total_orders = @total_orders_count.where(delivery_id: nil)
+      @remaining_orders = @total_orders_count.count
+    end
+    @total_bowls = @total_orders_count.where(category: "Meals").count
+    generate_pdf(@delivery_category, @total_orders)
+    set_orders_array
     authorize @delivery_groups
   end
 
   def show
     @delivery_group = Delivery.find(params[:id])
     @total_delivery_orders = Order.where(delivery_id: @delivery_group).count
-    generate_pdf(@delivery_group, @total_delivery_orders)
     authorize @delivery_group
   end
 

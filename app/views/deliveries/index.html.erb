@@ -7,6 +7,7 @@
   <h1><%= @delivery_category.name %></h1>
   <%= render 'riders/rider_pills' %>
    <p> <strong>#Bowls:</strong> <%= @total_bowls %></p>
+   <p><strong>#Paradas:</strong> <%= @rider_orders.count %></p>
   </div>
 
 
@@ -251,7 +252,6 @@
                           <% end %>
                          <% end %>
                         <%= link_to "Editar", edit_delivery_category_delivery_path(@delivery_category, order), class: "button-secondary" %>
-                        <%= link_to "Borrar", delivery_category_delivery(@delivery_category, order), method: :delete %>
                         </div>
                       </div>
                     </div>
