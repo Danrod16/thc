@@ -93,6 +93,35 @@ class DeliveryCategoriesController < ApplicationController
         order.update(sequence: index + 1)
       end
     end
+
+    # # check for groups with same sequence as another order and reorder again
+    # require 'pry-byebug'
+    # @order_groups = Delivery.where(delivery_category_id: @delivery_category.id)
+    # @order_groups.each do |group|
+    #   if @orders.where(sequence: group.sequence)
+    #     orders_array = @orders.map do |order|
+    #       {
+    #         id: order.id,
+    #         sequence: order.sequence,
+    #         type: order.class.to_s
+    #       }
+    #     end
+
+    #     order_groups_array = @order_groups.map do |group|
+    #       {
+    #         id: group.id,
+    #         sequence: group.sequence,
+    #         type: group.class.to_s
+    #       }
+    #     end
+    #     new_sequence_array = orders_array.concat(order_groups_array).sort_by{|object| object[:sequence] }.map do |object|
+    #       "#{object[:id]}-#{object[:type]}"
+    #     end
+    #     # binding.pry
+    #     # reorganize(@delivery_category.id, new_sequence_array)
+    #   end
+    #   break
+    # end
     authorize @delivery_category
   end
 

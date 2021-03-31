@@ -39,6 +39,7 @@ class DeliveryCategoryBase extends React.Component {
 
     // Current data
     const currentOrderArray = getCurrentCheckboxesData(deliveryCheckboxes)
+    console.log("addEventListenersAndData currentOrderArray: ", currentOrderArray)
     this.setState({
       counter: currentOrderArray.length,
       orderArray: currentOrderArray,
@@ -72,7 +73,7 @@ class DeliveryCategoryBase extends React.Component {
     checkbox.checked ?
       copyArray.push(id) :
       copyArray = copyArray.filter((value, index) => value !== id )
-
+    console.log("handleCheckBoxChange orderArray", copyArray)
     this.setState({
       orderArray: copyArray,
       counter: copyArray.length
@@ -126,6 +127,7 @@ class DeliveryCategoryBase extends React.Component {
   }
 
   deliveryDataObject = () => {
+    console.log("deliveryDataObject", this.arrayForReorganizeFetch())
     return JSON.stringify({
       delivery_category: {
         name: this.state.deliveryCategoryName,
@@ -168,9 +170,10 @@ function getCurrentCheckboxesData(checkboxes) {
     }
   })
 
+  presentSequences.sort((order1, order2) => order1.sequence - order2.sequence)
   const presentOrderArray = new Array(presentSequences.length)
-  presentSequences.forEach(el => {
-    presentOrderArray[el.sequence - 1] = el.id
+  presentSequences.forEach((el, index) => {
+    presentOrderArray[index] = el.id
   })
 
   return presentOrderArray
