@@ -6,7 +6,6 @@ class DeliveriesController < ApplicationController
     @riders = Rider.all
     @rider_orders = []
     @rider = @delivery_category.rider
-
     if Time.zone.now.strftime("%H").to_i >= "15".to_i
       @total_orders_count = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_category_id: @delivery_category.id)
       @total_orders = @total_orders_count.where(delivery_id: nil)
@@ -17,6 +16,7 @@ class DeliveriesController < ApplicationController
       @remaining_orders = @total_orders_count.count
     end
     @total_bowls = @total_orders_count.where(category: "Meals").count
+    remove_old_orders
     generate_pdf(@delivery_category, @total_orders)
     set_orders_array
     authorize @delivery_groups
@@ -117,6 +117,18 @@ class DeliveriesController < ApplicationController
       end
     end
     meal_date
+  end
+
+  def remove_old_orders
+    @delivery_groups.each do |group|
+      group.orders.each do |order|
+      if Time.zone.now.strftime("%H").to_i >= "15".to_i
+        if order.meal_date.to_date.today?
+          order.update(delivery_id: nil)
+        end
+       end
+      end
+    end
   end
 
   def set_orders_array
