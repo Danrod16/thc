@@ -1,3 +1,4 @@
+
 <% if current_user.role == "admin" || current_user.role == "cook" %>
   <%= link_to "< Atrás", delivery_categories_path %>
 <% else %>
@@ -9,7 +10,6 @@
    <p> <strong>#Bowls:</strong> <%= @total_bowls %></p>
    <p><strong>#Paradas:</strong> <%= @rider_orders.count %></p>
   </div>
-
 
   <!-- Start table test -->
   <div class="table-responsive-raw">

@@ -1,4 +1,4 @@
-<div class="tab-content" id="myTabContent" data-controller="orders" data-path="<%= @path %>">
+<div class="tab-content h-100" id="myTabContent" data-controller="orders" data-path="<%= @path %>">
   <div class="nav-wrapper-tabs">
     <div class="tabs-wrapper">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -19,7 +19,7 @@
     <div class="flex-wrapper">
       <a class="toggler" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"></i>Resumen</a>
       <%= link_to polymorphic_path(@path, format: :pdf), target: "_blank", class: "button-primary" do %>
-        <i class="fas fa-file-download"></i> 
+        <i class="fas fa-file-download"></i>
         Descargar
       <% end %>
     </div>
