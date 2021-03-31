@@ -1,26 +1,30 @@
 class DeliveriesController < ApplicationController
-  before_action :set_delivery_category, only: [:index, :show, :edit, :new, :create, :update]
+  before_action :set_delivery_category, only: [:index, :show, :edit, :new, :create, :update, :destroy]
 
   def index
     @delivery_groups = policy_scope(Delivery).where(delivery_category_id: @delivery_category.id)
     @riders = Rider.all
     @rider_orders = []
-    if Time.zone.now.strftime("%H").to_i >= "15".to_i
-      @remaining_orders = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: @delivery_category.id).count
-      @total_orders = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: @delivery_category.id)
-    else
-      @remaining_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: @delivery_category.id).count
-      @total_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: @delivery_category.id)
-    end
-    set_orders_array
+    @rider = @delivery_category.rider
 
+    if Time.zone.now.strftime("%H").to_i >= "15".to_i
+      @total_orders_count = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), delivery_category_id: @delivery_category.id)
+      @total_orders = @total_orders_count.where(delivery_id: nil)
+      @remaining_orders = @total_orders_count.count
+    else
+      @total_orders_count = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_category_id: @delivery_category.id)
+      @total_orders = @total_orders_count.where(delivery_id: nil)
+      @remaining_orders = @total_orders_count.count
+    end
+    @total_bowls = @total_orders_count.where(category: "Meals").count
+    generate_pdf(@delivery_category, @total_orders)
+    set_orders_array
     authorize @delivery_groups
   end
 
   def show
     @delivery_group = Delivery.find(params[:id])
     @total_delivery_orders = Order.where(delivery_id: @delivery_group).count
-    generate_pdf(@delivery_group, @total_delivery_orders)
     authorize @delivery_group
   end
 
@@ -79,8 +83,10 @@ class DeliveriesController < ApplicationController
 
   def destroy
     @delivery_group = Delivery.find(params[:id])
-    @delivery_group.destroy
-    redirect_to delivery_categroy_deliveries_path()
+    remove_delivery_category_id
+    if @delivery_group.destroy
+      redirect_to delivery_category_deliveries_path(@delivery_category)
+    end
     authorize @delivery_group
   end
 
@@ -88,6 +94,12 @@ class DeliveriesController < ApplicationController
 
   def delivery_params
     params.require(:delivery).permit(:name, :rider_id, :delivery_category, :order_ids => [])
+  end
+
+  def remove_delivery_category_id
+    @delivery_group.orders.each do |order|
+      order.update(delivery_category_id: nil) unless order.meal_date.to_date.today?
+    end
   end
 
   def assign_date(day)
