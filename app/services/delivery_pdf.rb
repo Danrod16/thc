@@ -40,13 +40,10 @@ class DeliveryPdf
   end
 
   def delivery_data
-    arr = []
-    
-    require 'pry-byebug'
     @groups = @delivery_group.deliveries
     @solo_orders = @delivery_group.orders.where(delivery_id: nil)
     
-    # binding.pry
+    arr = []
     (@solo_orders + @groups).sort_by{|obj| obj.sequence}.each_with_index do |object, index|
       if object.class == Order
         arr << [index + 1, object.customer_name, object.telephone, object.delivery_address, object.notes]
