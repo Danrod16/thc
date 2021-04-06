@@ -3,6 +3,8 @@ class DeliveriesController < ApplicationController
 
   def index
     @delivery_groups = policy_scope(Delivery).where(delivery_category_id: @delivery_category.id)
+    remove_old_orders
+    @delivery_groups = policy_scope(Delivery).where(delivery_category_id: @delivery_category.id)
     @riders = Rider.all
     @rider_orders = []
     @rider = @delivery_category.rider
@@ -16,7 +18,6 @@ class DeliveriesController < ApplicationController
       @remaining_orders = @total_orders_count.count
     end
     @total_bowls = @total_orders_count.where(category: "Meals").count
-    remove_old_orders
     set_orders_array
     generate_pdf(@delivery_category, @rider_orders)
     authorize @delivery_groups
@@ -43,7 +44,7 @@ class DeliveriesController < ApplicationController
     @delivery_group = Delivery.new(delivery_params)
     @delivery_group.delivery_category_id = @delivery_category.id
     @delivery_group.rider = @delivery_category.rider
-    @delivery_group.sequence = @delivery_group.orders.sort_by {|order| order.sequence}.first.sequence
+    @delivery_group.sequence = @delivery_group.orders.empty? ? 0 : @delivery_group.orders.sort_by {|order| order.sequence}.first.sequence
     if @delivery_group.save
       flash[:alert] = "Grupo creado!"
       redirect_to delivery_category_deliveries_path(@delivery_category.id)
@@ -126,6 +127,9 @@ class DeliveriesController < ApplicationController
         if order.meal_date.to_date.today?
           order.update(delivery_id: nil)
         end
+       end
+       if order.delivery_category_id.nil?
+          order.update(delivery_id: nil)
        end
       end
     end
