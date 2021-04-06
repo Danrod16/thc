@@ -44,7 +44,7 @@ class DeliveryCategoriesController < ApplicationController
       @today_orders = with_this_delivery_category + without_delivery_category
     else
       without_delivery_category = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: nil).order(created_at: :asc)
-      with_this_delivery_category = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_id: nil, delivery_category_id: @delivery_category.id)
+      with_this_delivery_category = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), delivery_category_id: @delivery_category.id)
       @today_orders = with_this_delivery_category + without_delivery_category
     end
     authorize @delivery_category
