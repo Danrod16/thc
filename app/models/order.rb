@@ -79,6 +79,7 @@ class Order < ApplicationRecord
       Order.new_snack(order, purchased_item)
     when "Desserts"
       Order.new_snack(order, purchased_item)
+
     else
       Order.new_meal(order, purchased_item)
     end
@@ -221,12 +222,13 @@ class Order < ApplicationRecord
   end
 
   def self.new_meal(order, purchased_item)
+
     Order.create(customer_name: Order.format_name(order["customerInfo"]["fullName"]),
                  customer_email: order["customerInfo"]["email"],
                  meal_size: Order.variants(purchased_item["variantName"], "Size"),
                  meal_protein: Order.variants(purchased_item["variantName"], "Protein"),
                  meal_custom: Order.variants(purchased_item["variantName"], "Customise"),
-                 notes: Order.format_notes(order["customData"][1]["textArea"]),
+                 notes: Order.format_notes(order["customData"].nil? ? order["customData"][1]["textArea"] : "-"),
                  telephone: order["customData"][0]["textInput"],
                  delivery_address: Order.delivery_address(order),
                  category: Order.assign_category(purchased_item),
