@@ -110,7 +110,7 @@ class Order < ApplicationRecord
   def self.fetch_days_monthly(order, days)
     array = []
     full_date = order["acceptedOn"].split("T")[0]
-    accepted_time = order["acceptedOn"].gsub("T", " ").split(".")[0].to_time
+    accepted_time = order["acceptedOn"].to_time.in_time_zone("Madrid")
     limited_time = "#{full_date} 11:00:00".to_time
     if accepted_time > limited_time
       day = Date.parse(full_date) + 1
@@ -131,7 +131,7 @@ class Order < ApplicationRecord
   def self.fetch_days_weekly(order, days)
     array = []
     full_date = order["acceptedOn"].split("T")[0]
-    accepted_time = order["acceptedOn"].gsub("T", " ").split(".")[0].to_time
+    accepted_time = order["acceptedOn"].to_time.in_time_zone("Madrid")
     limited_time = "#{full_date} 11:00:00".to_time
     if accepted_time > limited_time
       day = Date.parse(full_date) + 1
