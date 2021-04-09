@@ -114,9 +114,6 @@ class Order < ApplicationRecord
     full_date = order["acceptedOn"].split("T")[0]
     accepted_time = (order["acceptedOn"].gsub("T", " ").split(".")[0] + 'UTC').to_time.in_time_zone("Madrid")
     limited_time = "#{full_date} 11:00:00 CEST".to_time
-    puts " Accepted #{accepted_time}"
-    puts " Limited #{limited_time}"
-    binding.pry
     if accepted_time > limited_time
       day = Date.parse(full_date) + 1
     else
