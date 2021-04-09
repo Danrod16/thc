@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 2021_03_23_170420) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "rider_id"
     t.bigint "delivery_category_id", null: false
-    t.integer "sequence"
+    t.integer "sequence", default: 0, null: false
     t.index ["delivery_category_id"], name: "index_deliveries_on_delivery_category_id"
     t.index ["rider_id"], name: "index_deliveries_on_rider_id"
   end
