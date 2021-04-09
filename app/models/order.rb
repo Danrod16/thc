@@ -114,6 +114,7 @@ class Order < ApplicationRecord
     accepted_time = order["acceptedOn"].to_time.in_time_zone("Madrid")
     puts "#{accepted_time} Monthly created"
     limited_time = "#{full_date} 11:00:00".to_time
+    puts "#{limited_time} limited monthly"
     if accepted_time > limited_time
       day = Date.parse(full_date) + 1
     else
