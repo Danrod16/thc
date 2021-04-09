@@ -1,6 +1,5 @@
 class Order < ApplicationRecord
   require 'date'
-  require 'pry-byebug'
   include PgSearch::Model
   belongs_to :product
   belongs_to :delivery_category, optional: true
