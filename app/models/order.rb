@@ -196,8 +196,8 @@ class Order < ApplicationRecord
   end
 
   def self.delivery_address(order)
-    address = order['allAddresses'][1]
-    "#{address['line1']}, #{address['line2']}, #{address['postalCode']}"
+    order['allAddresses'][1] ? address = order['allAddresses'][1] : address = order['allAddresses'][0]
+      "#{address['line1']}, #{address['line2']}, #{address['postalCode']}"
   end
 
   def self.assign_day(name)
