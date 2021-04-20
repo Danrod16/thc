@@ -79,7 +79,6 @@ class Order < ApplicationRecord
       Order.new_snack(order, purchased_item)
     when "Desserts"
       Order.new_snack(order, purchased_item)
-
     else
       Order.new_meal(order, purchased_item)
     end
@@ -239,18 +238,22 @@ class Order < ApplicationRecord
 
   def self.fetch_snack_date(order, purchased_item)
     day = Date.parse(order["acceptedOn"].split("T")[0])
-    if day.wday == 6 || day.wday == 0 #weekend
+    if day.wday == 6 || day.wday == 0
       if day.wday == 6
         day += 2
       elsif day.wday == 0
         day += 1
       end
     else
-      accepted_day = order["acceptedOn"].split("T")[0]
-      accepted_time = order["acceptedOn"].gsub("T", " ").split(".")[0].to_time
-      limited_time = "#{accepted_day} 11:00:00".to_time
+      full_date = order["acceptedOn"].split("T")[0]
+      accepted_time = (order["acceptedOn"].gsub("T", " ").split(".")[0] + 'UTC').to_time.in_time_zone("Madrid")      
+      limited_time = "#{full_date} 11:00:00 CEST".to_time
       if accepted_time > limited_time
-        day += 1
+        if day.wday == 5
+          day += 3
+        else
+          day += 1
+        end
       else
         day
       end
