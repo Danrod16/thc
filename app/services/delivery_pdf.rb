@@ -40,9 +40,16 @@ class DeliveryPdf
   end
 
   def delivery_data
+    @groups = @delivery_group.deliveries
+    @solo_orders = @delivery_group.orders.where(delivery_id: nil)
+    
     arr = []
-    @delivery_group.orders.order(:sequence).each_with_index do |order, index|
-      arr << [index + 1, order.customer_name, order.telephone, order.delivery_address, order.notes]
+    (@solo_orders + @groups).sort_by{|obj| obj.sequence}.each_with_index do |object, index|
+      if object.class == Order
+        arr << [index + 1, object.customer_name, object.telephone, object.delivery_address, object.notes]
+      else
+        arr << [index + 1, "nº pedidos: #{object.orders.count}", '-', object.name, '-']
+      end
     end
     [["" ,"Nombre", "Teléfono", "Dirección", "Notas"]] + arr
   end
