@@ -9,7 +9,7 @@ class StickerPdf
 
 
   def create_stickers
-      start_new_page(margin: [10, 30, 10, 30])
+      start_new_page(margin: [10, 25, 10, 25])
       define_grid columns: 2, rows: 4, column_gutter: 5
       # grid.show_all
       # stroke_bounds
@@ -20,7 +20,7 @@ class StickerPdf
         grid(row,col).bounding_box do
           sticker(order)
           if row == 3 && col == 1
-            start_new_page(margin: [10, 30, 10, 30])
+            start_new_page(margin: [10, 25, 10, 25])
             define_grid columns: 2, rows: 4, column_gutter: 5
             col = 0
             row = 0
@@ -38,57 +38,57 @@ class StickerPdf
   end
 
   def sticker(order)
-      bounding_box([6,190], width: 270, height: 190) do
-        # stroke_bounds
-        bounding_box([0,190], width: 270, height: 100) do
-          move_down 10
-          image "thc-logo-1.png", width: 120
-          move_down 10
-          text_box order.product.meal_name, at: [125, 85], width: 140,
-                                            height: 20,
-                                            style: :bold,
-                                            size: 14,
-                                            overflow: :shrink_to_fit,
-                                            min_font_size: 6
-          bounding_box([125, 63], width: 140, height: 30) do
-            if order.product.description.include?("Allergies")
-              allergies = order.product.description.split("Allergies:").last.strip
-              font_size(7)
-              text "(Allergies: #{allergies})"
-              # stroke_bounds
-            end
+    bounding_box([6,190], width: 270, height: 190) do
+      # stroke_bounds
+      bounding_box([0,190], width: 270, height: 100) do
+        move_down 10
+        image "thc-logo-1.png", width: 120
+        move_down 10
+        text_box order.product.meal_name, at: [125, 85], width: 140,
+                                          height: 20,
+                                          style: :bold,
+                                          size: 14,
+                                          overflow: :shrink_to_fit,
+                                          min_font_size: 6
+        bounding_box([125, 63], width: 140, height: 30) do
+          if order.product.description.include?("Allergies")
+            allergies = order.product.description.split("Allergies:").last.strip
+            font_size(7)
+            text "(Allergies: #{allergies})"
+            # stroke_bounds
           end
-          bounding_box([125, 43], width: 140, height: 140) do
-            font("ArialUnicode.ttf") do
-              font_size(8)
-              text order.customer_name
-              text order.delivery_address
-              text order.telephone
-              text "Size: #{order.meal_size}"
-              text "Protein: #{order.meal_protein}"
-              text "Customization: #{order.meal_custom}"
-              # text "Notes: #{order.notes}"
-              # stroke_bounds
-            end
-          end
-          # stroke_bounds
         end
-        bounding_box([0, 108], width: 270, height: 100) do
-          image order.product.qr, width: 85
-          draw_text("Scan me for more info", :at => [5, 12], :style => :bold, :size => 6)
-          draw_text("about calories and macros", :at => [5, 6], :style => :bold, :size => 6)
-          bounding_box([108, 45], width: 170, height: 50) do
+        bounding_box([125, 43], width: 140, height: 140) do
+          font("ArialUnicode.ttf") do
             font_size(8)
-            text "INSTRUCTIONS:", style: :bold
-            move_down 5
-            text "1. Mix all the ingredients"
-            text "2. Heat directly in the microwave (omit if salad)"
-            text "3. Enjoy it!"
+            text order.customer_name
+            text order.delivery_address
+            text order.telephone
+            text "Size: #{order.meal_size}"
+            text "Protein: #{order.meal_protein}"
+            text "Customization: #{order.meal_custom}"
+            # text "Notes: #{order.notes}"
             # stroke_bounds
           end
         end
         # stroke_bounds
       end
+      bounding_box([0, 108], width: 270, height: 100) do
+        image order.product.qr, width: 85
+        draw_text("Scan me for more info", :at => [5, 12], :style => :bold, :size => 6)
+        draw_text("about calories and macros", :at => [5, 6], :style => :bold, :size => 6)
+        bounding_box([108, 45], width: 170, height: 50) do
+          font_size(8)
+          text "INSTRUCTIONS:", style: :bold
+          move_down 5
+          text "1. Mix all the ingredients"
+          text "2. Heat directly in the microwave (omit if salad)"
+          text "3. Enjoy it!"
+          # stroke_bounds
+        end
+      end
+      # stroke_bounds
+    end
   end
 end
 
