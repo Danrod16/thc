@@ -2,10 +2,10 @@ class StickersController < ApplicationController
   before_action :set_sticker, only: [:show, :edit, :update, :destroy]
   before_action :selected_orders, only: [:new, :show]
   before_action :edit_selected_orders, only: [:edit]
+  before_action :remaining_orders, only: [:index]
 
   def index
     @stickers = policy_scope(Sticker).all
-    @remaining_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), sticker_id: nil, category: "Meals").count
     authorize @stickers
   end
 
@@ -74,6 +74,14 @@ class StickersController < ApplicationController
       with_this_sticker = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), sticker_id: @sticker, category: "Meals")
     end
     @selected_orders = with_this_sticker + without_stickers
+  end
+
+  def remaining_orders
+    if Time.zone.now.strftime("%H").to_i >= "15".to_i
+      @remaining_orders = Order.where(meal_date: Date.tomorrow.strftime("%d-%m-%Y"), sticker_id: nil, category: "Meals").count
+    else
+      @remaining_orders = Order.where(meal_date: Date.today.strftime("%d-%m-%Y"), sticker_id: nil, category: "Meals").count
+    end
   end
 
   def generate_pdf(selected_orders)
